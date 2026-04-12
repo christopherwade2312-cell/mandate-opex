@@ -135,7 +135,7 @@
     .cost-preview::before { content:'→'; color:var(--w40); }
 
     /* RESULTS PANEL */
-    .results-panel { position:sticky; top:80px; }
+    .results-panel { position:sticky; top:80px; will-change:transform; -webkit-transform:translateZ(0); transform:translateZ(0); }
 
     .result-card { background:var(--navy-card); border:1px solid var(--border-a); border-radius:20px; overflow:hidden; margin-bottom:1rem; }
 
