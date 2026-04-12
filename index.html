@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Operational excellence diagnostic tools for manufacturing SMEs. Built with industry practitioners. Affordable, practical, built to work.">
+  <meta property="og:title" content="Mandate OpEx Toolkit — Operational excellence for manufacturing SMEs">
+  <title>Mandate OpEx Toolkit — Operational excellence for manufacturing SMEs</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;1,700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy:        #0B1929;
+      --navy-mid:    #112236;
+      --navy-card:   #162C45;
+      --navy-lift:   #1C3555;
+      --amber:       #F0A500;
+      --amber-soft:  rgba(240,165,0,0.10);
+      --amber-line:  rgba(240,165,0,0.22);
+      --teal:        #22C997;
+      --teal-soft:   rgba(34,201,151,0.10);
+      --white:       #F4F1EA;
+      --w70:         rgba(244,241,234,0.70);
+      --w40:         rgba(244,241,234,0.40);
+      --w15:         rgba(244,241,234,0.15);
+      --w06:         rgba(244,241,234,0.06);
+      --w03:         rgba(244,241,234,0.03);
+      --border:      rgba(244,241,234,0.07);
+      --border-a:    rgba(240,165,0,0.22);
+      --fd:          'Playfair Display', Georgia, serif;
+      --fb:          'Outfit', system-ui, sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--navy);
+      color: var(--white);
+      font-family: var(--fb);
+      font-weight: 300;
+      line-height: 1.65;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .bg-grid {
+      position: fixed; inset: 0; pointer-events: none; z-index: 0;
+      background-image:
+        linear-gradient(rgba(244,241,234,0.018) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(244,241,234,0.018) 1px, transparent 1px);
+      background-size: 72px 72px;
+    }
+
+    .bg-glow-1 {
+      position: fixed; top: -10%; right: -10%;
+      width: 700px; height: 700px; border-radius: 50%;
+      background: radial-gradient(ellipse, rgba(240,165,0,0.055) 0%, transparent 65%);
+      pointer-events: none; z-index: 0;
+    }
+
+    .bg-glow-2 {
+      position: fixed; bottom: 20%; left: -15%;
+      width: 600px; height: 600px; border-radius: 50%;
+      background: radial-gradient(ellipse, rgba(34,201,151,0.035) 0%, transparent 65%);
+      pointer-events: none; z-index: 0;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      height: 68px; display: flex; align-items: center;
+      justify-content: space-between; padding: 0 2.5rem;
+      background: rgba(11,25,41,0.88);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .logo { display: flex; align-items: center; gap: 11px; text-decoration: none; }
+
+    .logo-icon {
+      width: 36px; height: 36px; border-radius: 9px;
+      background: var(--amber);
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    .logo-text { font-family: var(--fb); font-weight: 600; font-size: 15px; color: var(--white); }
+    .logo-text span { color: var(--amber); }
+
+    .nav-right { display: flex; align-items: center; gap: 1.5rem; }
+
+    .nav-tag { font-size: 12px; color: var(--w40); }
+
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--amber); color: var(--navy);
+      font-family: var(--fb); font-weight: 600; font-size: 14px;
+      padding: 0.55rem 1.3rem; border-radius: 8px;
+      text-decoration: none; border: none; cursor: pointer;
+      transition: background 0.18s, transform 0.12s;
+    }
+
+    .btn-primary:hover { background: #ffb820; transform: translateY(-1px); }
+
+    /* HERO */
+    .hero {
+      position: relative; z-index: 1;
+      min-height: 100vh;
+      display: grid; grid-template-columns: 1fr 460px;
+      gap: 5rem; align-items: center;
+      max-width: 1180px; margin: 0 auto;
+      padding: 8rem 2.5rem 5rem;
+    }
+
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-size: 11.5px; font-weight: 500; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--amber);
+      margin-bottom: 1.75rem;
+      opacity: 0; animation: rise 0.7s ease forwards 0.1s;
+    }
+
+    .eyebrow-line { width: 28px; height: 1.5px; background: var(--amber); border-radius: 2px; }
+
+    .hero-h1 {
+      font-family: var(--fd);
+      font-size: clamp(2.8rem, 4.5vw, 4.2rem);
+      font-weight: 800; line-height: 1.08;
+      color: var(--white); margin-bottom: 1.75rem;
+      letter-spacing: -0.02em;
+      opacity: 0; animation: rise 0.7s ease forwards 0.2s;
+    }
+
+    .hero-h1 .hl { color: var(--amber); font-style: italic; }
+
+    .hero-lead {
+      font-size: 1.1rem; color: var(--w70);
+      max-width: 540px; margin-bottom: 2.5rem; line-height: 1.75;
+      opacity: 0; animation: rise 0.7s ease forwards 0.3s;
+    }
+
+    .stats-row {
+      display: flex; gap: 0; margin-bottom: 2.5rem;
+      opacity: 0; animation: rise 0.7s ease forwards 0.4s;
+    }
+
+    .stat-item { flex: 1; padding: 1rem 1.4rem; border-left: 1px solid var(--border); }
+    .stat-item:first-child { border-left: none; padding-left: 0; }
+
+    .stat-n {
+      font-family: var(--fd); font-size: 2.2rem; font-weight: 700;
+      color: var(--white); line-height: 1; margin-bottom: 5px;
+    }
+
+    .stat-l { font-size: 11.5px; color: var(--w40); line-height: 1.4; }
+
+    .builder-badge {
+      display: inline-flex; align-items: center; gap: 12px;
+      background: var(--w06); border: 1px solid var(--border);
+      border-radius: 100px; padding: 0.5rem 1.1rem;
+      font-size: 13px; color: var(--w70);
+      opacity: 0; animation: rise 0.7s ease forwards 0.5s;
+    }
+
+    .badge-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--teal); flex-shrink: 0;
+      box-shadow: 0 0 8px var(--teal);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.35} }
+
+    /* WAITLIST CARD */
+    .waitlist-card {
+      position: relative; z-index: 1;
+      background: var(--navy-card);
+      border: 1px solid var(--border-a);
+      border-radius: 20px; padding: 2.75rem 2.25rem;
+      overflow: hidden;
+      opacity: 0; animation: rise 0.8s ease forwards 0.5s;
+    }
+
+    .card-top-bar {
+      position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, var(--amber), var(--teal));
+    }
+
+    .card-glow {
+      position: absolute; top: -80px; right: -80px;
+      width: 260px; height: 260px; border-radius: 50%;
+      background: radial-gradient(ellipse, rgba(240,165,0,0.07), transparent 70%);
+      pointer-events: none;
+    }
+
+    .card-eye {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 11px; font-weight: 500; letter-spacing: 0.13em;
+      text-transform: uppercase; color: var(--teal); margin-bottom: 0.75rem;
+    }
+
+    .card-eye-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--teal); }
+
+    .card-title {
+      font-family: var(--fd); font-size: 1.65rem; font-weight: 700;
+      color: var(--white); line-height: 1.2; margin-bottom: 0.5rem;
+    }
+
+    .card-sub { font-size: 0.9rem; color: var(--w40); margin-bottom: 1.5rem; line-height: 1.6; }
+
+    .early-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--amber-soft); border: 1px solid var(--amber-line);
+      border-radius: 6px; padding: 5px 10px;
+      font-size: 12px; color: var(--amber); font-weight: 500;
+      margin-bottom: 1.5rem;
+    }
+
+    .wl-form { display: flex; flex-direction: column; gap: 0.7rem; }
+
+    .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.7rem; }
+
+    .wl-input, .wl-select {
+      width: 100%;
+      background: rgba(244,241,234,0.04);
+      border: 1px solid rgba(244,241,234,0.1);
+      border-radius: 8px; padding: 0.8rem 1rem;
+      font-family: var(--fb); font-size: 14px; font-weight: 400;
+      color: var(--white); outline: none;
+      transition: border-color 0.18s, background 0.18s;
+      appearance: none;
+    }
+
+    .wl-input::placeholder { color: rgba(244,241,234,0.25); }
+    .wl-input:focus, .wl-select:focus {
+      border-color: rgba(240,165,0,0.5);
+      background: rgba(240,165,0,0.04);
+    }
+
+    .wl-select option { background: var(--navy-mid); }
+
+    .sel-wrap { position: relative; }
+    .sel-wrap::after {
+      content: '';
+      position: absolute; right: 12px; top: 50%;
+      transform: translateY(-50%);
+      width: 0; height: 0;
+      border-left: 4px solid transparent;
+      border-right: 4px solid transparent;
+      border-top: 5px solid var(--w40);
+      pointer-events: none;
+    }
+
+    .wl-btn {
+      width: 100%; background: var(--amber); color: var(--navy);
+      font-family: var(--fb); font-weight: 600; font-size: 15px;
+      padding: 0.875rem; border-radius: 8px; border: none;
+      cursor: pointer; transition: background 0.18s, transform 0.12s;
+      margin-top: 0.25rem;
+    }
+
+    .wl-btn:hover { background: #ffb820; transform: translateY(-1px); }
+
+    .card-note { margin-top: 1rem; font-size: 11.5px; color: rgba(244,241,234,0.22); text-align: center; }
+
+    .success-state { display: none; text-align: center; padding: 1rem 0; }
+    .success-state.show { display: block; }
+
+    .success-circle {
+      width: 56px; height: 56px; border-radius: 50%;
+      background: var(--teal-soft); border: 1px solid rgba(34,201,151,0.3);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 1.25rem;
+    }
+
+    .success-h { font-family: var(--fd); font-size: 1.4rem; font-weight: 700; color: var(--white); margin-bottom: 0.5rem; }
+    .success-p { font-size: 0.875rem; color: var(--w70); line-height: 1.6; }
+
+    /* TRUST STRIP */
+    .trust-strip {
+      position: relative; z-index: 1;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      background: var(--w03); padding: 1.25rem 2.5rem;
+    }
+
+    .trust-inner {
+      max-width: 1180px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: center;
+      gap: 2.5rem; flex-wrap: wrap;
+    }
+
+    .trust-item { display: flex; align-items: center; gap: 9px; font-size: 13px; color: var(--w40); }
+    .trust-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--amber); flex-shrink: 0; }
+
+    /* SECTIONS */
+    .section { position: relative; z-index: 1; padding: 7rem 2.5rem; }
+    .section-inner { max-width: 1180px; margin: 0 auto; }
+
+    .s-eye {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-size: 11px; font-weight: 500; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--amber); margin-bottom: 1.25rem;
+    }
+    .s-eye::before { content:''; display:block; width:22px; height:1.5px; background:var(--amber); border-radius:2px; }
+
+    .s-h {
+      font-family: var(--fd);
+      font-size: clamp(2rem, 3.2vw, 2.9rem);
+      font-weight: 800; color: var(--white);
+      line-height: 1.12; margin-bottom: 1.25rem;
+      max-width: 720px; letter-spacing: -0.02em;
+    }
+
+    .s-h .hl { color: var(--amber); font-style: italic; }
+
+    .s-lead { font-size: 1.05rem; color: var(--w70); max-width: 600px; line-height: 1.78; }
+
+    /* BUILT WITH */
+    .built-bg { background: var(--navy-mid); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .section.built-bg { background: var(--navy-mid); }
+
+    .built-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+
+    .built-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+    .bc {
+      background: var(--navy); border: 1px solid var(--border);
+      border-radius: 12px; padding: 1.5rem;
+      transition: border-color 0.2s, transform 0.2s;
+      position: relative; overflow: hidden;
+    }
+
+    .bc::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; opacity:0; transition:opacity 0.2s; }
+    .bc.ca::before { background: var(--amber); }
+    .bc.ct::before { background: var(--teal); }
+    .bc:hover { border-color: var(--border-a); transform: translateY(-3px); }
+    .bc:hover::before { opacity: 1; }
+
+    .bc-n { font-family: var(--fd); font-size: 2.4rem; font-weight: 700; line-height: 1; margin-bottom: 6px; }
+    .bc.ca .bc-n { color: var(--amber); }
+    .bc.ct .bc-n { color: var(--teal); }
+    .bc-l { font-size: 13px; color: var(--w70); line-height: 1.45; }
+
+    /* PROBLEM */
+    .prob-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.25rem; margin-top: 3.5rem; }
+
+    .prob-card {
+      background: var(--navy-card); border: 1px solid var(--border);
+      border-radius: 20px; padding: 2rem 1.75rem;
+      position: relative; overflow: hidden;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+
+    .prob-card:hover { border-color: var(--border-a); transform: translateY(-4px); }
+    .prob-card::after { content:''; position:absolute; bottom:0; left:0; right:0; height:2px; background:linear-gradient(90deg,var(--amber),transparent); opacity:0; transition:opacity 0.2s; }
+    .prob-card:hover::after { opacity:1; }
+
+    .prob-n { font-family: var(--fd); font-size: 3.5rem; font-weight: 700; color: var(--amber); opacity: 0.45; line-height: 1; margin-bottom: 0.75rem; }
+    .prob-title { font-size: 1rem; font-weight: 500; color: var(--white); margin-bottom: 0.6rem; line-height: 1.4; }
+    .prob-body { font-size: 0.875rem; color: var(--w40); line-height: 1.65; }
+
+    /* TOOLS */
+    .tools-bg { background: var(--navy-mid); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+
+    .tools-layout { display: grid; grid-template-columns: 320px 1fr; gap: 4rem; align-items: start; }
+
+    .tools-sticky { position: sticky; top: 100px; }
+
+    .tools-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+    .tc {
+      background: var(--navy); border: 1px solid var(--border);
+      border-radius: 12px; padding: 1.4rem;
+      display: flex; flex-direction: column; gap: 0.5rem;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+
+    .tc:hover { border-color: rgba(240,165,0,0.2); transform: translateY(-2px); }
+
+    .tc-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 0.75rem; }
+
+    .tc-name { font-size: 0.925rem; font-weight: 500; color: var(--white); line-height: 1.35; }
+
+    .tc-pill { flex-shrink: 0; font-size: 10px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; padding: 3px 9px; border-radius: 20px; }
+    .pill-free { background: rgba(34,201,151,0.12); color: var(--teal); }
+    .pill-paid { background: var(--amber-soft); color: var(--amber); }
+
+    .tc-desc { font-size: 0.82rem; color: var(--w40); line-height: 1.6; }
+
+    .tc-cat { display: inline-flex; align-items: center; font-size: 10px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; padding: 2px 8px; border-radius: 4px; margin-top: 2px; }
+    .cat-q { background: rgba(34,201,151,0.08); color: rgba(34,201,151,0.7); }
+    .cat-o { background: rgba(240,165,0,0.08); color: rgba(240,165,0,0.7); }
+    .cat-p { background: rgba(180,110,200,0.08); color: rgba(180,110,200,0.7); }
+    .cat-s { background: rgba(100,140,255,0.08); color: rgba(100,140,255,0.7); }
+
+    .tc-more {
+      background: var(--w03); border: 1px dashed rgba(244,241,234,0.1);
+      border-radius: 12px; padding: 1.4rem; grid-column: span 2;
+      text-align: center; font-size: 0.875rem; color: var(--w40);
+    }
+
+    .tc-more strong { color: var(--w70); font-weight: 500; }
+
+    .design-note {
+      margin-top: 2rem; padding: 1.25rem;
+      background: var(--amber-soft); border: 1px solid var(--amber-line);
+      border-radius: 12px;
+    }
+
+    .design-note-label { font-size: 13px; color: var(--amber); font-weight: 500; margin-bottom: 6px; }
+    .design-note-body { font-size: 0.85rem; color: var(--w70); line-height: 1.65; }
+
+    /* HOW IT WORKS */
+    .steps-grid {
+      display: grid; grid-template-columns: repeat(4,1fr);
+      gap: 1px; background: var(--border);
+      border: 1px solid var(--border); border-radius: 20px;
+      overflow: hidden; margin-top: 3.5rem;
+    }
+
+    .step-block { background: var(--navy-card); padding: 2.25rem 1.75rem; }
+
+    .step-circle {
+      width: 48px; height: 48px; border-radius: 50%;
+      background: var(--amber-soft); border: 1px solid var(--amber-line);
+      display: flex; align-items: center; justify-content: center; margin-bottom: 1.25rem;
+    }
+
+    .step-n-text { font-family: var(--fd); font-size: 1.3rem; font-weight: 700; color: var(--amber); }
+    .step-title { font-size: 0.95rem; font-weight: 500; color: var(--white); margin-bottom: 0.5rem; line-height: 1.3; }
+    .step-body { font-size: 0.825rem; color: var(--w40); line-height: 1.65; }
+
+    /* HONEST BOX */
+    .honest-box {
+      background: var(--navy-card); border: 1px solid var(--border-a);
+      border-radius: 20px; padding: 3rem; margin-top: 5rem;
+      position: relative; overflow: hidden;
+    }
+
+    .honest-box::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; background:linear-gradient(90deg,var(--amber),var(--teal)); }
+
+    .honest-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; }
+
+    .honest-title { font-family: var(--fd); font-size: 1.6rem; font-weight: 700; color: var(--white); margin-bottom: 1rem; line-height: 1.2; }
+    .honest-body { font-size: 0.95rem; color: var(--w70); line-height: 1.75; }
+
+    .honest-list { list-style: none; display: flex; flex-direction: column; gap: 0.9rem; }
+    .honest-list li { display: flex; align-items: flex-start; gap: 12px; font-size: 0.9rem; color: var(--w70); line-height: 1.55; }
+
+    .hcheck { width: 20px; height: 20px; border-radius: 50%; background: var(--teal-soft); border: 1px solid rgba(34,201,151,0.25); display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+
+    /* PRICING */
+    .pricing-bg { background: var(--navy-mid); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+
+    .price-row { display: grid; grid-template-columns: repeat(4,1fr); gap: 1.25rem; margin-top: 3.5rem; }
+
+    .pc {
+      background: var(--navy-card); border: 1px solid var(--border);
+      border-radius: 20px; padding: 1.75rem 1.5rem; position: relative;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+
+    .pc:hover { border-color: var(--border-a); transform: translateY(-3px); }
+    .pc.featured { border-color: var(--border-a); background: var(--navy-lift); }
+
+    .price-badge {
+      position: absolute; top: -11px; left: 50%; transform: translateX(-50%);
+      background: var(--amber); color: var(--navy);
+      font-size: 11px; font-weight: 600; padding: 2px 12px; border-radius: 20px; white-space: nowrap;
+    }
+
+    .pt-name { font-size: 12px; font-weight: 500; color: var(--w40); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 0.75rem; }
+    .pt-amount { font-family: var(--fd); font-size: 2.4rem; font-weight: 700; color: var(--white); line-height: 1; margin-bottom: 4px; }
+    .pt-currency { font-size: 1.4rem; vertical-align: top; margin-top: 6px; display: inline-block; }
+    .pt-period { font-family: var(--fb); font-size: 13px; color: var(--w40); font-weight: 400; }
+    .pt-desc { font-size: 0.82rem; color: var(--w40); line-height: 1.6; margin-top: 0.75rem; padding-top: 0.75rem; border-top: 1px solid var(--border); }
+
+    /* BOTTOM CTA */
+    .cta-section { position: relative; z-index: 1; padding: 7rem 2.5rem; text-align: center; }
+    .cta-section::before { content:''; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:900px; height:500px; background:radial-gradient(ellipse,rgba(240,165,0,0.05),transparent 70%); pointer-events:none; }
+
+    .cta-wrap { max-width: 560px; margin: 0 auto; position: relative; }
+
+    .cta-h { font-family: var(--fd); font-size: clamp(2.2rem,4vw,3.2rem); font-weight: 800; color: var(--white); line-height: 1.1; margin-bottom: 1rem; letter-spacing: -0.02em; }
+    .cta-h .hl { color: var(--amber); font-style: italic; }
+
+    .cta-sub { font-size: 1rem; color: var(--w70); margin-bottom: 2.5rem; line-height: 1.7; }
+
+    .cta-row { display: flex; gap: 0.75rem; max-width: 440px; margin: 0 auto; }
+
+    .cta-email {
+      flex: 1; background: var(--navy-card); border: 1px solid var(--border-a);
+      border-radius: 8px; padding: 0.85rem 1.1rem;
+      font-family: var(--fb); font-size: 14px; color: var(--white); outline: none;
+      transition: border-color 0.18s;
+    }
+
+    .cta-email::placeholder { color: var(--w40); }
+    .cta-email:focus { border-color: var(--amber); }
+    .cta-note { margin-top: 1rem; font-size: 12px; color: rgba(244,241,234,0.22); }
+
+    /* FOOTER */
+    footer { position: relative; z-index: 1; border-top: 1px solid var(--border); padding: 2rem 2.5rem; }
+    .footer-inner { max-width: 1180px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+    .footer-copy { font-size: 13px; color: var(--w40); }
+    .footer-copy strong { color: var(--amber); font-weight: 500; }
+    .footer-links { display: flex; gap: 2rem; }
+    .footer-links a { font-size: 13px; color: rgba(244,241,234,0.28); text-decoration: none; transition: color 0.18s; }
+    .footer-links a:hover { color: var(--w70); }
+
+    /* ANIMATIONS */
+    @keyframes rise { from{opacity:0;transform:translateY(22px)} to{opacity:1;transform:translateY(0)} }
+
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.65s ease, transform 0.65s ease; }
+    .reveal.in { opacity: 1; transform: translateY(0); }
+    .d1 { transition-delay: 0.1s; }
+    .d2 { transition-delay: 0.2s; }
+    .d3 { transition-delay: 0.3s; }
+
+    /* RESPONSIVE */
+    @media(max-width:1024px) {
+      .hero { grid-template-columns: 1fr; gap:3rem; padding-top:7rem; }
+      .tools-layout { grid-template-columns: 1fr; }
+      .tools-sticky { position: static; }
+      .built-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .honest-inner { grid-template-columns: 1fr; gap: 2rem; }
+      .price-row { grid-template-columns: repeat(2,1fr); }
+    }
+
+    @media(max-width:768px) {
+      nav { padding: 0 1.5rem; }
+      .nav-tag { display: none; }
+      .hero, .section { padding-left: 1.5rem; padding-right: 1.5rem; }
+      .hero { padding-top: 7rem; padding-bottom: 4rem; }
+      .section { padding-top: 5rem; padding-bottom: 5rem; }
+      .prob-grid, .steps-grid, .price-row { grid-template-columns: 1fr 1fr; }
+      .built-cards { grid-template-columns: 1fr 1fr; }
+      .tools-grid { grid-template-columns: 1fr; }
+      .tc-more { grid-column: span 1; }
+      .cta-row { flex-direction: column; }
+      .trust-inner { gap: 1.25rem; }
+      .field-row { grid-template-columns: 1fr; }
+      .honest-box { padding: 2rem 1.5rem; }
+      .stats-row { flex-wrap: wrap; }
+      .footer-inner { flex-direction: column; align-items: flex-start; }
+    }
+
+    @media(max-width:480px) {
+      .prob-grid, .steps-grid, .price-row, .built-cards { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="bg-grid"></div>
+  <div class="bg-glow-1"></div>
+  <div class="bg-glow-2"></div>
+
+  <nav>
+    <a href="#" class="logo">
+      <div class="logo-icon">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <rect x="2" y="11" width="4" height="7" rx="1" fill="#0B1929"/>
+          <rect x="8" y="7" width="4" height="11" rx="1" fill="#0B1929"/>
+          <rect x="14" y="3" width="4" height="15" rx="1" fill="#0B1929"/>
+          <path d="M3 12L9 7.5L15 3.5" stroke="#0B1929" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <span class="logo-text">Mandate <span>OpEx Toolkit</span></span>
+    </a>
+    <div class="nav-right">
+      <span class="nav-tag">Early access open</span>
+      <a href="#waitlist" class="btn-primary">Join the waitlist</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div>
+      <div class="eyebrow"><div class="eyebrow-line"></div>For manufacturing SMEs</div>
+      <h1 class="hero-h1">
+        Your margin is leaking<br>
+        somewhere in your operation.<br>
+        <span class="hl">Here is how to find it.</span>
+      </h1>
+      <p class="hero-lead">
+        16 operational diagnostic tools built with manufacturing practitioners across industry. Score your operation. Get a prioritised action plan in plain English. No consultancy. No implementation. No jargon.
+      </p>
+      <div class="stats-row">
+        <div class="stat-item">
+          <div class="stat-n">£340k</div>
+          <div class="stat-l">Average hidden waste cost per year in a 50-person manufacturer</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-n">16</div>
+          <div class="stat-l">Diagnostic tools across quality, ops, people and strategy</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-n">£29</div>
+          <div class="stat-l">Per tool per month. Free diagnostic on every tool.</div>
+        </div>
+      </div>
+      <div class="builder-badge">
+        <div class="badge-dot"></div>
+        We are building this now &mdash; join the waitlist and help shape what gets built first
+      </div>
+    </div>
+
+    <div id="waitlist" class="waitlist-card">
+      <div class="card-top-bar"></div>
+      <div class="card-glow"></div>
+      <div class="card-eye"><div class="card-eye-dot"></div>Early access</div>
+      <h2 class="card-title">Reserve your place</h2>
+      <p class="card-sub">We are building Mandate OpEx Toolkit right now. Join the waitlist, get 3 months free on any tool at launch, and help shape what gets built first.</p>
+      <div class="early-badge">
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5" stroke="#F0A500" stroke-width="1.2"/><path d="M6 3.5V6.5L7.5 8" stroke="#F0A500" stroke-width="1.2" stroke-linecap="round"/></svg>
+        First 200 get 3 months free at launch
+      </div>
+      <form class="wl-form" id="heroForm" onsubmit="handleHero(event)">
+        <input type="text" class="wl-input" name="name" placeholder="Your full name" required autocomplete="name">
+        <input type="email" class="wl-input" name="email" placeholder="Work email address" required autocomplete="email">
+        <div class="field-row">
+          <div class="sel-wrap">
+            <select class="wl-select" name="role" required>
+              <option value="" disabled selected>Your role</option>
+              <option value="md">MD / Business Owner</option>
+              <option value="ops">Operations Director / Manager</option>
+              <option value="quality">Quality Director / Manager</option>
+              <option value="gm">General Manager</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+          <div class="sel-wrap">
+            <select class="wl-select" name="size" required>
+              <option value="" disabled selected>Company size</option>
+              <option value="1-10">1 to 10 people</option>
+              <option value="11-50">11 to 50 people</option>
+              <option value="51-100">51 to 100 people</option>
+              <option value="101-250">101 to 250 people</option>
+              <option value="250+">250+ people</option>
+            </select>
+          </div>
+        </div>
+        <button type="submit" class="wl-btn">Reserve my early access spot &rarr;</button>
+      </form>
+      <div class="success-state" id="heroOk">
+        <div class="success-circle">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+            <path d="M5 11.5l4 4 8-9" stroke="#22C997" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="success-h">You are on the list.</div>
+        <p class="success-p">We will be in touch before launch with your early access and 3 free months. Thank you for being part of building this.</p>
+      </div>
+      <p class="card-note">No spam. One email when we launch. Unsubscribe any time.</p>
+    </div>
+  </section>
+
+  <!-- TRUST STRIP -->
+  <div class="trust-strip">
+    <div class="trust-inner">
+      <div class="trust-item"><div class="trust-dot"></div>Built with operational excellence practitioners across manufacturing, TIC, and capital equipment</div>
+      <div class="trust-item"><div class="trust-dot"></div>Diagnosis AND prescription &mdash; not just a dashboard</div>
+      <div class="trust-item"><div class="trust-dot"></div>Free diagnostic score on every tool</div>
+      <div class="trust-item"><div class="trust-dot"></div>Tools that talk to each other</div>
+    </div>
+  </div>
+
+  <!-- BUILT WITH -->
+  <section class="section built-bg">
+    <div class="section-inner">
+      <div class="built-grid">
+        <div class="reveal">
+          <div class="s-eye">Why it is different</div>
+          <h2 class="s-h">Built with practitioners.<br><span class="hl">Not by a vendor.</span></h2>
+          <p class="s-lead">Most operational excellence software is built by software companies who researched manufacturing. Mandate OpEx Toolkit was built in collaboration with experienced operations leaders, quality directors, and general managers who have spent their careers doing this work &mdash; in real businesses, under real pressure, across manufacturing, testing, inspection, and capital equipment sectors.</p>
+          <p class="s-lead" style="margin-top:1.25rem">That means the questions we ask are the right questions. The benchmarks reflect real operations. The action plans are things that can actually be done on a Monday morning &mdash; not a consultant recommendation that sits in a report.</p>
+        </div>
+        <div class="built-cards reveal d1">
+          <div class="bc ca"><div class="bc-n">25+</div><div class="bc-l">Years of combined manufacturing operations experience behind every tool</div></div>
+          <div class="bc ct"><div class="bc-n">16</div><div class="bc-l">Diagnostic tools across quality, operations, people and strategy</div></div>
+          <div class="bc ct"><div class="bc-n">£0</div><div class="bc-l">Cost to run a diagnostic score on any tool. Always free.</div></div>
+          <div class="bc ca"><div class="bc-n">10</div><div class="bc-l">Free downloadable audit sheets. No login. Immediate value.</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROBLEM -->
+  <section class="section">
+    <div class="section-inner">
+      <div class="reveal">
+        <div class="s-eye">The problem</div>
+        <h2 class="s-h">You know something is wrong.<br><span class="hl">You just cannot pinpoint it.</span></h2>
+        <p class="s-lead">Manufacturing SMEs lose significant margin to problems they can feel but cannot measure. The tools that exist to fix this are either built for global enterprises with implementation teams &mdash; or they are dashboards that show you the score without telling you what to do about it.</p>
+      </div>
+      <div class="prob-grid">
+        <div class="prob-card reveal d1">
+          <div class="prob-n">60%</div>
+          <div class="prob-title">Average OEE for a discrete manufacturer</div>
+          <div class="prob-body">World class is 85%. The gap is capacity you already own but cannot access — without buying a single new machine.</div>
+        </div>
+        <div class="prob-card reveal d2">
+          <div class="prob-n">£340k</div>
+          <div class="prob-title">Typical hidden waste cost in a 50-person manufacturer</div>
+          <div class="prob-body">Most business owners know this waste exists. Almost none can quantify it. Our Cost of Waste Calculator gives you the number in under 5 minutes.</div>
+        </div>
+        <div class="prob-card reveal d3">
+          <div class="prob-n">80%</div>
+          <div class="prob-title">Of AI projects fail without a readiness assessment</div>
+          <div class="prob-body">SMEs are investing in AI without knowing if their data or processes are ready. Most are not. Our AI Readiness Diagnostic tells you in 5 minutes — free.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TOOLS -->
+  <section class="section tools-bg">
+    <div class="section-inner">
+      <div class="tools-layout">
+        <div class="tools-sticky reveal">
+          <div class="s-eye">The toolkit</div>
+          <h2 class="s-h" style="font-size:2.2rem">16 tools.<br>One platform.<br><span class="hl">All connected.</span></h2>
+          <p class="s-lead" style="font-size:0.95rem;margin-top:1rem">Every tool scores your current state and tells you the three things to do next &mdash; in plain English. And your tools talk to each other. OEE links to maintenance maturity. Skills matrix links to capacity. Everything feeds the MD Cockpit.</p>
+          <div class="design-note">
+            <div class="design-note-label">The design principle</div>
+            <div class="design-note-body">Every other tool shows you the score and stops. Mandate OpEx Toolkit shows you the score and tells you exactly what to do about it &mdash; in the language of the factory floor, not a consultant's slide deck.</div>
+          </div>
+        </div>
+        <div class="tools-grid reveal d1">
+          <div class="tc"><div class="tc-head"><div class="tc-name">OEE Calculator and Advisor</div><span class="tc-pill pill-free">Free score</span></div><div class="tc-desc">Score availability, performance and quality. Get the 3 most likely root causes and a ranked fix list.</div><span class="tc-cat cat-o">Operations</span></div>
+          <div class="tc"><div class="tc-head"><div class="tc-name">Cost of Waste Calculator</div><span class="tc-pill pill-free">Free</span></div><div class="tc-desc">Quantify your hidden waste in pounds per year. The number that makes the business case for everything else.</div><span class="tc-cat cat-s">Strategy</span></div>
+          <div class="tc"><div class="tc-head"><div class="tc-name">AI Readiness Diagnostic</div><span class="tc-pill pill-free">Free score</span></div><div class="tc-desc">5 manufacturing-specific dimensions. Know if your business is ready for AI before spending anything on it.</div><span class="tc-cat cat-s">Strategy</span></div>
+          <div class="tc"><div class="tc-head"><div class="tc-name">Operational Audit</div><span class="tc-pill pill-free">Free score</span></div><div class="tc-desc">Full SQCDP-based business health check. 8 sections. Traffic light output. Prioritised action plan.</div><span class="tc-cat cat-q">Quality</span></div>
+          <div class="tc"><div class="tc-head"><div class="tc-name">Skills Matrix Builder</div><span class="tc-pill pill-paid">£29/mo</span></div><div class="tc-desc">See your skills coverage gaps and single points of failure. Know if you can run every line, every shift.</div><span class="tc-cat cat-p">People</span></div>
+          <div class="tc"><div class="tc-head"><div class="tc-name">Maintenance Maturity Checker</div><span class="tc-pill pill-paid">£29/mo</span></div><div class="tc-desc">Score all 8 TPM pillars. Understand why your availability is low and what to fix first.</div><span class="tc-cat cat-o">Operations</span></div>
+          <div class="tc"><div class="tc-head"><div class="tc-name">SMED Changeover Analyser</div><span class="tc-pill pill-paid">£29/mo</span></div><div class="tc-desc">Calculate pounds per month lost to changeover. Get a ranked internal vs external action list.</div><span class="tc-cat cat-o">Operations</span></div>
+          <div class="tc"><div class="tc-head"><div class="tc-name">Strategy Deployment Planner</div><span class="tc-pill pill-paid">£29/mo</span></div><div class="tc-desc">Hoshin Kanri in plain English. Set breakthrough objectives and cascade them to the shop floor.</div><span class="tc-cat cat-s">Strategy</span></div>
+          <div class="tc-more"><strong>Plus 8 more tools:</strong> 5S Assessment, Capacity Planner, Supplier Health Check, Quality Culture Checker, Root Cause Analysis, Kaizen Log, Change Readiness Checker, and the MD Cockpit &mdash; which aggregates all your scores into one business dashboard.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="section">
+    <div class="section-inner">
+      <div class="reveal">
+        <div class="s-eye">How it works</div>
+        <h2 class="s-h">From audit sheet to <span class="hl">operational clarity</span> in four steps.</h2>
+      </div>
+      <div class="steps-grid reveal d1">
+        <div class="step-block"><div class="step-circle"><div class="step-n-text">1</div></div><div class="step-title">Download a free audit sheet</div><div class="step-body">Start with a free, immediately useful diagnostic sheet. No login. No credit card. Ten sheets covering every dimension of your operation.</div></div>
+        <div class="step-block"><div class="step-circle"><div class="step-n-text">2</div></div><div class="step-title">Run a free diagnostic score</div><div class="step-body">Take any tool for free. See your score. Understand exactly where you stand. No commitment required to get real value.</div></div>
+        <div class="step-block"><div class="step-circle"><div class="step-n-text">3</div></div><div class="step-title">Unlock your action plan</div><div class="step-body">Pay to unlock the prioritised action plan, industry benchmarks, PDF report and AI advisor. From &pound;29 per tool per month.</div></div>
+        <div class="step-block"><div class="step-circle"><div class="step-n-text">4</div></div><div class="step-title">Connect the toolkit</div><div class="step-body">Add more tools. Watch the intelligence compound. OEE links to maintenance. Skills links to capacity. Everything feeds the MD Cockpit.</div></div>
+      </div>
+
+      <div class="honest-box reveal">
+        <div class="honest-inner">
+          <div>
+            <div class="honest-title">We are building this right now &mdash; and we want your input.</div>
+            <p class="honest-body">Mandate OpEx Toolkit is currently in development. We are not promising something that does not exist &mdash; we are inviting the people who will use it to help shape what gets built first. Join the waitlist and we will be in touch to ask what you actually need before we build it. Your sector, your role, your problems &mdash; this is how we make sure we build the right things in the right order.</p>
+          </div>
+          <ul class="honest-list">
+            <li><div class="hcheck"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5.5L4 7.5L8 3" stroke="#22C997" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Waitlist members get first access to every tool as it launches</li>
+            <li><div class="hcheck"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5.5L4 7.5L8 3" stroke="#22C997" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>First 200 get 3 months free on any tool &mdash; no conditions attached</li>
+            <li><div class="hcheck"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5.5L4 7.5L8 3" stroke="#22C997" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Your feedback shapes the build sequence and feature priorities</li>
+            <li><div class="hcheck"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5.5L4 7.5L8 3" stroke="#22C997" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Free audit sheets available to download right now &mdash; no waitlist needed</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section class="section pricing-bg">
+    <div class="section-inner">
+      <div class="reveal">
+        <div class="s-eye">Pricing</div>
+        <h2 class="s-h">Start free. <span class="hl">Pay only for what you use.</span></h2>
+        <p class="s-lead">Every tool has a free diagnostic score &mdash; no credit card, no login. Pay when you want the action plan, benchmarks, and PDF report.</p>
+      </div>
+      <div class="price-row reveal d1">
+        <div class="pc"><div class="pt-name">Audit sheets</div><div class="pt-amount"><span class="pt-currency">&pound;</span>0</div><div class="pt-desc">All 10 audit sheets, always free. Download, no login, no credit card. The starting point for every user.</div></div>
+        <div class="pc"><div class="pt-name">Diagnostic score</div><div class="pt-amount"><span class="pt-currency">&pound;</span>0</div><div class="pt-desc">Run any diagnostic on any tool. See your score. Understand where you stand. No commitment required.</div></div>
+        <div class="pc featured"><div class="price-badge">Most popular</div><div class="pt-name">Single tool</div><div class="pt-amount"><span class="pt-currency">&pound;</span>29<span class="pt-period">/mo</span></div><div class="pt-desc">Full action plan, industry benchmarks, PDF report, AI advisor, and saved results for one tool.</div></div>
+        <div class="pc"><div class="pt-name">Full suite</div><div class="pt-amount"><span class="pt-currency">&pound;</span>199<span class="pt-period">/mo</span></div><div class="pt-desc">All 16 tools, CRM, MD Cockpit, and AI ask-anything layer. Your whole operation in one platform.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BOTTOM CTA -->
+  <section class="cta-section">
+    <div class="cta-wrap reveal">
+      <div class="s-eye" style="justify-content:center">Join the waitlist</div>
+      <h2 class="cta-h">Your operation has<br>hidden capacity.<br><span class="hl">Find it.</span></h2>
+      <p class="cta-sub">Join manufacturing leaders getting early access. Help shape what gets built. Get 3 months free when we launch.</p>
+      <form class="cta-row" onsubmit="handleBottom(event)">
+        <input type="email" class="cta-email" id="ctaEmail" placeholder="Your work email" required>
+        <button type="submit" class="btn-primary" style="padding:0.85rem 1.5rem;white-space:nowrap">Get early access</button>
+      </form>
+      <p class="cta-note">No spam. One email when we launch. Unsubscribe any time.</p>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-copy"><strong>Mandate OpEx Toolkit</strong> &mdash; The Operational Edge &mdash; &copy; 2026</div>
+      <div class="footer-links">
+        <a href="mailto:hello@opextoolkit.com">hello@opextoolkit.com</a>
+        <a href="#">Privacy policy</a>
+        <a href="#">Terms of use</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const io = new IntersectionObserver(es => es.forEach(e => { if(e.isIntersecting) e.target.classList.add('in'); }), {threshold:0.08});
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+    document.querySelectorAll('a[href="#waitlist"]').forEach(a => {
+      a.addEventListener('click', e => { e.preventDefault(); document.getElementById('waitlist').scrollIntoView({behavior:'smooth',block:'center'}); });
+    });
+
+    function save(d) {
+      try { const l=JSON.parse(localStorage.getItem('opex_wl')||'[]'); l.push(d); localStorage.setItem('opex_wl',JSON.stringify(l)); } catch(e){}
+      console.log('Signup:', d);
+      // Replace with your endpoint: fetch('/api/waitlist',{method:'POST',body:JSON.stringify(d),headers:{'Content-Type':'application/json'}});
+    }
+
+    function handleHero(e) {
+      e.preventDefault();
+      const f = e.target;
+      save({name:f.name.value, email:f.email.value, role:f.role.value, size:f.size.value, source:'hero', ts:new Date().toISOString()});
+      f.style.display = 'none';
+      document.getElementById('heroOk').classList.add('show');
+    }
+
+    function handleBottom(e) {
+      e.preventDefault();
+      save({email:document.getElementById('ctaEmail').value, source:'bottom', ts:new Date().toISOString()});
+      e.target.innerHTML = '<p style="color:var(--teal);font-weight:500;font-size:1rem;text-align:center;padding:0.5rem 0">You are on the list. We will be in touch.</p>';
+    }
+  </script>
+</body>
+</html>
