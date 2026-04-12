@@ -386,6 +386,11 @@
     .tc-pill { flex-shrink: 0; font-size: 10px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; padding: 3px 9px; border-radius: 20px; }
     .pill-free { background: rgba(34,201,151,0.12); color: var(--teal); }
     .pill-paid { background: var(--amber-soft); color: var(--amber); }
+    .pill-live { background: rgba(34,201,151,0.15); color: var(--teal); border: 1px solid rgba(34,201,151,0.3); }
+    .pill-soon { background: rgba(244,241,234,0.06); color: var(--w40); border: 1px solid rgba(244,241,234,0.10); }
+    .tc-link { display:inline-flex; align-items:center; gap:5px; margin-top:0.6rem; font-size:12px; font-weight:500; color:var(--teal); text-decoration:none; transition:color 0.18s; }
+    .tc-link:hover { color:#fff; }
+    .pt-tba { font-size:13px; color:var(--w40); font-style:italic; margin:0.5rem 0 0.25rem; }
 
     .tc-desc { font-size: 0.82rem; color: var(--w40); line-height: 1.6; }
 
@@ -731,13 +736,13 @@
         </div>
         <div class="tools-grid reveal d1">
           <div class="tc"><div class="tc-head"><div class="tc-name">OEE Calculator and Advisor</div><span class="tc-pill pill-free">Free score</span></div><div class="tc-desc">Score availability, performance and quality. Get the 3 most likely root causes and a ranked fix list.</div><span class="tc-cat cat-o">Operations</span></div>
-          <div class="tc"><div class="tc-head"><div class="tc-name">Cost of Waste Calculator</div><span class="tc-pill pill-free">Free</span></div><div class="tc-desc">Quantify your hidden waste in pounds per year. The number that makes the business case for everything else.</div><span class="tc-cat cat-s">Strategy</span></div>
+          <div class="tc"><div class="tc-head"><div class="tc-name">Cost of Waste Calculator</div><span class="tc-pill pill-live">Live now</span></div><div class="tc-desc">Quantify your hidden waste in pounds per year. The number that makes the business case for everything else.</div><a href="waste-calculator.html" class="tc-link">Try it now &rarr;</a><span class="tc-cat cat-s">Strategy</span></div>
           <div class="tc"><div class="tc-head"><div class="tc-name">AI Readiness Diagnostic</div><span class="tc-pill pill-free">Free score</span></div><div class="tc-desc">5 manufacturing-specific dimensions. Know if your business is ready for AI before spending anything on it.</div><span class="tc-cat cat-s">Strategy</span></div>
           <div class="tc"><div class="tc-head"><div class="tc-name">Operational Audit</div><span class="tc-pill pill-free">Free score</span></div><div class="tc-desc">Full SQCDP-based business health check. 8 sections. Traffic light output. Prioritised action plan.</div><span class="tc-cat cat-q">Quality</span></div>
-          <div class="tc"><div class="tc-head"><div class="tc-name">Skills Matrix Builder</div><span class="tc-pill pill-paid">£29/mo</span></div><div class="tc-desc">See your skills coverage gaps and single points of failure. Know if you can run every line, every shift.</div><span class="tc-cat cat-p">People</span></div>
-          <div class="tc"><div class="tc-head"><div class="tc-name">Maintenance Maturity Checker</div><span class="tc-pill pill-paid">£29/mo</span></div><div class="tc-desc">Score all 8 TPM pillars. Understand why your availability is low and what to fix first.</div><span class="tc-cat cat-o">Operations</span></div>
-          <div class="tc"><div class="tc-head"><div class="tc-name">SMED Changeover Analyser</div><span class="tc-pill pill-paid">£29/mo</span></div><div class="tc-desc">Calculate pounds per month lost to changeover. Get a ranked internal vs external action list.</div><span class="tc-cat cat-o">Operations</span></div>
-          <div class="tc"><div class="tc-head"><div class="tc-name">Strategy Deployment Planner</div><span class="tc-pill pill-paid">£29/mo</span></div><div class="tc-desc">Hoshin Kanri in plain English. Set breakthrough objectives and cascade them to the shop floor.</div><span class="tc-cat cat-s">Strategy</span></div>
+          <div class="tc"><div class="tc-head"><div class="tc-name">Skills Matrix Builder</div><span class="tc-pill pill-soon">Coming soon</span></div><div class="tc-desc">See your skills coverage gaps and single points of failure. Know if you can run every line, every shift.</div><span class="tc-cat cat-p">People</span></div>
+          <div class="tc"><div class="tc-head"><div class="tc-name">Maintenance Maturity Checker</div><span class="tc-pill pill-soon">Coming soon</span></div><div class="tc-desc">Score all 8 TPM pillars. Understand why your availability is low and what to fix first.</div><span class="tc-cat cat-o">Operations</span></div>
+          <div class="tc"><div class="tc-head"><div class="tc-name">SMED Changeover Analyser</div><span class="tc-pill pill-soon">Coming soon</span></div><div class="tc-desc">Calculate pounds per month lost to changeover. Get a ranked internal vs external action list.</div><span class="tc-cat cat-o">Operations</span></div>
+          <div class="tc"><div class="tc-head"><div class="tc-name">Strategy Deployment Planner</div><span class="tc-pill pill-soon">Coming soon</span></div><div class="tc-desc">Hoshin Kanri in plain English. Set breakthrough objectives and cascade them to the shop floor.</div><span class="tc-cat cat-s">Strategy</span></div>
           <div class="tc-more"><strong>Plus 8 more tools:</strong> 5S Assessment, Capacity Planner, Supplier Health Check, Quality Culture Checker, Root Cause Analysis, Kaizen Log, Change Readiness Checker, and the MD Cockpit &mdash; which aggregates all your scores into one business dashboard.</div>
         </div>
       </div>
@@ -786,8 +791,8 @@
       <div class="price-row reveal d1">
         <div class="pc"><div class="pt-name">Audit sheets</div><div class="pt-amount"><span class="pt-currency">&pound;</span>0</div><div class="pt-desc">All 10 audit sheets, always free. Download, no login, no credit card. The starting point for every user.</div></div>
         <div class="pc"><div class="pt-name">Diagnostic score</div><div class="pt-amount"><span class="pt-currency">&pound;</span>0</div><div class="pt-desc">Run any diagnostic on any tool. See your score. Understand where you stand. No commitment required.</div></div>
-        <div class="pc featured"><div class="price-badge">Most popular</div><div class="pt-name">Single tool</div><div class="pt-amount"><span class="pt-currency">&pound;</span>29<span class="pt-period">/mo</span></div><div class="pt-desc">Full action plan, industry benchmarks, PDF report, AI advisor, and saved results for one tool.</div></div>
-        <div class="pc"><div class="pt-name">Full suite</div><div class="pt-amount"><span class="pt-currency">&pound;</span>199<span class="pt-period">/mo</span></div><div class="pt-desc">All 16 tools, CRM, MD Cockpit, and AI ask-anything layer. Your whole operation in one platform.</div></div>
+        <div class="pc featured"><div class="price-badge">Most popular</div><div class="pt-name">Single tool</div><div class="pt-tba">Early access pricing announced at launch</div><div class="pt-desc">Full action plan, industry benchmarks, PDF report, AI advisor, and saved results for one tool.</div></div>
+        <div class="pc"><div class="pt-name">Full suite</div><div class="pt-tba">Early access pricing announced at launch</div><div class="pt-desc">All 16 tools, CRM, MD Cockpit, and AI ask-anything layer. Your whole operation in one platform.</div></div>
       </div>
     </div>
   </section>
