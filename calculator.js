@@ -460,10 +460,28 @@ function getCtx() {
 
 function calc() {
   if (!currentSector) return;
-  const cfg = SECTORS[currentSector];
-  const ctx = getCtx();
-  const parts = [];
+  const cfg        = SECTORS[currentSector];
+  const ctx        = getCtx();
+  const capNoticeEl = document.getElementById('capNotice');
 
+  // ── Zero-context guard: both revenue AND employees are 0 → everything is 0 ──
+  if (ctx.revenue === 0 && ctx.employees === 0) {
+    document.getElementById('totalYear').textContent   = fmt(0);
+    document.getElementById('totalMonth').textContent  = fmt(0);
+    document.getElementById('zeroState').style.display  = 'block';
+    document.getElementById('liveResults').style.display = 'none';
+    document.getElementById('alertBox').className       = 'result-alert';
+    document.getElementById('summaryPanel').classList.remove('show');
+    if (capNoticeEl) capNoticeEl.style.display = 'none';
+    cfg.questions.forEach(q => {
+      const prevEl = document.getElementById(`prev_${q.id}`);
+      if (prevEl) { prevEl.textContent = ''; prevEl.classList.remove('show'); }
+    });
+    return;
+  }
+
+  // ── Step 1: raw cost calculation ──────────────────────────────────────────
+  const rawParts = [];
   cfg.questions.forEach((q, i) => {
     let val;
     if (q.dual) {
@@ -471,14 +489,44 @@ function calc() {
     } else {
       val = v(`inp_${q.id}`);
     }
+    rawParts.push({ name: PART_NAMES[i], id: q.id, cost: Math.max(0, q.calc(val, ctx)) });
+  });
 
-    const cost = q.calc(val, ctx);
-    parts.push({ name: PART_NAMES[i], cost });
+  // ── Step 2: per-component cap ─────────────────────────────────────────────
+  // Cap each component at the lower of 20% of revenue and 30% of annual labour.
+  let componentCap = Infinity;
+  if (ctx.revenue > 0)      componentCap = Math.min(componentCap, ctx.revenue * 0.20);
+  if (ctx.annualLabour > 0) componentCap = Math.min(componentCap, ctx.annualLabour * 0.30);
+  if (componentCap === Infinity) componentCap = 0;
 
-    const prevEl = document.getElementById(`prev_${q.id}`);
+  let wasCapped = false;
+  const parts = rawParts.map(p => {
+    let cost = p.cost;
+    if (componentCap > 0 && cost > componentCap) { cost = componentCap; wasCapped = true; }
+    return { name: p.name, id: p.id, cost };
+  });
+
+  // ── Step 3: total cap with proportional scaling ───────────────────────────
+  // Cap total at 35% of revenue (or 50% of annual labour when revenue is 0).
+  let total = parts.reduce((s, p) => s + p.cost, 0);
+  const totalCap = ctx.revenue > 0
+    ? ctx.revenue * 0.35
+    : (ctx.annualLabour > 0 ? ctx.annualLabour * 0.50 : 0);
+
+  if (totalCap > 0 && total > totalCap) {
+    const scale = totalCap / total;
+    parts.forEach(p => { p.cost = p.cost * scale; });
+    total = totalCap;
+    wasCapped = true;
+  }
+
+  // ── Step 4: render previews using capped values ───────────────────────────
+  // Must come AFTER capping so the preview always matches the results panel.
+  parts.forEach(p => {
+    const prevEl = document.getElementById(`prev_${p.id}`);
     if (prevEl) {
-      if (cost > 0) {
-        prevEl.textContent = `This is costing you approximately ${fmtFull(cost)} per year`;
+      if (p.cost > 0) {
+        prevEl.textContent = `This is costing you approximately ${fmtFull(p.cost)} per year`;
         prevEl.classList.add('show');
       } else {
         prevEl.textContent = '';
@@ -487,8 +535,10 @@ function calc() {
     }
   });
 
-  const total = parts.reduce((s,p) => s + p.cost, 0);
+  // Cap notice
+  if (capNoticeEl) capNoticeEl.style.display = wasCapped ? 'block' : 'none';
 
+  // Totals
   document.getElementById('totalYear').textContent  = fmt(total);
   document.getElementById('totalMonth').textContent = fmt(total/12);
 
@@ -508,7 +558,7 @@ function calc() {
 
     const pctRev  = ctx.revenue > 0 ? (total/ctx.revenue*100) : 0;
     const perHead = ctx.employees > 0 ? Math.round(total/ctx.employees) : 0;
-    const top = [...parts].sort((a,b)=>b.cost-a.cost).find(p=>p.cost>0);
+    const top     = [...parts].sort((a,b)=>b.cost-a.cost).find(p=>p.cost>0);
 
     document.getElementById('wm1').textContent = perHead > 0
       ? `This works out to ${fmtFull(perHead)} per employee per year sitting in problems rather than productivity.`
@@ -522,26 +572,26 @@ function calc() {
       ? `This represents ${pctRev.toFixed(1)}% of your turnover. Recovering half of it is worth ${fmt(total*0.5)} per year.`
       : `Even recovering half of this would make a material difference to your bottom line.`;
 
-    // Breakdown
-    const sorted = [...parts].sort((a,b)=>b.cost-a.cost).filter(p=>p.cost>0);
+    // Breakdown bars
+    const sorted  = [...parts].sort((a,b)=>b.cost-a.cost).filter(p=>p.cost>0);
     const maxCost = sorted[0]?.cost || 1;
-    const bdEl = document.getElementById('bdRows');
+    const bdEl    = document.getElementById('bdRows');
     bdEl.innerHTML = '';
     sorted.forEach(p => {
       const barW = Math.round((p.cost/maxCost)*100);
       bdEl.innerHTML += `<div class="bd-row"><div class="bd-top"><div class="bd-name">${p.name}</div><div class="bd-val">${fmt(p.cost)}</div></div><div class="bd-bar-bg"><div class="bd-bar" style="width:${barW}%"></div></div></div>`;
     });
 
-    // Alert
+    // Alert box
     if (ctx.revenue > 0 && pctRev >= 15) {
       alertEl.className = 'result-alert red show';
-      alertEl.innerHTML = `<strong>Significant exposure.</strong> At ${pctRev.toFixed(1)}% of revenue, you are well above the 5–10% benchmark. The opportunity to recover margin here is substantial.`;
+      alertEl.innerHTML = `<strong>Significant exposure.</strong> At ${pctRev.toFixed(1)}% of revenue, you are well above the 5\u201310% benchmark. The opportunity to recover margin here is substantial.`;
     } else if (ctx.revenue > 0 && pctRev >= 5) {
       alertEl.className = 'result-alert amber show';
       alertEl.innerHTML = `<strong>Clear opportunity.</strong> At ${pctRev.toFixed(1)}% of revenue, you are above the benchmark of below 5%. Tackling your top two cost drivers would make a material difference.`;
     } else if (total > 0) {
       alertEl.className = 'result-alert amber show';
-      alertEl.innerHTML = `<strong>Every number here is recoverable.</strong>Add your annual revenue to see how this compares to your turnover and what the realistic recovery looks like.`;
+      alertEl.innerHTML = `<strong>Every number here is recoverable.</strong> Add your annual revenue to see how this compares to your turnover and what the realistic recovery looks like.`;
     } else {
       alertEl.className = 'result-alert';
     }
@@ -550,7 +600,7 @@ function calc() {
   } else {
     zeroEl.style.display = 'block';
     liveEl.style.display = 'none';
-    alertEl.className = 'result-alert';
+    alertEl.className    = 'result-alert';
     document.getElementById('summaryPanel').classList.remove('show');
   }
 }
@@ -677,7 +727,8 @@ function renderRecs(recs, top3) {
 }
 
 function renderFallback(top3) {
-  const FB = {
+  // Generic fallbacks for each waste type
+  const FB_GENERIC = {
     'Defects and scrap':       {i:'Your defect cost includes both the labour and the material in every rejected part — not just the time to make it.',a:'Map your last 10 rejected outputs and identify the most common cause. In most operations 80% of defects come from one or two root causes. Fix those first.',t:'Quality Culture Checker + Root Cause Analysis Tool'},
     'Rework and corrections':  {i:'Rework is a symptom. The cost you see is the direct labour and material cost of going back over work that was not right first time.',a:'Identify where in your process the problem is introduced. Work backwards from where you find it — that is where to intervene.',t:'Operational Audit + 5S Assessment'},
     'Equipment downtime':      {i:'Every hour your equipment stops unexpectedly costs you idle labour, ongoing machine running cost, and lost production simultaneously.',a:'List your top 3 breakdown causes from the last month. In most operations 2 causes account for most downtime. Address those specifically.',t:'Maintenance Maturity Checker + OEE Calculator'},
@@ -686,11 +737,46 @@ function renderFallback(top3) {
     'Excess stock holding':    {i:'Holding stock costs approximately 25% of its value per year in storage, insurance, obsolescence, and capital that could be working elsewhere.',a:'Count your stock by value and by date last moved. Anything not moved in 3 months is your starting point for a rationalisation conversation.',t:'Operational Audit + Supplier Health Check'},
     'Unnecessary tasks':       {i:'Time on tasks that add no value to your customer is pure cost — and it compounds across every person, every day.',a:'Pick your most time-consuming recurring task. Ask: what decision does this enable? If nobody can answer clearly, it is a candidate for elimination.',t:'Operational Audit + Kaizen Log'}
   };
+
+  // Sector-specific overrides for key waste types — used when AI is unavailable
+  const FB_SECTOR = {
+    engineering: {
+      'Defects and scrap':  {i:'In precision engineering, scrap includes the full material value of every rejected part — not just the final operation. On expensive alloys or titanium, one failed part can cost more than a day of labour.',a:'Pull your last month of reject notes. Categorise by operation and root cause. You will almost certainly find one or two operations generating 70% of your scrap. Focus your first-off checks and tooling reviews there.',t:'Quality Culture Checker + Root Cause Analysis Tool'},
+      'Changeover / setup': {i:'Setup time in short-run machining is often 30–50% of total job time. Every minute of prove-out is machine time consumed with no output.',a:'Film one full setup on your slowest-changing machine. Separate internal tasks (machine must be stopped) from external tasks (can be done while machine runs). Moving external tasks outside the stoppage can halve your setup time without any capital investment.',t:'SMED Changeover Analyser + Capacity Planner'},
+    },
+    food: {
+      'Defects and scrap':  {i:'In food manufacturing, yield loss is calculated against your raw ingredient cost — not just labour. A 4% yield gap on a high-ingredient product means 4% of your material spend generates no revenue at all.',a:'Run a yield audit for one week: weigh raw ingredients in and saleable product out. The gap is your true yield loss. Most operations find it is higher than their estimates. Start with your highest-value ingredient stream.',t:'Quality Culture Checker + OEE Calculator'},
+      'Changeover / setup': {i:'Allergen changeovers in food manufacturing hit all three OEE dimensions simultaneously: the line is stopped (availability), startup batches are rejected (quality), and the line runs slowly as it ramps up (performance).',a:'Map your allergen changeover step by step and identify which tasks can be prepared before the line stops. CIP pre-staging, packaging changeover preparation, and pre-labelling are often the biggest time savers.',t:'SMED Changeover Analyser + Capacity Planner'},
+    },
+    automotive: {
+      'Defects and scrap':  {i:'Internal scrap is only part of the story in automotive. This calculation covers parts scrapped before they leave your site. Customer-detected defects trigger containment costs, warranty claims, and scorecard penalties that can multiply this figure several times.',a:'Review your last 3 months of internal scrap data against your PPM report. If customer PPM is rising while internal scrap appears controlled, your detection system — not your process — needs attention first.',t:'Quality Culture Checker + Root Cause Analysis Tool'},
+      'Changeover / setup': {i:'In automotive JIT supply, changeover time directly reduces your available capacity to fulfil scheduled deliveries. A first-off approval wait of 30 minutes per tool change means the machine is set up but generating no parts — and no revenue.',a:'Identify which changeovers take longest and which are on your most constrained machines. Apply SMED (Single Minute Exchange of Die) discipline to those first — it is a proven method for halving setup time without capital spend.',t:'SMED Changeover Analyser + Capacity Planner'},
+    },
+    print: {
+      'Defects and scrap':  {i:'In print and packaging, makeready waste is calculated against your full substrate cost — because every sheet consumed during setup generates no revenue. At 50-65% material cost, yield losses go straight through to margin.',a:'Audit your makeready waste by job type for one month. Separate digital from litho jobs and short runs from long runs. The highest waste ratio by job type is your starting point for a substrate cost reduction conversation.',t:'Quality Culture Checker + Root Cause Analysis Tool'},
+      'Changeover / setup': {i:'On press, every makeready minute is substrate consumed with no customer output. Sub-15 minute changeovers are achievable on most packaging lines with SMED methodology. Above 30 minutes is a red flag.',a:'Film one full makeready including ink mixing, plate/forme changes, and register setting. Identify which tasks can be set up while the previous job is still running. Parallel preparation is almost always the biggest lever.',t:'SMED Changeover Analyser + Capacity Planner'},
+    },
+    plastics: {
+      'Defects and scrap':  {i:'In plastics, scrap includes the energy consumed in every reject — not just the material. Even regrindable scrap has a hidden cost: regrinding consumes energy, degrades material properties, and ties up handling time.',a:'Review your scrap log by mould and by shift for one month. Scrap that spikes on one shift or one mould points to a process control or tooling issue rather than a material problem. That distinction determines whether the fix is a training issue or a maintenance issue.',t:'Quality Culture Checker + OEE Calculator'},
+      'Changeover / setup': {i:'Colour and material purging in injection moulding can consume kilos of material per change. This is a material cost that does not appear in your waste figures unless you track it explicitly.',a:'Weigh purge material consumed on your most frequent colour changes for one week. The number usually surprises people. Optimising purge sequences and material compatibility scheduling typically recovers 30-50% of purge material cost.',t:'SMED Changeover Analyser + Capacity Planner'},
+    },
+    electronics: {
+      'Defects and scrap':  {i:'In electronics assembly, the cost of a defect escalates with each process stage it passes through. A solder defect found at SMT costs minutes of hand rework. Found at functional test it costs hours. Found by the customer it can cost the contract.',a:'Map where your defects are being found — at SMT inspection, at functional test, or by the customer. The later in the process, the higher the multiplier on your cost. Push your detection earlier in the build.',t:'Quality Culture Checker + Root Cause Analysis Tool'},
+      'Equipment downtime': {i:'Component shortage line stops are often more damaging than equipment failures — the entire assembly run stops, not just one machine. Above 2 line stops per week due to missing parts indicates a planning and procurement failure.',a:'Pull your last 10 line stop events and separate equipment faults from component shortages. If shortages dominate, the fix is in your MRP system and supplier relationships — not maintenance. Start with your most frequent missing component.',t:'Maintenance Maturity Checker + OEE Calculator'},
+    },
+    service: {
+      'Defects and scrap':  {i:'In field service, a return visit costs you the full mobilisation cost — travel, technician time, vehicle — with no additional revenue. World-class First Time Fix Rate is 90%+. Industry typical is 72–80%, meaning 1 in 4 jobs is not resolved on the first visit.',a:'For the next 30 days track every return visit and record the stated cause. You will find a pattern — either parts not on the van, a skills gap on a specific fault type, or inadequate pre-visit diagnostics. Fix the pattern, not the individual incident.',t:'Quality Culture Checker + Operational Audit'},
+      'Changeover / setup': {i:'Travel and between-job admin time in field service is the equivalent of changeover time in manufacturing — your engineer is present and paid but not delivering billable work.',a:'Map one typical engineer day: travel time, job completion admin, and wait time at site. Most field service operations find 35-45% of the working day is non-billable. Territory optimisation and digital job management typically recover 60-90 minutes per engineer per day.',t:'Capacity Planner + Daily Management Planner'},
+    },
+    general: {}
+  };
+
+  const sectorFB  = FB_SECTOR[currentSector] || {};
   const cards     = document.getElementById('recCards');
   const rankClass = ['r1','r2','r3'];
   cards.innerHTML = '';
   top3.forEach((p,i) => {
-    const fb = FB[p.name] || {i:'Review this cost area with your team.',a:'Quantify the problem more precisely, then identify root cause before implementing any solution.',t:'Operational Audit'};
+    const fb = sectorFB[p.name] || FB_GENERIC[p.name] || {i:'Review this cost area with your team.',a:'Quantify the problem more precisely, then identify root cause before implementing any solution.',t:'Operational Audit'};
     const card = document.createElement('div');
     card.className = 'rec-card';
     card.innerHTML = `
