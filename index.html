@@ -30,7 +30,7 @@
       border-bottom: 1px solid rgba(255,255,255,0.07);
       position: sticky;
       top: 0;
-      z-index: 100;
+      z-index: 1000;
     }
 
     .logo {
@@ -38,6 +38,7 @@
       align-items: center;
       gap: 8px;
       text-decoration: none;
+      flex-shrink: 0;
     }
 
     .logo-icon {
@@ -65,8 +66,122 @@
       color: #F4F1EA;
     }
 
-    .logo-text span {
+    .logo-text span { color: #F0A500; }
+
+    /* Nav links (centre) */
+    .nav-links {
+      display: flex;
+      align-items: center;
+    }
+
+    .nav-item {
+      position: relative;
+    }
+
+    .nav-link {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 12px;
+      color: rgba(255,255,255,0.5);
+      padding: 5px 12px;
+      cursor: pointer;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: color 0.15s;
+      line-height: 54px;
+      height: 54px;
+    }
+
+    .nav-link:hover { color: #F4F1EA; }
+
+    .nav-chevron {
+      width: 8px;
+      height: 6px;
+      flex-shrink: 0;
+      opacity: 0.5;
+    }
+
+    /* Dropdown panels */
+    .nav-dropdown {
+      display: none;
+      position: absolute;
+      top: 54px;
+      left: 0;
+      background: #112236;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-top: none;
+      border-radius: 0 0 10px 10px;
+      padding: 20px;
+      z-index: 999;
+      min-width: 260px;
+    }
+
+    .nav-dropdown.active { display: block; }
+    .nav-dropdown.dd-wide { min-width: 640px; }
+    .nav-dropdown.dd-wide.active { display: flex; gap: 0; }
+
+    .dd-col {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .dd-col + .dd-col {
+      padding-left: 24px;
+      border-left: 1px solid rgba(255,255,255,0.06);
+      margin-left: 24px;
+    }
+
+    .dd-col-header {
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
       color: #F0A500;
+      margin-bottom: 12px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
+
+    .dd-cat-label {
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: rgba(255,255,255,0.3);
+      margin-bottom: 6px;
+      margin-top: 12px;
+    }
+
+    .dd-cat-label:first-of-type { margin-top: 0; }
+
+    .dd-tool-link {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 8px;
+      border-radius: 5px;
+      text-decoration: none;
+      font-size: 12px;
+      color: #F4F1EA;
+    }
+
+    .dd-tool-link:hover { background: rgba(255,255,255,0.04); }
+    .dd-tool-link.soon { color: rgba(255,255,255,0.5); }
+
+    .dd-live-dot {
+      width: 5px;
+      height: 5px;
+      background: #22C997;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    /* Nav right */
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-shrink: 0;
     }
 
     .nav-cta {
@@ -80,6 +195,113 @@
       text-decoration: none;
       cursor: pointer;
       white-space: nowrap;
+    }
+
+    /* Hamburger */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 4px;
+      cursor: pointer;
+      padding: 6px;
+      background: none;
+      border: none;
+    }
+
+    .hamburger span {
+      display: block;
+      width: 18px;
+      height: 2px;
+      background: #F0A500;
+      border-radius: 1px;
+    }
+
+    /* Mobile overlay */
+    .mobile-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: #0B1929;
+      z-index: 9999;
+      overflow-y: auto;
+    }
+
+    .mobile-overlay.open { display: block; }
+
+    .mobile-overlay-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 16px;
+      height: 54px;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
+
+    .mobile-close {
+      background: none;
+      border: none;
+      color: rgba(255,255,255,0.5);
+      font-size: 24px;
+      cursor: pointer;
+      padding: 8px;
+      line-height: 1;
+    }
+
+    .mobile-nav-items { padding: 8px 0; }
+
+    .mobile-nav-section {
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .mobile-nav-toggle {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 20px;
+      cursor: pointer;
+      color: #F4F1EA;
+      font-size: 14px;
+      background: none;
+      border: none;
+      width: 100%;
+      text-align: left;
+      font-family: inherit;
+    }
+
+    .mobile-toggle-chevron {
+      color: rgba(255,255,255,0.3);
+      font-size: 12px;
+      transition: transform 0.2s;
+    }
+
+    .mobile-nav-toggle.open .mobile-toggle-chevron { transform: rotate(180deg); }
+
+    .mobile-nav-sub {
+      display: none;
+      padding: 0 20px 12px 32px;
+    }
+
+    .mobile-nav-sub.open { display: block; }
+
+    .mobile-nav-sub a {
+      display: block;
+      padding: 8px 0;
+      color: rgba(255,255,255,0.55);
+      text-decoration: none;
+      font-size: 13px;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+    }
+
+    .mobile-nav-sub a:last-child { border-bottom: none; }
+    .mobile-nav-sub a:hover { color: #F4F1EA; }
+
+    .mobile-nav-link {
+      display: block;
+      padding: 14px 20px;
+      color: rgba(255,255,255,0.6);
+      text-decoration: none;
+      font-size: 14px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
     }
 
     /* ── HERO ───────────────────────────────────────────────────────────────── */
@@ -197,7 +419,6 @@
       line-height: 1.4;
     }
 
-    /* Tool preview card */
     .preview-card {
       background: #112236;
       border: 1px solid rgba(255,255,255,0.08);
@@ -271,7 +492,6 @@
       margin-top: 8px;
     }
 
-    /* Stats */
     .stats-row {
       display: flex;
       border-top: 1px solid rgba(255,255,255,0.07);
@@ -564,11 +784,17 @@
       color: rgba(255,255,255,0.6);
     }
 
-    /* ── TOOLS GRID ─────────────────────────────────────────────────────────── */
+    /* ── TOOLS / ASSESSMENT / TOOLPACK SECTIONS ─────────────────────────────── */
     .tools-section {
       padding: 24px 28px;
       max-width: 1060px;
       margin: 0 auto;
+    }
+
+    .toolpacks-section {
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding-top: 24px;
+      margin-top: 8px;
     }
 
     h2 {
@@ -637,6 +863,10 @@
       padding: 12px;
     }
 
+    .tc-live {
+      border-color: rgba(34,201,151,0.2);
+    }
+
     .tc-top {
       display: flex;
       justify-content: space-between;
@@ -680,6 +910,13 @@
       margin-bottom: 7px;
     }
 
+    .tc-amber-note {
+      font-size: 9px;
+      color: rgba(240,165,0,0.7);
+      margin-bottom: 7px;
+      margin-top: -3px;
+    }
+
     .tc-bottom {
       display: flex;
       justify-content: space-between;
@@ -705,18 +942,6 @@
       font-size: 10px;
       color: #F0A500;
       text-decoration: none;
-    }
-
-    .tc-more {
-      grid-column: 1 / -1;
-      background: rgba(255,255,255,0.02);
-      border: 1px dashed rgba(255,255,255,0.07);
-      border-radius: 9px;
-      padding: 12px;
-      text-align: center;
-      font-size: 10px;
-      color: rgba(255,255,255,0.3);
-      line-height: 1.65;
     }
 
     /* ── SHAPE THE TOOLKIT ──────────────────────────────────────────────────── */
@@ -802,6 +1027,44 @@
       margin-top: 10px;
       display: none;
       line-height: 1.5;
+    }
+
+    /* ── GUIDES / NEWS COMING SOON ──────────────────────────────────────────── */
+    .placeholder-section {
+      background: #0F2036;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding: 24px 28px;
+    }
+
+    .placeholder-inner {
+      max-width: 1060px;
+      margin: 0 auto;
+    }
+
+    .placeholder-inner h2 {
+      font-size: 18px;
+      margin-bottom: 6px;
+    }
+
+    .placeholder-sub {
+      font-size: 11px;
+      color: rgba(255,255,255,0.4);
+      line-height: 1.6;
+      max-width: 520px;
+      margin-bottom: 12px;
+    }
+
+    .cs-badge {
+      display: inline-block;
+      background: rgba(240,165,0,0.1);
+      color: #F0A500;
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 20px;
+      border: 1px solid rgba(240,165,0,0.2);
     }
 
     /* ── FAQ ────────────────────────────────────────────────────────────────── */
@@ -902,6 +1165,9 @@
 
     /* ── MOBILE ─────────────────────────────────────────────────────────────── */
     @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+
       .hero {
         grid-template-columns: 1fr;
         padding: 24px 16px 24px;
@@ -914,6 +1180,7 @@
       .faq-section { padding: 20px 16px; }
       .testimonial-section { padding: 16px; }
       .trust-bar { padding: 10px 16px; }
+      .placeholder-section { padding: 20px 16px; }
       footer { padding: 16px; }
       nav { padding: 0 16px; }
 
@@ -926,7 +1193,6 @@
       }
 
       .stat { min-width: 110px; }
-
       .waitlist-card { margin-top: 8px; }
     }
 
@@ -949,8 +1215,183 @@
     </div>
     <span class="logo-text">Mandate <span>OpEx</span></span>
   </a>
-  <a href="#waitlist" class="nav-cta">Join the waitlist</a>
+
+  <!-- Centre nav links (desktop) -->
+  <div class="nav-links">
+
+    <!-- Tools dropdown (all 25) -->
+    <div class="nav-item" id="ni-tools">
+      <a class="nav-link" href="#" data-drop="dd-tools">Tools
+        <svg class="nav-chevron" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </a>
+      <div class="nav-dropdown dd-wide" id="dd-tools">
+        <div class="dd-col">
+          <div class="dd-col-header">Assessments</div>
+          <div class="dd-cat-label" style="margin-top:0;">Operations</div>
+          <a class="dd-tool-link" href="/waste-calculator.html"><span class="dd-live-dot"></span>Cost of Waste Calculator</a>
+          <a class="dd-tool-link soon" href="/coming-soon.html?tool=OEE+Diagnostic&amp;category=operations&amp;type=assessment">OEE Diagnostic</a>
+          <a class="dd-tool-link soon" href="/coming-soon.html?tool=SMED+Changeover+Assessment&amp;category=operations&amp;type=assessment">SMED Changeover Assessment</a>
+          <a class="dd-tool-link soon" href="/coming-soon.html?tool=Capacity+Assessment&amp;category=operations&amp;type=assessment">Capacity Assessment</a>
+          <a class="dd-tool-link soon" href="/coming-soon.html?tool=Maintenance+Maturity+Assessment&amp;category=operations&amp;type=assessment">Maintenance Maturity Assessment</a>
+          <div class="dd-cat-label">Quality</div>
+          <a class="dd-tool-link soon" href="/coming-soon.html?tool=Operational+Audit&amp;category=quality&amp;type=assessment">Operational Audit</a>
+          <a class="dd-tool-link soon" href="/coming-soon.html?tool=5S+Readiness+Assessment&amp;category=quality&amp;type=assessment">5S Readiness Assessment</a>
+          <a class="dd-tool-link soon" href="/coming-soon.html?tool=Quality+Culture+Assessment&amp;category=quality&amp;type=assessment">Quality Culture Assessment</a>
+          <a class="dd-tool-link soon" href="/coming-soon.html?tool=Root+Cause+Analysis+Form&amp;category=quality&amp;type=assessment">Root Cause Analysis Form</a>
+          <div class="dd-cat-label">People</div>
+          <a class="dd-tool-link soon" href="/coming-soon.html?tool=Skills+Matrix+Assessment&amp;category=people&amp;type=assessment">Skills Matrix Assessment</a>
+          <a class="dd-tool-link soon" href="/coming-soon.html?tool=Change+Readiness+Assessment&amp;category=people&amp;type=assessment">Change Readiness Assessment</a>
+          <div class="dd-cat-label">Strategy</div>
+          <a class="dd-tool-link soon" href="/coming-soon.html?tool=AI+Readiness+Diagnostic&amp;category=strategy&amp;type=assessment">AI Readiness Diagnostic</a>
+          <a class="dd-tool-link soon" href="/coming-soon.html?tool=Strategy+Deployment+Assessment&amp;category=strategy&amp;type=assessment">Strategy Deployment Assessment</a>
+          <div class="dd-cat-label">Commercial</div>
+          <a class="dd-tool-link soon" href="/coming-soon.html?tool=Supplier+Audit+Form&amp;category=commercial&amp;type=assessment">Supplier Audit Form</a>
+        </div>
+        <div class="dd-col">
+          <div class="dd-col-header">Tool Packs</div>
+          <div class="dd-cat-label" style="margin-top:0;">Operations</div>
+          <a class="dd-tool-link soon" href="/coming-soon.html?tool=SQCDP+Live&amp;category=operations&amp;type=toolpack">SQCDP Live</a>
+          <a class="dd-tool-link soon" href="/coming-soon.html?tool=Maintenance+Maturity+Tracker&amp;category=operations&amp;type=toolpack">Maintenance Maturity Tracker</a>
+          <a class="dd-tool-link soon" href="/coming-soon.html?tool=SMED+Improvement+Planner&amp;category=operations&amp;type=toolpack">SMED Improvement Planner</a>
+          <a class="dd-tool-link soon" href="/coming-soon.html?tool=Capacity+Planner&amp;category=operations&amp;type=toolpack">Capacity Planner</a>
+          <a class="dd-tool-link soon" href="/coming-soon.html?tool=Kaizen+Log&amp;category=operations&amp;type=toolpack">Kaizen Log</a>
+          <div class="dd-cat-label">Quality</div>
+          <a class="dd-tool-link soon" href="/coming-soon.html?tool=5S+Improvement+Tool+Pack&amp;category=quality&amp;type=toolpack">5S Improvement Tool Pack</a>
+          <div class="dd-cat-label">Strategy</div>
+          <a class="dd-tool-link soon" href="/coming-soon.html?tool=Strategy+Deployment+Planner&amp;category=strategy&amp;type=toolpack">Strategy Deployment Planner</a>
+          <a class="dd-tool-link soon" href="/coming-soon.html?tool=MD+Cockpit&amp;category=strategy&amp;type=toolpack">MD Cockpit</a>
+          <div class="dd-cat-label">Commercial</div>
+          <a class="dd-tool-link soon" href="/coming-soon.html?tool=Supply+Chain+Performance+Tracker&amp;category=commercial&amp;type=toolpack">Supply Chain Performance Tracker</a>
+          <a class="dd-tool-link soon" href="/coming-soon.html?tool=Mandate+CRM&amp;category=commercial&amp;type=toolpack">Mandate CRM</a>
+          <a class="dd-tool-link soon" href="/coming-soon.html?tool=Mandate+Jobs&amp;category=commercial&amp;type=toolpack">Mandate Jobs</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Assessments dropdown -->
+    <div class="nav-item" id="ni-assessments">
+      <a class="nav-link" href="#" data-drop="dd-assessments">Assessments
+        <svg class="nav-chevron" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </a>
+      <div class="nav-dropdown" id="dd-assessments">
+        <div class="dd-col-header">Assessments and Audit Forms</div>
+        <div class="dd-cat-label" style="margin-top:0;">Operations</div>
+        <a class="dd-tool-link" href="/waste-calculator.html"><span class="dd-live-dot"></span>Cost of Waste Calculator</a>
+        <a class="dd-tool-link soon" href="/coming-soon.html?tool=OEE+Diagnostic&amp;category=operations&amp;type=assessment">OEE Diagnostic</a>
+        <a class="dd-tool-link soon" href="/coming-soon.html?tool=SMED+Changeover+Assessment&amp;category=operations&amp;type=assessment">SMED Changeover Assessment</a>
+        <a class="dd-tool-link soon" href="/coming-soon.html?tool=Capacity+Assessment&amp;category=operations&amp;type=assessment">Capacity Assessment</a>
+        <a class="dd-tool-link soon" href="/coming-soon.html?tool=Maintenance+Maturity+Assessment&amp;category=operations&amp;type=assessment">Maintenance Maturity Assessment</a>
+        <div class="dd-cat-label">Quality</div>
+        <a class="dd-tool-link soon" href="/coming-soon.html?tool=Operational+Audit&amp;category=quality&amp;type=assessment">Operational Audit</a>
+        <a class="dd-tool-link soon" href="/coming-soon.html?tool=5S+Readiness+Assessment&amp;category=quality&amp;type=assessment">5S Readiness Assessment</a>
+        <a class="dd-tool-link soon" href="/coming-soon.html?tool=Quality+Culture+Assessment&amp;category=quality&amp;type=assessment">Quality Culture Assessment</a>
+        <a class="dd-tool-link soon" href="/coming-soon.html?tool=Root+Cause+Analysis+Form&amp;category=quality&amp;type=assessment">Root Cause Analysis Form</a>
+        <div class="dd-cat-label">People</div>
+        <a class="dd-tool-link soon" href="/coming-soon.html?tool=Skills+Matrix+Assessment&amp;category=people&amp;type=assessment">Skills Matrix Assessment</a>
+        <a class="dd-tool-link soon" href="/coming-soon.html?tool=Change+Readiness+Assessment&amp;category=people&amp;type=assessment">Change Readiness Assessment</a>
+        <div class="dd-cat-label">Strategy</div>
+        <a class="dd-tool-link soon" href="/coming-soon.html?tool=AI+Readiness+Diagnostic&amp;category=strategy&amp;type=assessment">AI Readiness Diagnostic</a>
+        <a class="dd-tool-link soon" href="/coming-soon.html?tool=Strategy+Deployment+Assessment&amp;category=strategy&amp;type=assessment">Strategy Deployment Assessment</a>
+        <div class="dd-cat-label">Commercial</div>
+        <a class="dd-tool-link soon" href="/coming-soon.html?tool=Supplier+Audit+Form&amp;category=commercial&amp;type=assessment">Supplier Audit Form</a>
+      </div>
+    </div>
+
+    <!-- Tool Packs dropdown -->
+    <div class="nav-item" id="ni-toolpacks">
+      <a class="nav-link" href="#" data-drop="dd-toolpacks">Tool Packs
+        <svg class="nav-chevron" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </a>
+      <div class="nav-dropdown" id="dd-toolpacks">
+        <div class="dd-col-header">Tool Packs</div>
+        <div class="dd-cat-label" style="margin-top:0;">Operations</div>
+        <a class="dd-tool-link soon" href="/coming-soon.html?tool=SQCDP+Live&amp;category=operations&amp;type=toolpack">SQCDP Live</a>
+        <a class="dd-tool-link soon" href="/coming-soon.html?tool=Maintenance+Maturity+Tracker&amp;category=operations&amp;type=toolpack">Maintenance Maturity Tracker</a>
+        <a class="dd-tool-link soon" href="/coming-soon.html?tool=SMED+Improvement+Planner&amp;category=operations&amp;type=toolpack">SMED Improvement Planner</a>
+        <a class="dd-tool-link soon" href="/coming-soon.html?tool=Capacity+Planner&amp;category=operations&amp;type=toolpack">Capacity Planner</a>
+        <a class="dd-tool-link soon" href="/coming-soon.html?tool=Kaizen+Log&amp;category=operations&amp;type=toolpack">Kaizen Log</a>
+        <div class="dd-cat-label">Quality</div>
+        <a class="dd-tool-link soon" href="/coming-soon.html?tool=5S+Improvement+Tool+Pack&amp;category=quality&amp;type=toolpack">5S Improvement Tool Pack</a>
+        <div class="dd-cat-label">Strategy</div>
+        <a class="dd-tool-link soon" href="/coming-soon.html?tool=Strategy+Deployment+Planner&amp;category=strategy&amp;type=toolpack">Strategy Deployment Planner</a>
+        <a class="dd-tool-link soon" href="/coming-soon.html?tool=MD+Cockpit&amp;category=strategy&amp;type=toolpack">MD Cockpit</a>
+        <div class="dd-cat-label">Commercial</div>
+        <a class="dd-tool-link soon" href="/coming-soon.html?tool=Supply+Chain+Performance+Tracker&amp;category=commercial&amp;type=toolpack">Supply Chain Performance Tracker</a>
+        <a class="dd-tool-link soon" href="/coming-soon.html?tool=Mandate+CRM&amp;category=commercial&amp;type=toolpack">Mandate CRM</a>
+        <a class="dd-tool-link soon" href="/coming-soon.html?tool=Mandate+Jobs&amp;category=commercial&amp;type=toolpack">Mandate Jobs</a>
+      </div>
+    </div>
+
+    <a class="nav-link" href="#guides-coming-soon">Free Guides</a>
+    <a class="nav-link" href="#news-coming-soon">Industry News</a>
+    <a class="nav-link" href="#footer">About</a>
+  </div>
+
+  <div class="nav-right">
+    <button class="hamburger" id="hamburger" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+    <a href="#waitlist" class="nav-cta">Join the waitlist</a>
+  </div>
 </nav>
+
+<!-- ── MOBILE OVERLAY ────────────────────────────────────────────────────────── -->
+<div class="mobile-overlay" id="mobile-overlay">
+  <div class="mobile-overlay-nav">
+    <a href="/" class="logo">
+      <div class="logo-icon">
+        <div class="bar" style="height:5px;"></div>
+        <div class="bar" style="height:9px;"></div>
+        <div class="bar" style="height:13px;"></div>
+      </div>
+      <span class="logo-text">Mandate <span>OpEx</span></span>
+    </a>
+    <button class="mobile-close" id="mobile-close" aria-label="Close menu">&#x2715;</button>
+  </div>
+  <div class="mobile-nav-items">
+    <div class="mobile-nav-section">
+      <button class="mobile-nav-toggle" data-target="mob-tools">Assessments <span class="mobile-toggle-chevron">&#9660;</span></button>
+      <div class="mobile-nav-sub" id="mob-tools">
+        <a href="/waste-calculator.html">Cost of Waste Calculator <span style="color:#22C997;font-size:10px;">&#9679; Live</span></a>
+        <a href="/coming-soon.html?tool=OEE+Diagnostic&category=operations&type=assessment">OEE Diagnostic</a>
+        <a href="/coming-soon.html?tool=SMED+Changeover+Assessment&category=operations&type=assessment">SMED Changeover Assessment</a>
+        <a href="/coming-soon.html?tool=Capacity+Assessment&category=operations&type=assessment">Capacity Assessment</a>
+        <a href="/coming-soon.html?tool=Maintenance+Maturity+Assessment&category=operations&type=assessment">Maintenance Maturity Assessment</a>
+        <a href="/coming-soon.html?tool=Operational+Audit&category=quality&type=assessment">Operational Audit</a>
+        <a href="/coming-soon.html?tool=5S+Readiness+Assessment&category=quality&type=assessment">5S Readiness Assessment</a>
+        <a href="/coming-soon.html?tool=Quality+Culture+Assessment&category=quality&type=assessment">Quality Culture Assessment</a>
+        <a href="/coming-soon.html?tool=Root+Cause+Analysis+Form&category=quality&type=assessment">Root Cause Analysis Form</a>
+        <a href="/coming-soon.html?tool=Skills+Matrix+Assessment&category=people&type=assessment">Skills Matrix Assessment</a>
+        <a href="/coming-soon.html?tool=Change+Readiness+Assessment&category=people&type=assessment">Change Readiness Assessment</a>
+        <a href="/coming-soon.html?tool=AI+Readiness+Diagnostic&category=strategy&type=assessment">AI Readiness Diagnostic</a>
+        <a href="/coming-soon.html?tool=Strategy+Deployment+Assessment&category=strategy&type=assessment">Strategy Deployment Assessment</a>
+        <a href="/coming-soon.html?tool=Supplier+Audit+Form&category=commercial&type=assessment">Supplier Audit Form</a>
+      </div>
+    </div>
+    <div class="mobile-nav-section">
+      <button class="mobile-nav-toggle" data-target="mob-toolpacks">Tool Packs <span class="mobile-toggle-chevron">&#9660;</span></button>
+      <div class="mobile-nav-sub" id="mob-toolpacks">
+        <a href="/coming-soon.html?tool=SQCDP+Live&category=operations&type=toolpack">SQCDP Live</a>
+        <a href="/coming-soon.html?tool=Maintenance+Maturity+Tracker&category=operations&type=toolpack">Maintenance Maturity Tracker</a>
+        <a href="/coming-soon.html?tool=SMED+Improvement+Planner&category=operations&type=toolpack">SMED Improvement Planner</a>
+        <a href="/coming-soon.html?tool=Capacity+Planner&category=operations&type=toolpack">Capacity Planner</a>
+        <a href="/coming-soon.html?tool=Kaizen+Log&category=operations&type=toolpack">Kaizen Log</a>
+        <a href="/coming-soon.html?tool=5S+Improvement+Tool+Pack&category=quality&type=toolpack">5S Improvement Tool Pack</a>
+        <a href="/coming-soon.html?tool=Strategy+Deployment+Planner&category=strategy&type=toolpack">Strategy Deployment Planner</a>
+        <a href="/coming-soon.html?tool=MD+Cockpit&category=strategy&type=toolpack">MD Cockpit</a>
+        <a href="/coming-soon.html?tool=Supply+Chain+Performance+Tracker&category=commercial&type=toolpack">Supply Chain Performance Tracker</a>
+        <a href="/coming-soon.html?tool=Mandate+CRM&category=commercial&type=toolpack">Mandate CRM</a>
+        <a href="/coming-soon.html?tool=Mandate+Jobs&category=commercial&type=toolpack">Mandate Jobs</a>
+      </div>
+    </div>
+    <a class="mobile-nav-link" href="#guides-coming-soon" onclick="document.getElementById('mobile-overlay').classList.remove('open');document.body.style.overflow='';">Free Guides</a>
+    <a class="mobile-nav-link" href="#news-coming-soon" onclick="document.getElementById('mobile-overlay').classList.remove('open');document.body.style.overflow='';">Industry News</a>
+    <a class="mobile-nav-link" href="#footer" onclick="document.getElementById('mobile-overlay').classList.remove('open');document.body.style.overflow='';">About</a>
+    <div style="padding:16px 20px;">
+      <a href="#waitlist" class="wl-submit" style="display:block;text-align:center;text-decoration:none;" onclick="document.getElementById('mobile-overlay').classList.remove('open');document.body.style.overflow='';">Join the waitlist</a>
+    </div>
+  </div>
+</div>
 
 <!-- ── HERO ─────────────────────────────────────────────────────────────────── -->
 <div class="hero">
@@ -1008,8 +1449,8 @@
         <div class="stat-label">Average hidden waste per year in a 50-person operation</div>
       </div>
       <div class="stat">
-        <div class="stat-num">17</div>
-        <div class="stat-label">Diagnostic tools across ops, quality, people and strategy</div>
+        <div class="stat-num">25</div>
+        <div class="stat-label">Diagnostic tools, assessments and management systems</div>
       </div>
       <div class="stat">
         <div class="stat-num">Free</div>
@@ -1064,97 +1505,167 @@
   </div>
 </div>
 
-<!-- ── TOOLS GRID ─────────────────────────────────────────────────────────────── -->
+<!-- ── SECTION A: ASSESSMENTS ─────────────────────────────────────────────────── -->
 <div class="tools-section">
-  <div class="eyebrow">The toolkit</div>
-  <h2>17 tools. One platform. <em>All connected.</em></h2>
-  <p class="section-sub">Every tool scores your current state and tells you the three things to do next in plain English. Click a category to filter.</p>
+  <div class="eyebrow">Assessments and audit forms</div>
+  <h2>Understand where you are. <em>Then fix it.</em></h2>
+  <p class="section-sub">Each assessment gives you a score, a gap analysis, and a prioritised action plan. Start here before you pick a tool pack.</p>
 
-  <div class="tabs" id="tool-tabs">
+  <div class="tabs" id="assessment-tabs">
     <button class="tab on" data-tab="all">All</button>
     <button class="tab" data-tab="operations">Operations</button>
     <button class="tab" data-tab="quality">Quality</button>
-    <button class="tab" data-tab="strategy">Strategy</button>
     <button class="tab" data-tab="people">People</button>
+    <button class="tab" data-tab="strategy">Strategy</button>
     <button class="tab" data-tab="commercial">Commercial</button>
   </div>
 
-  <div class="tools-grid" id="tools-grid">
+  <div class="tools-grid" id="assessment-grid">
 
     <!-- 1. Cost of Waste Calculator — LIVE -->
-    <div class="tc" data-category="strategy">
+    <div class="tc tc-live" data-category="operations">
       <div class="tc-top">
         <div class="tc-name">Cost of Waste Calculator</div>
         <span class="badge badge-live">Live now</span>
       </div>
-      <div class="tc-desc">Quantify hidden waste in pounds per year. Sector-specific questions, industry benchmarks, and a plain-English action plan.</div>
+      <div class="tc-desc">Quantify hidden waste in pounds per year across 8 sectors. Sector-specific questions, industry benchmarks, and a plain-English action plan.</div>
       <div class="tc-bottom">
-        <span class="cat-pill cat-strategy">Strategy</span>
+        <span class="cat-pill cat-operations">Operations</span>
         <a href="/waste-calculator.html" class="tc-link">Try it now &rarr;</a>
       </div>
     </div>
 
-    <!-- 2. OEE Calculator -->
+    <!-- 2. OEE Diagnostic -->
     <div class="tc" data-category="operations">
       <div class="tc-top">
-        <div class="tc-name">OEE Calculator and Advisor</div>
+        <div class="tc-name">OEE Diagnostic</div>
         <span class="badge badge-soon">Coming soon</span>
       </div>
-      <div class="tc-desc">Score availability, performance and quality. Get the 3 most likely root causes and a ranked fix list.</div>
+      <div class="tc-desc">Score availability, performance and quality. Find which pillar is dragging you down.</div>
       <div class="tc-bottom">
         <span class="cat-pill cat-operations">Operations</span>
+        <a href="/coming-soon.html?tool=OEE+Diagnostic&amp;category=operations&amp;type=assessment" class="tc-link">Notify me &rarr;</a>
       </div>
     </div>
 
-    <!-- 3. Operational Audit -->
-    <div class="tc" data-category="quality">
-      <div class="tc-top">
-        <div class="tc-name">Operational Audit</div>
-        <span class="badge badge-soon">Coming soon</span>
-      </div>
-      <div class="tc-desc">Full SQCDP-based health check. 8 sections. Traffic light output. Prioritised action plan.</div>
-      <div class="tc-bottom">
-        <span class="cat-pill cat-quality">Quality</span>
-      </div>
-    </div>
-
-    <!-- 4. Maintenance Maturity -->
+    <!-- 3. SMED Changeover Assessment -->
     <div class="tc" data-category="operations">
       <div class="tc-top">
-        <div class="tc-name">Maintenance Maturity Checker</div>
-        <span class="badge badge-soon">Coming soon</span>
-      </div>
-      <div class="tc-desc">Score all 8 TPM pillars. Know why your availability is low and what to fix first.</div>
-      <div class="tc-bottom">
-        <span class="cat-pill cat-operations">Operations</span>
-      </div>
-    </div>
-
-    <!-- 5. Skills Matrix -->
-    <div class="tc" data-category="people">
-      <div class="tc-top">
-        <div class="tc-name">Skills Matrix Builder</div>
-        <span class="badge badge-soon">Coming soon</span>
-      </div>
-      <div class="tc-desc">See skills gaps and single points of failure. Know if you can run every line, every shift.</div>
-      <div class="tc-bottom">
-        <span class="cat-pill cat-people">People</span>
-      </div>
-    </div>
-
-    <!-- 6. SMED -->
-    <div class="tc" data-category="operations">
-      <div class="tc-top">
-        <div class="tc-name">SMED Changeover Analyser</div>
+        <div class="tc-name">SMED Changeover Assessment</div>
         <span class="badge badge-soon">Coming soon</span>
       </div>
       <div class="tc-desc">Calculate pounds per month lost to changeover. Get a ranked internal vs external action list.</div>
       <div class="tc-bottom">
         <span class="cat-pill cat-operations">Operations</span>
+        <a href="/coming-soon.html?tool=SMED+Changeover+Assessment&amp;category=operations&amp;type=assessment" class="tc-link">Notify me &rarr;</a>
       </div>
     </div>
 
-    <!-- 7. AI Readiness -->
+    <!-- 4. Capacity Assessment -->
+    <div class="tc" data-category="operations">
+      <div class="tc-top">
+        <div class="tc-name">Capacity Assessment</div>
+        <span class="badge badge-soon">Coming soon</span>
+      </div>
+      <div class="tc-desc">Calculate your true available capacity and find the bottlenecks before you take on the next order.</div>
+      <div class="tc-bottom">
+        <span class="cat-pill cat-operations">Operations</span>
+        <a href="/coming-soon.html?tool=Capacity+Assessment&amp;category=operations&amp;type=assessment" class="tc-link">Notify me &rarr;</a>
+      </div>
+    </div>
+
+    <!-- 5. Maintenance Maturity Assessment -->
+    <div class="tc" data-category="operations">
+      <div class="tc-top">
+        <div class="tc-name">Maintenance Maturity Assessment</div>
+        <span class="badge badge-soon">Coming soon</span>
+      </div>
+      <div class="tc-desc">Score your maintenance operation across all 8 TPM pillars. Know exactly why your availability is low.</div>
+      <div class="tc-bottom">
+        <span class="cat-pill cat-operations">Operations</span>
+        <a href="/coming-soon.html?tool=Maintenance+Maturity+Assessment&amp;category=operations&amp;type=assessment" class="tc-link">Notify me &rarr;</a>
+      </div>
+    </div>
+
+    <!-- 6. Operational Audit -->
+    <div class="tc" data-category="quality">
+      <div class="tc-top">
+        <div class="tc-name">Operational Audit</div>
+        <span class="badge badge-soon">Coming soon</span>
+      </div>
+      <div class="tc-desc">Full SQCDP-based health check across Safety, Quality, Cost, Delivery, People. Traffic light output with prioritised action plan.</div>
+      <div class="tc-bottom">
+        <span class="cat-pill cat-quality">Quality</span>
+        <a href="/coming-soon.html?tool=Operational+Audit&amp;category=quality&amp;type=assessment" class="tc-link">Notify me &rarr;</a>
+      </div>
+    </div>
+
+    <!-- 7. 5S Readiness Assessment -->
+    <div class="tc" data-category="quality">
+      <div class="tc-top">
+        <div class="tc-name">5S Readiness Assessment</div>
+        <span class="badge badge-soon">Coming soon</span>
+      </div>
+      <div class="tc-desc">Score workplace organisation across all 5 pillars with gap analysis and a prioritised improvement plan.</div>
+      <div class="tc-bottom">
+        <span class="cat-pill cat-quality">Quality</span>
+        <a href="/coming-soon.html?tool=5S+Readiness+Assessment&amp;category=quality&amp;type=assessment" class="tc-link">Notify me &rarr;</a>
+      </div>
+    </div>
+
+    <!-- 8. Quality Culture Assessment -->
+    <div class="tc" data-category="quality">
+      <div class="tc-top">
+        <div class="tc-name">Quality Culture Assessment</div>
+        <span class="badge badge-soon">Coming soon</span>
+      </div>
+      <div class="tc-desc">Assess quality culture strength across leadership, process, people and systems. Find where culture is undermining quality performance.</div>
+      <div class="tc-bottom">
+        <span class="cat-pill cat-quality">Quality</span>
+        <a href="/coming-soon.html?tool=Quality+Culture+Assessment&amp;category=quality&amp;type=assessment" class="tc-link">Notify me &rarr;</a>
+      </div>
+    </div>
+
+    <!-- 9. Root Cause Analysis Form -->
+    <div class="tc" data-category="quality">
+      <div class="tc-top">
+        <div class="tc-name">Root Cause Analysis Form</div>
+        <span class="badge badge-soon">Coming soon</span>
+      </div>
+      <div class="tc-desc">Structured problem solving from symptom to root cause. Stop the same problems recurring.</div>
+      <div class="tc-bottom">
+        <span class="cat-pill cat-quality">Quality</span>
+        <a href="/coming-soon.html?tool=Root+Cause+Analysis+Form&amp;category=quality&amp;type=assessment" class="tc-link">Notify me &rarr;</a>
+      </div>
+    </div>
+
+    <!-- 10. Skills Matrix Assessment -->
+    <div class="tc" data-category="people">
+      <div class="tc-top">
+        <div class="tc-name">Skills Matrix Assessment</div>
+        <span class="badge badge-soon">Coming soon</span>
+      </div>
+      <div class="tc-desc">Map skills coverage and identify single points of failure. Know if you can run every line, every shift.</div>
+      <div class="tc-bottom">
+        <span class="cat-pill cat-people">People</span>
+        <a href="/coming-soon.html?tool=Skills+Matrix+Assessment&amp;category=people&amp;type=assessment" class="tc-link">Notify me &rarr;</a>
+      </div>
+    </div>
+
+    <!-- 11. Change Readiness Assessment -->
+    <div class="tc" data-category="people">
+      <div class="tc-top">
+        <div class="tc-name">Change Readiness Assessment</div>
+        <span class="badge badge-soon">Coming soon</span>
+      </div>
+      <div class="tc-desc">Assess how ready your organisation is to absorb and sustain change before you launch your next initiative.</div>
+      <div class="tc-bottom">
+        <span class="cat-pill cat-people">People</span>
+        <a href="/coming-soon.html?tool=Change+Readiness+Assessment&amp;category=people&amp;type=assessment" class="tc-link">Notify me &rarr;</a>
+      </div>
+    </div>
+
+    <!-- 12. AI Readiness Diagnostic -->
     <div class="tc" data-category="strategy">
       <div class="tc-top">
         <div class="tc-name">AI Readiness Diagnostic</div>
@@ -1163,136 +1674,202 @@
       <div class="tc-desc">5 operation-specific dimensions. Know if your business is ready for AI before spending anything on it.</div>
       <div class="tc-bottom">
         <span class="cat-pill cat-strategy">Strategy</span>
+        <a href="/coming-soon.html?tool=AI+Readiness+Diagnostic&amp;category=strategy&amp;type=assessment" class="tc-link">Notify me &rarr;</a>
       </div>
     </div>
 
-    <!-- 8. Strategy Deployment -->
+    <!-- 13. Strategy Deployment Assessment -->
     <div class="tc" data-category="strategy">
       <div class="tc-top">
-        <div class="tc-name">Strategy Deployment Planner</div>
+        <div class="tc-name">Strategy Deployment Assessment</div>
         <span class="badge badge-soon">Coming soon</span>
       </div>
-      <div class="tc-desc">Hoshin Kanri in plain English. Set breakthrough objectives and cascade them to the front line.</div>
+      <div class="tc-desc">Assess how well your strategy cascades from boardroom to shop floor. Hoshin Kanri diagnostic in plain English.</div>
       <div class="tc-bottom">
         <span class="cat-pill cat-strategy">Strategy</span>
+        <a href="/coming-soon.html?tool=Strategy+Deployment+Assessment&amp;category=strategy&amp;type=assessment" class="tc-link">Notify me &rarr;</a>
       </div>
     </div>
 
-    <!-- 9. Mandate Jobs -->
+    <!-- 14. Supplier Audit Form -->
     <div class="tc" data-category="commercial">
       <div class="tc-top">
-        <div class="tc-name">Mandate Jobs</div>
+        <div class="tc-name">Supplier Audit Form</div>
         <span class="badge badge-soon">Coming soon</span>
       </div>
-      <div class="tc-desc">The executive job search platform for operations and manufacturing leaders. Built for your level.</div>
+      <div class="tc-desc">Structured audit covering quality, delivery, responsiveness and risk. Know where your supply chain is vulnerable before it fails.</div>
       <div class="tc-bottom">
         <span class="cat-pill cat-commercial">Commercial</span>
+        <a href="/coming-soon.html?tool=Supplier+Audit+Form&amp;category=commercial&amp;type=assessment" class="tc-link">Notify me &rarr;</a>
       </div>
     </div>
 
-    <!-- 10. 5S Assessment -->
-    <div class="tc" data-category="quality">
-      <div class="tc-top">
-        <div class="tc-name">5S Assessment</div>
-        <span class="badge badge-soon">Coming soon</span>
-      </div>
-      <div class="tc-desc">Score your workplace organisation across all 5 pillars. Get a prioritised improvement plan with specific actions for each area.</div>
-      <div class="tc-bottom">
-        <span class="cat-pill cat-quality">Quality</span>
-      </div>
+  </div><!-- /#assessment-grid -->
+
+  <!-- ── SECTION B: TOOL PACKS ───────────────────────────────────────────────── -->
+  <div class="toolpacks-section">
+    <div class="eyebrow">Tool packs</div>
+    <h2>Fix the gaps. <em>Build the operating rhythm.</em></h2>
+    <p class="section-sub">Use these alongside your assessment results. Each tool pack gives you the ongoing management system to sustain improvement.</p>
+
+    <div class="tabs" id="toolpack-tabs">
+      <button class="tab on" data-tab="all">All</button>
+      <button class="tab" data-tab="operations">Operations</button>
+      <button class="tab" data-tab="quality">Quality</button>
+      <button class="tab" data-tab="strategy">Strategy</button>
+      <button class="tab" data-tab="commercial">Commercial</button>
     </div>
 
-    <!-- 11. Capacity Planner -->
-    <div class="tc" data-category="operations">
-      <div class="tc-top">
-        <div class="tc-name">Capacity Planner</div>
-        <span class="badge badge-soon">Coming soon</span>
-      </div>
-      <div class="tc-desc">Calculate your true available capacity. Understand where the bottlenecks are before you take on the next order.</div>
-      <div class="tc-bottom">
-        <span class="cat-pill cat-operations">Operations</span>
-      </div>
-    </div>
+    <div class="tools-grid" id="toolpack-grid">
 
-    <!-- 12. Supplier Health Check -->
-    <div class="tc" data-category="commercial">
-      <div class="tc-top">
-        <div class="tc-name">Supplier Health Check</div>
-        <span class="badge badge-soon">Coming soon</span>
+      <!-- 15. SQCDP Live -->
+      <div class="tc" data-category="operations">
+        <div class="tc-top">
+          <div class="tc-name">SQCDP Live</div>
+          <span class="badge badge-soon">Coming soon</span>
+        </div>
+        <div class="tc-desc">The daily management system. Your operational heartbeat. Safety, Quality, Cost, Delivery, People — tracked live.</div>
+        <div class="tc-bottom">
+          <span class="cat-pill cat-operations">Operations</span>
+          <a href="/coming-soon.html?tool=SQCDP+Live&amp;category=operations&amp;type=toolpack" class="tc-link">Notify me &rarr;</a>
+        </div>
       </div>
-      <div class="tc-desc">Score your key suppliers on quality, delivery, responsiveness and risk. Know where your supply chain is vulnerable before it fails.</div>
-      <div class="tc-bottom">
-        <span class="cat-pill cat-commercial">Commercial</span>
-      </div>
-    </div>
 
-    <!-- 13. Mandate CRM -->
-    <div class="tc" data-category="commercial">
-      <div class="tc-top">
-        <div class="tc-name">Mandate CRM</div>
-        <span class="badge badge-soon">Coming soon</span>
+      <!-- 16. Maintenance Maturity Tracker -->
+      <div class="tc" data-category="operations">
+        <div class="tc-top">
+          <div class="tc-name">Maintenance Maturity Tracker</div>
+          <span class="badge badge-soon">Coming soon</span>
+        </div>
+        <div class="tc-desc">Ongoing TPM improvement planner across all 8 pillars. Track progress, assign owners, measure impact.</div>
+        <div class="tc-bottom">
+          <span class="cat-pill cat-operations">Operations</span>
+          <a href="/coming-soon.html?tool=Maintenance+Maturity+Tracker&amp;category=operations&amp;type=toolpack" class="tc-link">Notify me &rarr;</a>
+        </div>
       </div>
-      <div class="tc-desc">A lightweight CRM built for operational SMEs. Manage prospects, track pipeline across multiple revenue streams, and get board-level financial summaries without enterprise complexity.</div>
-      <div class="tc-bottom">
-        <span class="cat-pill cat-commercial">Commercial</span>
-      </div>
-    </div>
 
-    <!-- 14. Quality Culture Checker -->
-    <div class="tc" data-category="quality">
-      <div class="tc-top">
-        <div class="tc-name">Quality Culture Checker</div>
-        <span class="badge badge-soon">Coming soon</span>
+      <!-- 17. SMED Improvement Planner -->
+      <div class="tc" data-category="operations">
+        <div class="tc-top">
+          <div class="tc-name">SMED Improvement Planner</div>
+          <span class="badge badge-soon">Coming soon</span>
+        </div>
+        <div class="tc-desc">Action plan and tracker for changeover reduction. Separate internal from external time. Measure gains as you go.</div>
+        <div class="tc-bottom">
+          <span class="cat-pill cat-operations">Operations</span>
+          <a href="/coming-soon.html?tool=SMED+Improvement+Planner&amp;category=operations&amp;type=toolpack" class="tc-link">Notify me &rarr;</a>
+        </div>
       </div>
-      <div class="tc-desc">Assess the strength of your quality culture across leadership, process, people and systems. Identify where culture is undermining your quality performance.</div>
-      <div class="tc-bottom">
-        <span class="cat-pill cat-quality">Quality</span>
-      </div>
-    </div>
 
-    <!-- 14. Root Cause Analysis Tool -->
-    <div class="tc" data-category="quality">
-      <div class="tc-top">
-        <div class="tc-name">Root Cause Analysis Tool</div>
-        <span class="badge badge-soon">Coming soon</span>
+      <!-- 18. Capacity Planner -->
+      <div class="tc" data-category="operations">
+        <div class="tc-top">
+          <div class="tc-name">Capacity Planner</div>
+          <span class="badge badge-soon">Coming soon</span>
+        </div>
+        <div class="tc-desc">Ongoing capacity management and scenario planning. Know your headroom before you commit to the next order.</div>
+        <div class="tc-bottom">
+          <span class="cat-pill cat-operations">Operations</span>
+          <a href="/coming-soon.html?tool=Capacity+Planner&amp;category=operations&amp;type=toolpack" class="tc-link">Notify me &rarr;</a>
+        </div>
       </div>
-      <div class="tc-desc">Structure your problem solving using proven methodologies. Get from symptom to root cause faster and stop the same problems recurring.</div>
-      <div class="tc-bottom">
-        <span class="cat-pill cat-quality">Quality</span>
-      </div>
-    </div>
 
-    <!-- 15. Kaizen Log -->
-    <div class="tc" data-category="operations">
-      <div class="tc-top">
-        <div class="tc-name">Kaizen Log</div>
-        <span class="badge badge-soon">Coming soon</span>
+      <!-- 19. Kaizen Log -->
+      <div class="tc" data-category="operations">
+        <div class="tc-top">
+          <div class="tc-name">Kaizen Log</div>
+          <span class="badge badge-soon">Coming soon</span>
+        </div>
+        <div class="tc-desc">Capture ideas, assign owners, track progress, measure impact. Build a visible culture of continuous improvement.</div>
+        <div class="tc-bottom">
+          <span class="cat-pill cat-operations">Operations</span>
+          <a href="/coming-soon.html?tool=Kaizen+Log&amp;category=operations&amp;type=toolpack" class="tc-link">Notify me &rarr;</a>
+        </div>
       </div>
-      <div class="tc-desc">Track and manage your continuous improvement activity. Capture ideas, assign owners, measure impact and build a culture of improvement.</div>
-      <div class="tc-bottom">
-        <span class="cat-pill cat-operations">Operations</span>
-      </div>
-    </div>
 
-    <!-- 16. Change Readiness Checker -->
-    <div class="tc" data-category="people">
-      <div class="tc-top">
-        <div class="tc-name">Change Readiness Checker</div>
-        <span class="badge badge-soon">Coming soon</span>
+      <!-- 20. 5S Improvement Tool Pack -->
+      <div class="tc" data-category="quality">
+        <div class="tc-top">
+          <div class="tc-name">5S Improvement Tool Pack</div>
+          <span class="badge badge-soon">Coming soon</span>
+        </div>
+        <div class="tc-desc">Implementation tracker, audit schedule and sustain checklist. From assessment result to embedded 5S discipline.</div>
+        <div class="tc-bottom">
+          <span class="cat-pill cat-quality">Quality</span>
+          <a href="/coming-soon.html?tool=5S+Improvement+Tool+Pack&amp;category=quality&amp;type=toolpack" class="tc-link">Notify me &rarr;</a>
+        </div>
       </div>
-      <div class="tc-desc">Assess how ready your organisation is to absorb and sustain change before you launch your next initiative.</div>
-      <div class="tc-bottom">
-        <span class="cat-pill cat-people">People</span>
+
+      <!-- 21. Strategy Deployment Planner -->
+      <div class="tc" data-category="strategy">
+        <div class="tc-top">
+          <div class="tc-name">Strategy Deployment Planner</div>
+          <span class="badge badge-soon">Coming soon</span>
+        </div>
+        <div class="tc-desc">Hoshin Kanri in plain English. Set breakthrough objectives and cascade them to the front line.</div>
+        <div class="tc-bottom">
+          <span class="cat-pill cat-strategy">Strategy</span>
+          <a href="/coming-soon.html?tool=Strategy+Deployment+Planner&amp;category=strategy&amp;type=toolpack" class="tc-link">Notify me &rarr;</a>
+        </div>
       </div>
-    </div>
 
-    <!-- Full-width MD Cockpit card -->
-    <div class="tc-more" id="tc-more-card">
-      <strong style="color:rgba(255,255,255,0.5);font-weight:500;">MD Cockpit</strong> — coming last. Aggregates scores from every tool — including Mandate CRM pipeline data — into one business dashboard. See the health of your entire operation at a glance.
-    </div>
+      <!-- 22. MD Cockpit -->
+      <div class="tc" data-category="strategy">
+        <div class="tc-top">
+          <div class="tc-name">MD Cockpit</div>
+          <span class="badge badge-soon">Coming soon</span>
+        </div>
+        <div class="tc-desc">Aggregates scores from every tool into one business dashboard. See the health of your entire operation at a glance.</div>
+        <div class="tc-amber-note">Builds last — aggregates everything</div>
+        <div class="tc-bottom">
+          <span class="cat-pill cat-strategy">Strategy</span>
+          <a href="/coming-soon.html?tool=MD+Cockpit&amp;category=strategy&amp;type=toolpack" class="tc-link">Notify me &rarr;</a>
+        </div>
+      </div>
 
-  </div>
-</div>
+      <!-- 23. Supply Chain Performance Tracker -->
+      <div class="tc" data-category="commercial">
+        <div class="tc-top">
+          <div class="tc-name">Supply Chain Performance Tracker</div>
+          <span class="badge badge-soon">Coming soon</span>
+        </div>
+        <div class="tc-desc">Track OTIF, PPM, lead time and risk across your supplier base. Catch problems before they hit your production floor.</div>
+        <div class="tc-bottom">
+          <span class="cat-pill cat-commercial">Commercial</span>
+          <a href="/coming-soon.html?tool=Supply+Chain+Performance+Tracker&amp;category=commercial&amp;type=toolpack" class="tc-link">Notify me &rarr;</a>
+        </div>
+      </div>
+
+      <!-- 24. Mandate CRM -->
+      <div class="tc" data-category="commercial">
+        <div class="tc-top">
+          <div class="tc-name">Mandate CRM</div>
+          <span class="badge badge-soon">Coming soon</span>
+        </div>
+        <div class="tc-desc">Lightweight CRM for operational SMEs. Manage prospects, track pipeline across multiple revenue streams, board-level reporting without enterprise complexity.</div>
+        <div class="tc-bottom">
+          <span class="cat-pill cat-commercial">Commercial</span>
+          <a href="/coming-soon.html?tool=Mandate+CRM&amp;category=commercial&amp;type=toolpack" class="tc-link">Notify me &rarr;</a>
+        </div>
+      </div>
+
+      <!-- 25. Mandate Jobs -->
+      <div class="tc" data-category="commercial">
+        <div class="tc-top">
+          <div class="tc-name">Mandate Jobs</div>
+          <span class="badge badge-soon">Coming soon</span>
+        </div>
+        <div class="tc-desc">The executive job search platform for operations and manufacturing leaders. Built for your level.</div>
+        <div class="tc-bottom">
+          <span class="cat-pill cat-commercial">Commercial</span>
+          <a href="/coming-soon.html?tool=Mandate+Jobs&amp;category=commercial&amp;type=toolpack" class="tc-link">Notify me &rarr;</a>
+        </div>
+      </div>
+
+    </div><!-- /#toolpack-grid -->
+  </div><!-- /.toolpacks-section -->
+
+</div><!-- /.tools-section -->
 
 <!-- ── SHAPE THE TOOLKIT ──────────────────────────────────────────────────────── -->
 <div class="suggest-section">
@@ -1308,6 +1885,26 @@
       </form>
       <div class="suggest-confirm" id="suggest-confirm">Thanks — we read every suggestion. If you left your email we will let you know when it gets built.</div>
     </div>
+  </div>
+</div>
+
+<!-- ── GUIDES COMING SOON ─────────────────────────────────────────────────────── -->
+<div class="placeholder-section" id="guides-coming-soon">
+  <div class="placeholder-inner">
+    <div class="eyebrow">Free guides</div>
+    <h2>Plain-English guides to operational excellence</h2>
+    <p class="placeholder-sub">We are writing practical guides to 5S, SMED, OEE, Hoshin Kanri, TPM, and more. Each one links to the relevant tool so you can move straight from understanding to action. Coming soon.</p>
+    <span class="cs-badge">Coming soon</span>
+  </div>
+</div>
+
+<!-- ── NEWS COMING SOON ───────────────────────────────────────────────────────── -->
+<div class="placeholder-section" id="news-coming-soon">
+  <div class="placeholder-inner">
+    <div class="eyebrow">Industry news</div>
+    <h2>Sector news from credible sources</h2>
+    <p class="placeholder-sub">Curated manufacturing and operations news from The Manufacturer, Make UK, Food Manufacture, Machinery Magazine and more. Updated weekly. Coming soon.</p>
+    <span class="cs-badge">Coming soon</span>
   </div>
 </div>
 
@@ -1335,7 +1932,7 @@
 </div>
 
 <!-- ── FOOTER ─────────────────────────────────────────────────────────────────── -->
-<footer>
+<footer id="footer">
   <div class="footer-left">
     <p><strong>Pricing announced at launch.</strong> Founder pricing guaranteed to the first 50 members. No credit card required.</p>
     <a href="/privacy.html" class="footer-privacy">Privacy policy</a>
@@ -1347,31 +1944,129 @@
 </footer>
 
 <script>
-// ── TAB FILTERING ────────────────────────────────────────────────────────────
+// ── NAV DROPDOWN ─────────────────────────────────────────────────────────────
 (function() {
-  const tabs = document.querySelectorAll('.tab');
-  const cards = document.querySelectorAll('#tools-grid .tc');
-  const moreCard = document.getElementById('tc-more-card');
+  var items = [
+    { ni: 'ni-tools',      dd: 'dd-tools' },
+    { ni: 'ni-assessments', dd: 'dd-assessments' },
+    { ni: 'ni-toolpacks',  dd: 'dd-toolpacks' }
+  ];
+
+  function closeAll() {
+    items.forEach(function(x) {
+      var d = document.getElementById(x.dd);
+      if (d) d.classList.remove('active');
+    });
+  }
+
+  items.forEach(function(x) {
+    var navItem = document.getElementById(x.ni);
+    var dropdown = document.getElementById(x.dd);
+    if (!navItem || !dropdown) return;
+
+    var timer = null;
+
+    function openDrop() {
+      clearTimeout(timer);
+      closeAll();
+      dropdown.classList.add('active');
+    }
+
+    function startClose() {
+      timer = setTimeout(function() {
+        dropdown.classList.remove('active');
+      }, 150);
+    }
+
+    function cancelClose() {
+      clearTimeout(timer);
+    }
+
+    navItem.addEventListener('mouseenter', openDrop);
+    navItem.addEventListener('mouseleave', startClose);
+    dropdown.addEventListener('mouseenter', cancelClose);
+    dropdown.addEventListener('mouseleave', startClose);
+  });
+
+  // Close on click outside
+  document.addEventListener('click', function(e) {
+    var inside = false;
+    items.forEach(function(x) {
+      var ni = document.getElementById(x.ni);
+      if (ni && ni.contains(e.target)) inside = true;
+    });
+    if (!inside) closeAll();
+  });
+})();
+
+// ── MOBILE HAMBURGER ─────────────────────────────────────────────────────────
+(function() {
+  var hamburger = document.getElementById('hamburger');
+  var overlay   = document.getElementById('mobile-overlay');
+  var closeBtn  = document.getElementById('mobile-close');
+
+  if (hamburger) {
+    hamburger.addEventListener('click', function() {
+      overlay.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    });
+  }
+
+  if (closeBtn) {
+    closeBtn.addEventListener('click', function() {
+      overlay.classList.remove('open');
+      document.body.style.overflow = '';
+    });
+  }
+
+  document.querySelectorAll('.mobile-nav-toggle').forEach(function(toggle) {
+    toggle.addEventListener('click', function() {
+      var targetId = this.getAttribute('data-target');
+      var sub = document.getElementById(targetId);
+      var isOpen = sub.classList.contains('open');
+
+      // Close all
+      document.querySelectorAll('.mobile-nav-sub').forEach(function(s) { s.classList.remove('open'); });
+      document.querySelectorAll('.mobile-nav-toggle').forEach(function(t) { t.classList.remove('open'); });
+
+      if (!isOpen) {
+        sub.classList.add('open');
+        this.classList.add('open');
+      }
+    });
+  });
+})();
+
+// ── ASSESSMENT TAB FILTERING ─────────────────────────────────────────────────
+(function() {
+  var tabs  = document.querySelectorAll('#assessment-tabs .tab');
+  var cards = document.querySelectorAll('#assessment-grid .tc');
 
   tabs.forEach(function(tab) {
     tab.addEventListener('click', function() {
-      // Update active tab
       tabs.forEach(function(t) { t.classList.remove('on'); });
       tab.classList.add('on');
-
       var filter = tab.getAttribute('data-tab');
-
-      // Filter tool cards
       cards.forEach(function(card) {
-        if (filter === 'all' || card.getAttribute('data-category') === filter) {
-          card.style.display = 'block';
-        } else {
-          card.style.display = 'none';
-        }
+        card.style.display = (filter === 'all' || card.getAttribute('data-category') === filter) ? '' : 'none';
       });
+    });
+  });
+})();
 
-      // The spanning "more" card always stays visible
-      if (moreCard) moreCard.style.display = 'block';
+// ── TOOLPACK TAB FILTERING ───────────────────────────────────────────────────
+(function() {
+  var tabs  = document.querySelectorAll('#toolpack-tabs .tab');
+  var cards = document.querySelectorAll('#toolpack-grid .tc');
+
+  tabs.forEach(function(tab) {
+    tab.addEventListener('click', function() {
+      tabs.forEach(function(t) { t.classList.remove('on'); });
+      tab.classList.add('on');
+      var filter = tab.getAttribute('data-tab');
+      cards.forEach(function(card) {
+        card.style.display = (filter === 'all' || card.getAttribute('data-category') === filter) ? '' : 'none';
+      });
     });
   });
 })();
@@ -1383,21 +2078,15 @@
 
   form.addEventListener('submit', function(e) {
     e.preventDefault();
-
     var name        = form.querySelector('[name="name"]').value.trim();
     var email       = form.querySelector('[name="email"]').value.trim();
     var role        = form.querySelector('[name="role"]').value.trim();
     var companySize = form.querySelector('[name="company_size"]').value.trim();
 
-    // Save to localStorage
     var submissions = JSON.parse(localStorage.getItem('waitlist_submissions') || '[]');
-    submissions.push({
-      name: name, email: email, role: role, company_size: companySize,
-      timestamp: new Date().toISOString()
-    });
+    submissions.push({ name: name, email: email, role: role, company_size: companySize, timestamp: new Date().toISOString() });
     localStorage.setItem('waitlist_submissions', JSON.stringify(submissions));
 
-    // Show success
     var wrap = document.getElementById('wl-form-wrap');
     wrap.innerHTML = '<div class="wl-success">' +
       '<div class="wl-success-icon">&#10003;</div>' +
@@ -1409,13 +2098,12 @@
 
 // ── SUGGESTION FORM ──────────────────────────────────────────────────────────
 (function() {
-  var form = document.getElementById('suggest-form');
+  var form    = document.getElementById('suggest-form');
   var confirm = document.getElementById('suggest-confirm');
   if (!form) return;
 
   form.addEventListener('submit', function(e) {
     e.preventDefault();
-
     var suggestion = form.querySelector('[name="suggestion"]').value.trim();
     var email      = form.querySelector('[name="suggest-email"]').value.trim();
 
