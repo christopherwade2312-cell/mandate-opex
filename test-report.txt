@@ -1,0 +1,533 @@
+==================================================================================================================================
+MANDATE OpEx CALCULATOR - FULL TEST PROGRAMME
+8 sectors x 6 profiles (A, B, C, D, E1-zero, E2-sole-trader) x 7 waste inputs
+Standard waste inputs: defects=4%, rework=15hrs/wk, downtime=8hrs/wk,
+  changeover=60min x 8/wk, waiting=30min/person/day,
+  inventory=GBP150000, unnecessary=25min/person/day
+==================================================================================================================================
+
+==================================================================================================================================
+  BEFORE FIX (current code)
+==================================================================================================================================
+  Profile  Sector           Defects    Rework  Downtime  Chngover   Waiting    Invent     Unnec       TOTAL   %Rev  STATUS
+  ------------------------------------------------------------------------------------------------------------------------------
+  A        engineering        4,320    11,700    10,400    10,400     9,375    37,500     7,812      91,508  30.5%  FLAG
+           >>> FLAG: Total 30.5% of revenue
+  A        food               4,680    11,700    13,520    16,640     9,375    45,000     7,812     108,728  36.2%  FLAG
+           >>> FLAG: Total 36.2% of revenue
+  A        automotive         5,760    14,040    11,960    10,400     9,375    37,500     7,812      96,848  32.3%  FLAG
+           >>> FLAG: Total 32.3% of revenue
+  A        print              4,950    15,600    10,400    10,400     9,375    37,500     7,812      96,038  32.0%  FLAG
+           >>> FLAG: Total 32.0% of revenue
+  A        plastics           5,220    14,040    10,400    10,400     9,375    37,500     7,812      94,748  31.6%  FLAG
+           >>> FLAG: Total 31.6% of revenue
+  A        electronics        3,780    11,700    13,520    10,400     9,375    37,500     7,812      94,088  31.4%  FLAG
+           >>> FLAG: Total 31.4% of revenue
+  A        service            8,400    19,500    10,400    10,400     9,375    37,500     7,812     103,388  34.5%  FLAG
+           >>> FLAG: Total 34.5% of revenue
+           >>> FLAG_SVC: Service 34.5% (intentional design)
+  A        general            5,490    11,700    10,400    10,400     9,375    37,500     7,812      92,678  30.9%  FLAG
+           >>> FLAG: Total 30.9% of revenue
+  B        engineering       16,488    14,040    28,704    23,088    33,750    37,500    28,125     181,695  18.2%  PASS
+  B        food              17,888    14,040    39,936    51,168    33,750    45,000    28,125     229,907  23.0%  FLAG
+           >>> FLAG: Total 23.0% of revenue
+  B        automotive        21,776    17,550    34,320    28,704    33,750    37,500    28,125     201,725  20.2%  FLAG
+           >>> FLAG: Total 20.2% of revenue
+  B        print             18,860    19,096    28,704    23,088    33,750    37,500    28,125     189,123  18.9%  PASS
+  B        plastics          19,832    17,550    23,088    17,472    33,750    37,500    28,125     177,317  17.7%  PASS
+  B        electronics       13,920    14,040    39,936    28,704    33,750    37,500    28,125     195,975  19.6%  PASS
+  B        service           28,000    25,740    13,728    13,728    33,750    37,500    28,125     180,571  18.1%  FLAG
+           >>> FLAG_SVC: Service 18.1% (intentional design)
+  B        general           20,804    14,040    28,704    23,088    33,750    37,500    28,125     186,011  18.6%  PASS
+  C        engineering       51,120    15,600    67,392    52,832    87,500    37,500    72,917     384,861  12.8%  PASS
+  C        food              55,680    15,600    96,512   125,632    87,500    45,000    72,917     498,841  16.6%  PASS
+  C        automotive        65,760    20,748    81,952    67,392    87,500    37,500    72,917     433,769  14.5%  PASS
+  C        print             58,200    22,657    67,392    52,832    87,500    37,500    72,917     398,998  13.3%  PASS
+  C        plastics          60,720    20,748    52,832    38,272    87,500    37,500    72,917     370,489  12.3%  PASS
+  C        electronics       38,880    15,600    96,512    67,392    87,500    37,500    72,917     416,301  13.9%  PASS
+  C        service           84,000    32,760    17,472    17,472    87,500    37,500    72,917     349,621  11.7%  PASS
+  C        general           63,240    15,600    67,392    52,832    87,500    37,500    72,917     396,981  13.2%  PASS
+  D        engineering      201,600    19,500   245,440   188,240   343,750    37,500   286,458   1,322,488  13.2%  PASS
+  D        food             219,600    19,500   359,840   474,240   343,750    45,000   286,458   1,748,388  17.5%  PASS
+  D        automotive       259,200    28,860   302,640   245,440   343,750    37,500   286,458   1,503,848  15.0%  PASS
+  D        print            229,500    28,364   245,440   188,240   343,750    37,500   286,458   1,359,252  13.6%  PASS
+  D        plastics         239,400    28,860   188,240   131,040   343,750    37,500   286,458   1,255,248  12.6%  PASS
+  D        electronics      153,000    19,500   359,840   245,440   343,750    37,500   286,458   1,445,488  14.5%  PASS
+  D        service          280,000    50,700    27,040    27,040   343,750    37,500   286,458   1,052,488  10.5%  PASS
+  D        general          249,300    19,500   245,440   188,240   343,750    37,500   286,458   1,370,188  13.7%  PASS
+  E1       engineering            0    15,600    22,880    22,880         0    37,500         0      98,860    N/A  FAIL
+           !!! FAIL3: rework=15,600.00 non-zero with zero context
+           !!! FAIL3: downtime=22,880.00 non-zero with zero context
+           !!! FAIL3: changeover=22,880.00 non-zero with zero context
+  E1       food                   0    15,600    15,808    15,808         0    45,000         0      92,216    N/A  FAIL
+           !!! FAIL3: rework=15,600.00 non-zero with zero context
+           !!! FAIL3: downtime=15,808.00 non-zero with zero context
+           !!! FAIL3: changeover=15,808.00 non-zero with zero context
+  E1       automotive             0    24,960    24,960    24,960         0    37,500         0     112,380    N/A  FAIL
+           !!! FAIL3: rework=24,960.00 non-zero with zero context
+           !!! FAIL3: downtime=24,960.00 non-zero with zero context
+           !!! FAIL3: changeover=24,960.00 non-zero with zero context
+  E1       print                  0    15,600    20,800    20,800         0    37,500         0      94,700    N/A  FAIL
+           !!! FAIL3: rework=15,600.00 non-zero with zero context
+           !!! FAIL3: downtime=20,800.00 non-zero with zero context
+           !!! FAIL3: changeover=20,800.00 non-zero with zero context
+  E1       plastics               0    19,812    15,808    15,808         0    37,500         0      88,928    N/A  FAIL
+           !!! FAIL3: rework=19,812.00 non-zero with zero context
+           !!! FAIL3: downtime=15,808.00 non-zero with zero context
+           !!! FAIL3: changeover=15,808.00 non-zero with zero context
+  E1       electronics            0    15,600    18,720    18,720         0    37,500         0      90,540    N/A  FAIL
+           !!! FAIL3: rework=15,600.00 non-zero with zero context
+           !!! FAIL3: downtime=18,720.00 non-zero with zero context
+           !!! FAIL3: changeover=18,720.00 non-zero with zero context
+  E1       service                0    24,960    13,312    13,312         0    37,500         0      89,084    N/A  FAIL
+           !!! FAIL3: rework=24,960.00 non-zero with zero context
+           !!! FAIL3: downtime=13,312.00 non-zero with zero context
+           !!! FAIL3: changeover=13,312.00 non-zero with zero context
+  E1       general                0    15,600    14,560    14,560         0    37,500         0      82,220    N/A  FAIL
+           !!! FAIL3: rework=15,600.00 non-zero with zero context
+           !!! FAIL3: downtime=14,560.00 non-zero with zero context
+           !!! FAIL3: changeover=14,560.00 non-zero with zero context
+  E2       engineering        7,920    39,000    35,360    35,360     6,250    37,500     5,208     166,598  33.3%  FLAG
+           >>> FLAG: Total 33.3% of revenue
+  E2       food               9,720    39,000    28,288    28,288     6,250    45,000     5,208     161,754  32.4%  FLAG
+           >>> FLAG: Total 32.4% of revenue
+  E2       automotive        11,440    48,360    37,440    37,440     6,250    37,500     5,208     183,638  36.7%  FLAG
+           >>> FLAG: Total 36.7% of revenue
+  E2       print             11,900    98,583    33,280    33,280     6,250    37,500     5,208     226,002  45.2%  PASS
+  E2       plastics          10,080    43,212    28,288    28,288     6,250    37,500     5,208     158,826  31.8%  FLAG
+           >>> FLAG: Total 31.8% of revenue
+  E2       electronics        4,920    39,000    31,200    31,200     6,250    37,500     5,208     155,278  31.1%  FLAG
+           >>> FLAG: Total 31.1% of revenue
+  E2       service           14,000    48,360    25,792    25,792     6,250    37,500     5,208     162,902  32.6%  FLAG
+           >>> FLAG: Total 32.6% of revenue
+           >>> FLAG_SVC: Service 32.6% (intentional design)
+  E2       general            8,860    39,000    27,040    27,040     6,250    37,500     5,208     150,898  30.2%  FLAG
+           >>> FLAG: Total 30.2% of revenue
+  ------------------------------------------------------------------------------------------------------------------------------
+  SUMMARY: PASS=22  FLAG=18  FAIL=8  Total=48
+
+==================================================================================================================================
+  AFTER FIX (getCtx() guard applied)
+==================================================================================================================================
+  Profile  Sector           Defects    Rework  Downtime  Chngover   Waiting    Invent     Unnec       TOTAL   %Rev  STATUS
+  ------------------------------------------------------------------------------------------------------------------------------
+  A        engineering        4,320    11,700    10,400    10,400     9,375    37,500     7,812      91,508  30.5%  FLAG
+           >>> FLAG: Total 30.5% of revenue
+  A        food               4,680    11,700    13,520    16,640     9,375    45,000     7,812     108,728  36.2%  FLAG
+           >>> FLAG: Total 36.2% of revenue
+  A        automotive         5,760    14,040    11,960    10,400     9,375    37,500     7,812      96,848  32.3%  FLAG
+           >>> FLAG: Total 32.3% of revenue
+  A        print              4,950    15,600    10,400    10,400     9,375    37,500     7,812      96,038  32.0%  FLAG
+           >>> FLAG: Total 32.0% of revenue
+  A        plastics           5,220    14,040    10,400    10,400     9,375    37,500     7,812      94,748  31.6%  FLAG
+           >>> FLAG: Total 31.6% of revenue
+  A        electronics        3,780    11,700    13,520    10,400     9,375    37,500     7,812      94,088  31.4%  FLAG
+           >>> FLAG: Total 31.4% of revenue
+  A        service            8,400    19,500    10,400    10,400     9,375    37,500     7,812     103,388  34.5%  FLAG
+           >>> FLAG: Total 34.5% of revenue
+           >>> FLAG_SVC: Service 34.5% (intentional design)
+  A        general            5,490    11,700    10,400    10,400     9,375    37,500     7,812      92,678  30.9%  FLAG
+           >>> FLAG: Total 30.9% of revenue
+  B        engineering       16,488    14,040    28,704    23,088    33,750    37,500    28,125     181,695  18.2%  PASS
+  B        food              17,888    14,040    39,936    51,168    33,750    45,000    28,125     229,907  23.0%  FLAG
+           >>> FLAG: Total 23.0% of revenue
+  B        automotive        21,776    17,550    34,320    28,704    33,750    37,500    28,125     201,725  20.2%  FLAG
+           >>> FLAG: Total 20.2% of revenue
+  B        print             18,860    19,096    28,704    23,088    33,750    37,500    28,125     189,123  18.9%  PASS
+  B        plastics          19,832    17,550    23,088    17,472    33,750    37,500    28,125     177,317  17.7%  PASS
+  B        electronics       13,920    14,040    39,936    28,704    33,750    37,500    28,125     195,975  19.6%  PASS
+  B        service           28,000    25,740    13,728    13,728    33,750    37,500    28,125     180,571  18.1%  FLAG
+           >>> FLAG_SVC: Service 18.1% (intentional design)
+  B        general           20,804    14,040    28,704    23,088    33,750    37,500    28,125     186,011  18.6%  PASS
+  C        engineering       51,120    15,600    67,392    52,832    87,500    37,500    72,917     384,861  12.8%  PASS
+  C        food              55,680    15,600    96,512   125,632    87,500    45,000    72,917     498,841  16.6%  PASS
+  C        automotive        65,760    20,748    81,952    67,392    87,500    37,500    72,917     433,769  14.5%  PASS
+  C        print             58,200    22,657    67,392    52,832    87,500    37,500    72,917     398,998  13.3%  PASS
+  C        plastics          60,720    20,748    52,832    38,272    87,500    37,500    72,917     370,489  12.3%  PASS
+  C        electronics       38,880    15,600    96,512    67,392    87,500    37,500    72,917     416,301  13.9%  PASS
+  C        service           84,000    32,760    17,472    17,472    87,500    37,500    72,917     349,621  11.7%  PASS
+  C        general           63,240    15,600    67,392    52,832    87,500    37,500    72,917     396,981  13.2%  PASS
+  D        engineering      201,600    19,500   245,440   188,240   343,750    37,500   286,458   1,322,488  13.2%  PASS
+  D        food             219,600    19,500   359,840   474,240   343,750    45,000   286,458   1,748,388  17.5%  PASS
+  D        automotive       259,200    28,860   302,640   245,440   343,750    37,500   286,458   1,503,848  15.0%  PASS
+  D        print            229,500    28,364   245,440   188,240   343,750    37,500   286,458   1,359,252  13.6%  PASS
+  D        plastics         239,400    28,860   188,240   131,040   343,750    37,500   286,458   1,255,248  12.6%  PASS
+  D        electronics      153,000    19,500   359,840   245,440   343,750    37,500   286,458   1,445,488  14.5%  PASS
+  D        service          280,000    50,700    27,040    27,040   343,750    37,500   286,458   1,052,488  10.5%  PASS
+  D        general          249,300    19,500   245,440   188,240   343,750    37,500   286,458   1,370,188  13.7%  PASS
+  E1       engineering            0         0         0         0         0    37,500         0      37,500    N/A  PASS
+  E1       food                   0         0         0         0         0    45,000         0      45,000    N/A  PASS
+  E1       automotive             0         0         0         0         0    37,500         0      37,500    N/A  PASS
+  E1       print                  0         0         0         0         0    37,500         0      37,500    N/A  PASS
+  E1       plastics               0         0         0         0         0    37,500         0      37,500    N/A  PASS
+  E1       electronics            0         0         0         0         0    37,500         0      37,500    N/A  PASS
+  E1       service                0         0         0         0         0    37,500         0      37,500    N/A  PASS
+  E1       general                0         0         0         0         0    37,500         0      37,500    N/A  PASS
+  E2       engineering        7,920    39,000    35,360    35,360     6,250    37,500     5,208     166,598  33.3%  FLAG
+           >>> FLAG: Total 33.3% of revenue
+  E2       food               9,720    39,000    28,288    28,288     6,250    45,000     5,208     161,754  32.4%  FLAG
+           >>> FLAG: Total 32.4% of revenue
+  E2       automotive        11,440    48,360    37,440    37,440     6,250    37,500     5,208     183,638  36.7%  FLAG
+           >>> FLAG: Total 36.7% of revenue
+  E2       print             11,900    98,583    33,280    33,280     6,250    37,500     5,208     226,002  45.2%  PASS
+  E2       plastics          10,080    43,212    28,288    28,288     6,250    37,500     5,208     158,826  31.8%  FLAG
+           >>> FLAG: Total 31.8% of revenue
+  E2       electronics        4,920    39,000    31,200    31,200     6,250    37,500     5,208     155,278  31.1%  FLAG
+           >>> FLAG: Total 31.1% of revenue
+  E2       service           14,000    48,360    25,792    25,792     6,250    37,500     5,208     162,902  32.6%  FLAG
+           >>> FLAG: Total 32.6% of revenue
+           >>> FLAG_SVC: Service 32.6% (intentional design)
+  E2       general            8,860    39,000    27,040    27,040     6,250    37,500     5,208     150,898  30.2%  FLAG
+           >>> FLAG: Total 30.2% of revenue
+  ------------------------------------------------------------------------------------------------------------------------------
+  SUMMARY: PASS=30  FLAG=18  FAIL=0  Total=48
+
+==================================================================================================================================
+  ALL CHECKS PASS AFTER FIX. Zero fails remaining.
+==================================================================================================================================
+
+==================================================================================================================================
+  INDIVIDUAL WASTE INPUT CHECKS (after fix) - 280 checks
+  FAIL conditions per check:
+    F1: total > revenue   F2: component > 30% rev   F3: non-zero with zero context
+    F4: negative result   F5: wait/unnec > 20% labour   F6: defects > 25% rev
+==================================================================================================================================
+  #  1  A    engineering    defects      cost=     4,320  PASS
+  #  2  A    engineering    rework       cost=    11,700  PASS
+  #  3  A    engineering    downtime     cost=    10,400  PASS
+  #  4  A    engineering    changeover   cost=    10,400  PASS
+  #  5  A    engineering    waiting      cost=     9,375  PASS
+  #  6  A    engineering    inventory    cost=    37,500  PASS
+  #  7  A    engineering    unnecessary  cost=     7,812  PASS
+  #  8  A    food           defects      cost=     4,680  PASS
+  #  9  A    food           rework       cost=    11,700  PASS
+  # 10  A    food           downtime     cost=    13,520  PASS
+  # 11  A    food           changeover   cost=    16,640  PASS
+  # 12  A    food           waiting      cost=     9,375  PASS
+  # 13  A    food           inventory    cost=    45,000  PASS
+  # 14  A    food           unnecessary  cost=     7,812  PASS
+  # 15  A    automotive     defects      cost=     5,760  PASS
+  # 16  A    automotive     rework       cost=    14,040  PASS
+  # 17  A    automotive     downtime     cost=    11,960  PASS
+  # 18  A    automotive     changeover   cost=    10,400  PASS
+  # 19  A    automotive     waiting      cost=     9,375  PASS
+  # 20  A    automotive     inventory    cost=    37,500  PASS
+  # 21  A    automotive     unnecessary  cost=     7,812  PASS
+  # 22  A    print          defects      cost=     4,950  PASS
+  # 23  A    print          rework       cost=    15,600  PASS
+  # 24  A    print          downtime     cost=    10,400  PASS
+  # 25  A    print          changeover   cost=    10,400  PASS
+  # 26  A    print          waiting      cost=     9,375  PASS
+  # 27  A    print          inventory    cost=    37,500  PASS
+  # 28  A    print          unnecessary  cost=     7,812  PASS
+  # 29  A    plastics       defects      cost=     5,220  PASS
+  # 30  A    plastics       rework       cost=    14,040  PASS
+  # 31  A    plastics       downtime     cost=    10,400  PASS
+  # 32  A    plastics       changeover   cost=    10,400  PASS
+  # 33  A    plastics       waiting      cost=     9,375  PASS
+  # 34  A    plastics       inventory    cost=    37,500  PASS
+  # 35  A    plastics       unnecessary  cost=     7,812  PASS
+  # 36  A    electronics    defects      cost=     3,780  PASS
+  # 37  A    electronics    rework       cost=    11,700  PASS
+  # 38  A    electronics    downtime     cost=    13,520  PASS
+  # 39  A    electronics    changeover   cost=    10,400  PASS
+  # 40  A    electronics    waiting      cost=     9,375  PASS
+  # 41  A    electronics    inventory    cost=    37,500  PASS
+  # 42  A    electronics    unnecessary  cost=     7,812  PASS
+  # 43  A    service        defects      cost=     8,400  PASS
+  # 44  A    service        rework       cost=    19,500  PASS
+  # 45  A    service        downtime     cost=    10,400  PASS
+  # 46  A    service        changeover   cost=    10,400  PASS
+  # 47  A    service        waiting      cost=     9,375  PASS
+  # 48  A    service        inventory    cost=    37,500  PASS
+  # 49  A    service        unnecessary  cost=     7,812  PASS
+  # 50  A    general        defects      cost=     5,490  PASS
+  # 51  A    general        rework       cost=    11,700  PASS
+  # 52  A    general        downtime     cost=    10,400  PASS
+  # 53  A    general        changeover   cost=    10,400  PASS
+  # 54  A    general        waiting      cost=     9,375  PASS
+  # 55  A    general        inventory    cost=    37,500  PASS
+  # 56  A    general        unnecessary  cost=     7,812  PASS
+  # 57  B    engineering    defects      cost=    16,488  PASS
+  # 58  B    engineering    rework       cost=    14,040  PASS
+  # 59  B    engineering    downtime     cost=    28,704  PASS
+  # 60  B    engineering    changeover   cost=    23,088  PASS
+  # 61  B    engineering    waiting      cost=    33,750  PASS
+  # 62  B    engineering    inventory    cost=    37,500  PASS
+  # 63  B    engineering    unnecessary  cost=    28,125  PASS
+  # 64  B    food           defects      cost=    17,888  PASS
+  # 65  B    food           rework       cost=    14,040  PASS
+  # 66  B    food           downtime     cost=    39,936  PASS
+  # 67  B    food           changeover   cost=    51,168  PASS
+  # 68  B    food           waiting      cost=    33,750  PASS
+  # 69  B    food           inventory    cost=    45,000  PASS
+  # 70  B    food           unnecessary  cost=    28,125  PASS
+  # 71  B    automotive     defects      cost=    21,776  PASS
+  # 72  B    automotive     rework       cost=    17,550  PASS
+  # 73  B    automotive     downtime     cost=    34,320  PASS
+  # 74  B    automotive     changeover   cost=    28,704  PASS
+  # 75  B    automotive     waiting      cost=    33,750  PASS
+  # 76  B    automotive     inventory    cost=    37,500  PASS
+  # 77  B    automotive     unnecessary  cost=    28,125  PASS
+  # 78  B    print          defects      cost=    18,860  PASS
+  # 79  B    print          rework       cost=    19,096  PASS
+  # 80  B    print          downtime     cost=    28,704  PASS
+  # 81  B    print          changeover   cost=    23,088  PASS
+  # 82  B    print          waiting      cost=    33,750  PASS
+  # 83  B    print          inventory    cost=    37,500  PASS
+  # 84  B    print          unnecessary  cost=    28,125  PASS
+  # 85  B    plastics       defects      cost=    19,832  PASS
+  # 86  B    plastics       rework       cost=    17,550  PASS
+  # 87  B    plastics       downtime     cost=    23,088  PASS
+  # 88  B    plastics       changeover   cost=    17,472  PASS
+  # 89  B    plastics       waiting      cost=    33,750  PASS
+  # 90  B    plastics       inventory    cost=    37,500  PASS
+  # 91  B    plastics       unnecessary  cost=    28,125  PASS
+  # 92  B    electronics    defects      cost=    13,920  PASS
+  # 93  B    electronics    rework       cost=    14,040  PASS
+  # 94  B    electronics    downtime     cost=    39,936  PASS
+  # 95  B    electronics    changeover   cost=    28,704  PASS
+  # 96  B    electronics    waiting      cost=    33,750  PASS
+  # 97  B    electronics    inventory    cost=    37,500  PASS
+  # 98  B    electronics    unnecessary  cost=    28,125  PASS
+  # 99  B    service        defects      cost=    28,000  PASS
+  #100  B    service        rework       cost=    25,740  PASS
+  #101  B    service        downtime     cost=    13,728  PASS
+  #102  B    service        changeover   cost=    13,728  PASS
+  #103  B    service        waiting      cost=    33,750  PASS
+  #104  B    service        inventory    cost=    37,500  PASS
+  #105  B    service        unnecessary  cost=    28,125  PASS
+  #106  B    general        defects      cost=    20,804  PASS
+  #107  B    general        rework       cost=    14,040  PASS
+  #108  B    general        downtime     cost=    28,704  PASS
+  #109  B    general        changeover   cost=    23,088  PASS
+  #110  B    general        waiting      cost=    33,750  PASS
+  #111  B    general        inventory    cost=    37,500  PASS
+  #112  B    general        unnecessary  cost=    28,125  PASS
+  #113  C    engineering    defects      cost=    51,120  PASS
+  #114  C    engineering    rework       cost=    15,600  PASS
+  #115  C    engineering    downtime     cost=    67,392  PASS
+  #116  C    engineering    changeover   cost=    52,832  PASS
+  #117  C    engineering    waiting      cost=    87,500  PASS
+  #118  C    engineering    inventory    cost=    37,500  PASS
+  #119  C    engineering    unnecessary  cost=    72,917  PASS
+  #120  C    food           defects      cost=    55,680  PASS
+  #121  C    food           rework       cost=    15,600  PASS
+  #122  C    food           downtime     cost=    96,512  PASS
+  #123  C    food           changeover   cost=   125,632  PASS
+  #124  C    food           waiting      cost=    87,500  PASS
+  #125  C    food           inventory    cost=    45,000  PASS
+  #126  C    food           unnecessary  cost=    72,917  PASS
+  #127  C    automotive     defects      cost=    65,760  PASS
+  #128  C    automotive     rework       cost=    20,748  PASS
+  #129  C    automotive     downtime     cost=    81,952  PASS
+  #130  C    automotive     changeover   cost=    67,392  PASS
+  #131  C    automotive     waiting      cost=    87,500  PASS
+  #132  C    automotive     inventory    cost=    37,500  PASS
+  #133  C    automotive     unnecessary  cost=    72,917  PASS
+  #134  C    print          defects      cost=    58,200  PASS
+  #135  C    print          rework       cost=    22,657  PASS
+  #136  C    print          downtime     cost=    67,392  PASS
+  #137  C    print          changeover   cost=    52,832  PASS
+  #138  C    print          waiting      cost=    87,500  PASS
+  #139  C    print          inventory    cost=    37,500  PASS
+  #140  C    print          unnecessary  cost=    72,917  PASS
+  #141  C    plastics       defects      cost=    60,720  PASS
+  #142  C    plastics       rework       cost=    20,748  PASS
+  #143  C    plastics       downtime     cost=    52,832  PASS
+  #144  C    plastics       changeover   cost=    38,272  PASS
+  #145  C    plastics       waiting      cost=    87,500  PASS
+  #146  C    plastics       inventory    cost=    37,500  PASS
+  #147  C    plastics       unnecessary  cost=    72,917  PASS
+  #148  C    electronics    defects      cost=    38,880  PASS
+  #149  C    electronics    rework       cost=    15,600  PASS
+  #150  C    electronics    downtime     cost=    96,512  PASS
+  #151  C    electronics    changeover   cost=    67,392  PASS
+  #152  C    electronics    waiting      cost=    87,500  PASS
+  #153  C    electronics    inventory    cost=    37,500  PASS
+  #154  C    electronics    unnecessary  cost=    72,917  PASS
+  #155  C    service        defects      cost=    84,000  PASS
+  #156  C    service        rework       cost=    32,760  PASS
+  #157  C    service        downtime     cost=    17,472  PASS
+  #158  C    service        changeover   cost=    17,472  PASS
+  #159  C    service        waiting      cost=    87,500  PASS
+  #160  C    service        inventory    cost=    37,500  PASS
+  #161  C    service        unnecessary  cost=    72,917  PASS
+  #162  C    general        defects      cost=    63,240  PASS
+  #163  C    general        rework       cost=    15,600  PASS
+  #164  C    general        downtime     cost=    67,392  PASS
+  #165  C    general        changeover   cost=    52,832  PASS
+  #166  C    general        waiting      cost=    87,500  PASS
+  #167  C    general        inventory    cost=    37,500  PASS
+  #168  C    general        unnecessary  cost=    72,917  PASS
+  #169  D    engineering    defects      cost=   201,600  PASS
+  #170  D    engineering    rework       cost=    19,500  PASS
+  #171  D    engineering    downtime     cost=   245,440  PASS
+  #172  D    engineering    changeover   cost=   188,240  PASS
+  #173  D    engineering    waiting      cost=   343,750  PASS
+  #174  D    engineering    inventory    cost=    37,500  PASS
+  #175  D    engineering    unnecessary  cost=   286,458  PASS
+  #176  D    food           defects      cost=   219,600  PASS
+  #177  D    food           rework       cost=    19,500  PASS
+  #178  D    food           downtime     cost=   359,840  PASS
+  #179  D    food           changeover   cost=   474,240  PASS
+  #180  D    food           waiting      cost=   343,750  PASS
+  #181  D    food           inventory    cost=    45,000  PASS
+  #182  D    food           unnecessary  cost=   286,458  PASS
+  #183  D    automotive     defects      cost=   259,200  PASS
+  #184  D    automotive     rework       cost=    28,860  PASS
+  #185  D    automotive     downtime     cost=   302,640  PASS
+  #186  D    automotive     changeover   cost=   245,440  PASS
+  #187  D    automotive     waiting      cost=   343,750  PASS
+  #188  D    automotive     inventory    cost=    37,500  PASS
+  #189  D    automotive     unnecessary  cost=   286,458  PASS
+  #190  D    print          defects      cost=   229,500  PASS
+  #191  D    print          rework       cost=    28,364  PASS
+  #192  D    print          downtime     cost=   245,440  PASS
+  #193  D    print          changeover   cost=   188,240  PASS
+  #194  D    print          waiting      cost=   343,750  PASS
+  #195  D    print          inventory    cost=    37,500  PASS
+  #196  D    print          unnecessary  cost=   286,458  PASS
+  #197  D    plastics       defects      cost=   239,400  PASS
+  #198  D    plastics       rework       cost=    28,860  PASS
+  #199  D    plastics       downtime     cost=   188,240  PASS
+  #200  D    plastics       changeover   cost=   131,040  PASS
+  #201  D    plastics       waiting      cost=   343,750  PASS
+  #202  D    plastics       inventory    cost=    37,500  PASS
+  #203  D    plastics       unnecessary  cost=   286,458  PASS
+  #204  D    electronics    defects      cost=   153,000  PASS
+  #205  D    electronics    rework       cost=    19,500  PASS
+  #206  D    electronics    downtime     cost=   359,840  PASS
+  #207  D    electronics    changeover   cost=   245,440  PASS
+  #208  D    electronics    waiting      cost=   343,750  PASS
+  #209  D    electronics    inventory    cost=    37,500  PASS
+  #210  D    electronics    unnecessary  cost=   286,458  PASS
+  #211  D    service        defects      cost=   280,000  PASS
+  #212  D    service        rework       cost=    50,700  PASS
+  #213  D    service        downtime     cost=    27,040  PASS
+  #214  D    service        changeover   cost=    27,040  PASS
+  #215  D    service        waiting      cost=   343,750  PASS
+  #216  D    service        inventory    cost=    37,500  PASS
+  #217  D    service        unnecessary  cost=   286,458  PASS
+  #218  D    general        defects      cost=   249,300  PASS
+  #219  D    general        rework       cost=    19,500  PASS
+  #220  D    general        downtime     cost=   245,440  PASS
+  #221  D    general        changeover   cost=   188,240  PASS
+  #222  D    general        waiting      cost=   343,750  PASS
+  #223  D    general        inventory    cost=    37,500  PASS
+  #224  D    general        unnecessary  cost=   286,458  PASS
+  #225  E1   engineering    defects      cost=         0  PASS
+  #226  E1   engineering    rework       cost=         0  PASS
+  #227  E1   engineering    downtime     cost=         0  PASS
+  #228  E1   engineering    changeover   cost=         0  PASS
+  #229  E1   engineering    waiting      cost=         0  PASS
+  #230  E1   engineering    inventory    cost=    37,500  PASS
+  #231  E1   engineering    unnecessary  cost=         0  PASS
+  #232  E1   food           defects      cost=         0  PASS
+  #233  E1   food           rework       cost=         0  PASS
+  #234  E1   food           downtime     cost=         0  PASS
+  #235  E1   food           changeover   cost=         0  PASS
+  #236  E1   food           waiting      cost=         0  PASS
+  #237  E1   food           inventory    cost=    45,000  PASS
+  #238  E1   food           unnecessary  cost=         0  PASS
+  #239  E1   automotive     defects      cost=         0  PASS
+  #240  E1   automotive     rework       cost=         0  PASS
+  #241  E1   automotive     downtime     cost=         0  PASS
+  #242  E1   automotive     changeover   cost=         0  PASS
+  #243  E1   automotive     waiting      cost=         0  PASS
+  #244  E1   automotive     inventory    cost=    37,500  PASS
+  #245  E1   automotive     unnecessary  cost=         0  PASS
+  #246  E1   print          defects      cost=         0  PASS
+  #247  E1   print          rework       cost=         0  PASS
+  #248  E1   print          downtime     cost=         0  PASS
+  #249  E1   print          changeover   cost=         0  PASS
+  #250  E1   print          waiting      cost=         0  PASS
+  #251  E1   print          inventory    cost=    37,500  PASS
+  #252  E1   print          unnecessary  cost=         0  PASS
+  #253  E1   plastics       defects      cost=         0  PASS
+  #254  E1   plastics       rework       cost=         0  PASS
+  #255  E1   plastics       downtime     cost=         0  PASS
+  #256  E1   plastics       changeover   cost=         0  PASS
+  #257  E1   plastics       waiting      cost=         0  PASS
+  #258  E1   plastics       inventory    cost=    37,500  PASS
+  #259  E1   plastics       unnecessary  cost=         0  PASS
+  #260  E1   electronics    defects      cost=         0  PASS
+  #261  E1   electronics    rework       cost=         0  PASS
+  #262  E1   electronics    downtime     cost=         0  PASS
+  #263  E1   electronics    changeover   cost=         0  PASS
+  #264  E1   electronics    waiting      cost=         0  PASS
+  #265  E1   electronics    inventory    cost=    37,500  PASS
+  #266  E1   electronics    unnecessary  cost=         0  PASS
+  #267  E1   service        defects      cost=         0  PASS
+  #268  E1   service        rework       cost=         0  PASS
+  #269  E1   service        downtime     cost=         0  PASS
+  #270  E1   service        changeover   cost=         0  PASS
+  #271  E1   service        waiting      cost=         0  PASS
+  #272  E1   service        inventory    cost=    37,500  PASS
+  #273  E1   service        unnecessary  cost=         0  PASS
+  #274  E1   general        defects      cost=         0  PASS
+  #275  E1   general        rework       cost=         0  PASS
+  #276  E1   general        downtime     cost=         0  PASS
+  #277  E1   general        changeover   cost=         0  PASS
+  #278  E1   general        waiting      cost=         0  PASS
+  #279  E1   general        inventory    cost=    37,500  PASS
+  #280  E1   general        unnecessary  cost=         0  PASS
+  #281  E2   engineering    defects      cost=     7,920  PASS
+  #282  E2   engineering    rework       cost=    39,000  PASS
+  #283  E2   engineering    downtime     cost=    35,360  PASS
+  #284  E2   engineering    changeover   cost=    35,360  PASS
+  #285  E2   engineering    waiting      cost=     6,250  PASS
+  #286  E2   engineering    inventory    cost=    37,500  PASS
+  #287  E2   engineering    unnecessary  cost=     5,208  PASS
+  #288  E2   food           defects      cost=     9,720  PASS
+  #289  E2   food           rework       cost=    39,000  PASS
+  #290  E2   food           downtime     cost=    28,288  PASS
+  #291  E2   food           changeover   cost=    28,288  PASS
+  #292  E2   food           waiting      cost=     6,250  PASS
+  #293  E2   food           inventory    cost=    45,000  PASS
+  #294  E2   food           unnecessary  cost=     5,208  PASS
+  #295  E2   automotive     defects      cost=    11,440  PASS
+  #296  E2   automotive     rework       cost=    48,360  PASS
+  #297  E2   automotive     downtime     cost=    37,440  PASS
+  #298  E2   automotive     changeover   cost=    37,440  PASS
+  #299  E2   automotive     waiting      cost=     6,250  PASS
+  #300  E2   automotive     inventory    cost=    37,500  PASS
+  #301  E2   automotive     unnecessary  cost=     5,208  PASS
+  #302  E2   print          defects      cost=    11,900  PASS
+  #303  E2   print          rework       cost=    98,583  PASS
+  #304  E2   print          downtime     cost=    33,280  PASS
+  #305  E2   print          changeover   cost=    33,280  PASS
+  #306  E2   print          waiting      cost=     6,250  PASS
+  #307  E2   print          inventory    cost=    37,500  PASS
+  #308  E2   print          unnecessary  cost=     5,208  PASS
+  #309  E2   plastics       defects      cost=    10,080  PASS
+  #310  E2   plastics       rework       cost=    43,212  PASS
+  #311  E2   plastics       downtime     cost=    28,288  PASS
+  #312  E2   plastics       changeover   cost=    28,288  PASS
+  #313  E2   plastics       waiting      cost=     6,250  PASS
+  #314  E2   plastics       inventory    cost=    37,500  PASS
+  #315  E2   plastics       unnecessary  cost=     5,208  PASS
+  #316  E2   electronics    defects      cost=     4,920  PASS
+  #317  E2   electronics    rework       cost=    39,000  PASS
+  #318  E2   electronics    downtime     cost=    31,200  PASS
+  #319  E2   electronics    changeover   cost=    31,200  PASS
+  #320  E2   electronics    waiting      cost=     6,250  PASS
+  #321  E2   electronics    inventory    cost=    37,500  PASS
+  #322  E2   electronics    unnecessary  cost=     5,208  PASS
+  #323  E2   service        defects      cost=    14,000  PASS
+  #324  E2   service        rework       cost=    48,360  PASS
+  #325  E2   service        downtime     cost=    25,792  PASS
+  #326  E2   service        changeover   cost=    25,792  PASS
+  #327  E2   service        waiting      cost=     6,250  PASS
+  #328  E2   service        inventory    cost=    37,500  PASS
+  #329  E2   service        unnecessary  cost=     5,208  PASS
+  #330  E2   general        defects      cost=     8,860  PASS
+  #331  E2   general        rework       cost=    39,000  PASS
+  #332  E2   general        downtime     cost=    27,040  PASS
+  #333  E2   general        changeover   cost=    27,040  PASS
+  #334  E2   general        waiting      cost=     6,250  PASS
+  #335  E2   general        inventory    cost=    37,500  PASS
+  #336  E2   general        unnecessary  cost=     5,208  PASS
+
+  Individual checks: 336 total, 0 FAIL, 336 PASS
+==================================================================================================================================

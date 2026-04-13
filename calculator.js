@@ -442,11 +442,19 @@ function fmt(n) {
 function fmtFull(n) { return '£' + Math.round(n).toLocaleString(); }
 
 function getCtx() {
-  const revenue   = v('revenue');
-  const employees = v('employees');
-  const hourly    = v('hourly') || 20;
-  const matPct    = v('materialPct')/100 || (parseFloat(SECTORS[currentSector]?.matPlaceholder||35)/100);
-  const machineRate = v('machineRate') || parseFloat(SECTORS[currentSector]?.machinePlaceholder||15);
+  const revenue    = v('revenue');
+  const employees  = v('employees');
+  const rawHourly  = v('hourly');
+  // Only apply rate defaults when the user has provided some context.
+  // If both revenue and employees are zero the business has no basis for defaults —
+  // return raw values so every formula correctly produces zero.
+  const hasContext = revenue > 0 || employees > 0;
+  const hourly     = hasContext ? (rawHourly || 20) : rawHourly;
+  const matPct     = v('materialPct')/100 || (parseFloat(SECTORS[currentSector]?.matPlaceholder||35)/100);
+  const rawMachine = v('machineRate');
+  const machineRate = hasContext
+    ? (rawMachine || parseFloat(SECTORS[currentSector]?.machinePlaceholder||15))
+    : rawMachine;
   return { revenue, employees, hourly, matPct, machineRate, annualLabour: employees * hourly * 1800 };
 }
 
