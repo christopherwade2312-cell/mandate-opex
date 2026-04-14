@@ -484,19 +484,45 @@
       e.preventDefault();
       var email = form.querySelector('[name="email"]').value.trim();
       if (!email) return;
-
-      // Save to localStorage keyed by tool name
-      var key = 'notify_' + (toolName || 'general');
+      var btn       = form.querySelector('[type="submit"]');
+      var timestamp = new Date().toISOString();
+      // localStorage backup
       var subs = JSON.parse(localStorage.getItem('notify_signups') || '[]');
-      subs.push({ tool: toolName, category: catName, type: typeName, email: email, timestamp: new Date().toISOString() });
+      subs.push({ tool: toolName, category: catName, type: typeName, email: email, timestamp: timestamp });
       localStorage.setItem('notify_signups', JSON.stringify(subs));
-
-      // Show success
-      formInner.innerHTML = '<div class="notify-success">' +
-        '<div class="notify-success-icon">&#10003;</div>' +
-        '<div class="notify-success-title">You are on the list</div>' +
-        '<div class="notify-success-sub">We will email you the moment ' + (toolName || 'this tool') + ' launches.</div>' +
-        '</div>';
+      // Loading state
+      btn.disabled = true;
+      btn.textContent = 'Sending…';
+      // Airtable
+      fetch('https://api.airtable.com/v0/appyLNjk2cKIk6swM/Notifications', {
+        method: 'POST',
+        headers: {
+          'Authorization': 'Bearer patmoq442wmkNDGhD.edfe94549612aa6395252343786a7d8cb5f3d074f9a8db406ccb2578fe9baaf4',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ fields: {
+          'Email':     email,
+          'Tool Name': toolName,
+          'Timestamp': timestamp
+        } })
+      }).then(function() {
+        formInner.innerHTML = '<div class="notify-success">' +
+          '<div class="notify-success-icon">&#10003;</div>' +
+          '<div class="notify-success-title">You are on the list</div>' +
+          '<div class="notify-success-sub">We will email you the moment ' + (toolName || 'this tool') + ' launches.</div>' +
+          '</div>';
+      }).catch(function() {
+        btn.disabled = false;
+        btn.textContent = 'Notify me when it launches →';
+        var errEl = form.querySelector('.notif-error');
+        if (!errEl) {
+          errEl = document.createElement('p');
+          errEl.className = 'notif-error';
+          errEl.style.cssText = 'font-size:11px;color:#E05555;margin-top:8px;';
+          form.appendChild(errEl);
+        }
+        errEl.textContent = 'Something went wrong. Please email hello@mandateopex.com directly.';
+      });
     });
   }
 })();

@@ -443,6 +443,7 @@
   if (form) {
     form.addEventListener('submit', function(e) {
       e.preventDefault();
+      var btn  = form.querySelector('[type="submit"]');
       var data = {
         name:         form.querySelector('[name="name"]').value.trim(),
         email:        form.querySelector('[name="email"]').value.trim(),
@@ -450,15 +451,47 @@
         company_size: form.querySelector('[name="company_size"]').value.trim(),
         timestamp:    new Date().toISOString()
       };
+      // localStorage backup
       var subs = JSON.parse(localStorage.getItem('waitlist_submissions') || '[]');
       subs.push(data);
       localStorage.setItem('waitlist_submissions', JSON.stringify(subs));
-      document.getElementById('wl-form-wrap').innerHTML =
-        '<div class="wl-success">' +
-        '<div class="wl-success-icon">&#10003;</div>' +
-        '<div class="wl-success-title">You are on the list</div>' +
-        '<div class="wl-success-sub">We will be in touch when we launch. Thank you for being one of our first 50.</div>' +
-        '</div>';
+      // Loading state
+      btn.disabled = true;
+      btn.textContent = 'Sending…';
+      // Airtable
+      fetch('https://api.airtable.com/v0/appyLNjk2cKIk6swM/Waitlist', {
+        method: 'POST',
+        headers: {
+          'Authorization': 'Bearer patmoq442wmkNDGhD.edfe94549612aa6395252343786a7d8cb5f3d074f9a8db406ccb2578fe9baaf4',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ fields: {
+          'Full Name':    data.name,
+          'Email':        data.email,
+          'Role':         data.role,
+          'Company size': data.company_size,
+          'Source':       'Landing page',
+          'Timestamp':    data.timestamp
+        } })
+      }).then(function() {
+        document.getElementById('wl-form-wrap').innerHTML =
+          '<div class="wl-success">' +
+          '<div class="wl-success-icon">&#10003;</div>' +
+          '<div class="wl-success-title">You are on the list</div>' +
+          '<div class="wl-success-sub">We will be in touch when we launch. Thank you for being one of our first 50.</div>' +
+          '</div>';
+      }).catch(function() {
+        btn.disabled = false;
+        btn.textContent = 'Reserve my early access spot →';
+        var errEl = form.querySelector('.wl-error');
+        if (!errEl) {
+          errEl = document.createElement('p');
+          errEl.className = 'wl-error';
+          errEl.style.cssText = 'font-size:11px;color:#E05555;margin-top:8px;';
+          form.appendChild(errEl);
+        }
+        errEl.textContent = 'Something went wrong. Please email hello@mandateopex.com directly.';
+      });
     });
   }
 })();

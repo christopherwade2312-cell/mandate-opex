@@ -440,11 +440,44 @@
   if (sf) {
     sf.addEventListener('submit', function(e) {
       e.preventDefault();
+      var btn        = sf.querySelector('[type="submit"]');
+      var suggestion = sf.querySelector('[name="suggestion"]').value.trim();
+      var email      = sf.querySelector('[name="suggest-email"]').value.trim();
+      var timestamp  = new Date().toISOString();
+      // localStorage backup
       var subs = JSON.parse(localStorage.getItem('tool_suggestions') || '[]');
-      subs.push({ suggestion: sf.querySelector('[name="suggestion"]').value.trim(), email: sf.querySelector('[name="suggest-email"]').value.trim(), timestamp: new Date().toISOString() });
+      subs.push({ suggestion: suggestion, email: email, timestamp: timestamp });
       localStorage.setItem('tool_suggestions', JSON.stringify(subs));
-      sf.style.display = 'none';
-      if (sc) sc.style.display = 'block';
+      // Loading state
+      btn.disabled = true;
+      btn.textContent = 'Sending…';
+      // Airtable
+      fetch('https://api.airtable.com/v0/appyLNjk2cKIk6swM/Suggestions', {
+        method: 'POST',
+        headers: {
+          'Authorization': 'Bearer patmoq442wmkNDGhD.edfe94549612aa6395252343786a7d8cb5f3d074f9a8db406ccb2578fe9baaf4',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ fields: {
+          'Suggestion': suggestion,
+          'Email':      email,
+          'Timestamp':  timestamp
+        } })
+      }).then(function() {
+        sf.style.display = 'none';
+        if (sc) sc.style.display = 'block';
+      }).catch(function() {
+        btn.disabled = false;
+        btn.textContent = 'Submit suggestion';
+        var errEl = sf.querySelector('.sg-error');
+        if (!errEl) {
+          errEl = document.createElement('p');
+          errEl.className = 'sg-error';
+          errEl.style.cssText = 'font-size:11px;color:#E05555;margin-top:8px;';
+          sf.appendChild(errEl);
+        }
+        errEl.textContent = 'Something went wrong. Please email hello@mandateopex.com directly.';
+      });
     });
   }
 })();
