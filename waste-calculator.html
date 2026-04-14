@@ -52,8 +52,21 @@
     .logo-icon { width:30px; height:30px; border-radius:7px; background:var(--amber); display:flex; align-items:center; justify-content:center; }
     .logo-text { font-family:var(--fb); font-weight:600; font-size:14px; color:var(--white); }
     .logo-text span { color:var(--amber); }
-    .nav-back { font-size:13px; color:var(--w40); text-decoration:none; transition:color 0.18s; }
-    .nav-back:hover { color:var(--w70); }
+    .nav-links { display:flex; align-items:center; gap:2px; }
+    .nav-link { font-size:12px; color:rgba(255,255,255,0.5); padding:5px 12px; border-radius:5px; text-decoration:none; display:inline-block; transition:color 0.15s; white-space:nowrap; }
+    .nav-link:hover { color:#F4F1EA; }
+    .nav-link.active { color:#F0A500; background:rgba(240,165,0,0.08); }
+    .nav-right { display:flex; align-items:center; gap:12px; flex-shrink:0; }
+    .nav-cta { background:#F0A500; color:#0B1929; font-weight:700; font-size:11px; padding:7px 16px; border-radius:6px; border:none; text-decoration:none; white-space:nowrap; }
+    .hamburger { display:none; flex-direction:column; gap:4px; cursor:pointer; padding:6px; background:none; border:none; }
+    .hamburger span { display:block; width:18px; height:2px; background:#F0A500; border-radius:1px; }
+    .mobile-overlay { display:none; position:fixed; inset:0; background:#0B1929; z-index:9999; padding:24px; overflow-y:auto; }
+    .mobile-overlay.open { display:block; }
+    .mob-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:24px; }
+    .mob-close { background:none; border:none; color:#F0A500; font-size:24px; cursor:pointer; padding:4px; line-height:1; }
+    .mob-link { display:block; font-size:16px; color:rgba(255,255,255,0.7); text-decoration:none; padding:14px 0; border-bottom:1px solid rgba(255,255,255,0.07); }
+    .mob-link.active { color:#F0A500; }
+    .mob-wl { margin-top:24px; display:block; text-align:center; background:#F0A500; color:#0B1929; font-weight:700; font-size:14px; padding:12px; border-radius:7px; text-decoration:none; }
 
     /* PAGE */
     .page { position:relative; z-index:1; max-width:1060px; margin:0 auto; padding:3rem 2rem 6rem; }
@@ -225,7 +238,7 @@
 
     /* RESPONSIVE */
     @media(max-width:940px) { .calc-grid { grid-template-columns:1fr; } .results-panel { position:static; } }
-    @media(max-width:700px) { .page { padding:2rem 1.25rem 4rem; } nav { padding:0 1.25rem; } .ctx-grid { grid-template-columns:1fr; } .selector-grid, .vol-grid { grid-template-columns:1fr 1fr; } .inp-wrap { max-width:100%; } .dual-wrap { grid-template-columns:1fr; } }
+    @media(max-width:700px) { .nav-links { display:none; } .hamburger { display:flex; } .page { padding:2rem 1.25rem 4rem; } nav { padding:0 1.25rem; } .ctx-grid { grid-template-columns:1fr; } .selector-grid, .vol-grid { grid-template-columns:1fr 1fr; } .inp-wrap { max-width:100%; } .dual-wrap { grid-template-columns:1fr; } }
     @media(max-width:400px) { .selector-grid, .vol-grid { grid-template-columns:1fr; } }
   </style>
 </head>
@@ -234,7 +247,7 @@
 <div class="bg-glow"></div>
 
 <nav>
-  <a href="index.html" class="logo">
+  <a href="/index.html" class="logo">
     <div class="logo-icon">
       <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
         <rect x="1" y="3" width="3" height="10" rx="0.5" fill="white"/>
@@ -245,8 +258,43 @@
     </div>
     <span class="logo-text">Mandate <span>OpEx</span></span>
   </a>
-  <a href="index.html" class="nav-back">&#8592; Back to Mandate OpEx</a>
+  <div class="nav-links">
+    <a class="nav-link" href="/tools.html">Tools</a>
+    <a class="nav-link" href="/guides.html">Guides</a>
+    <a class="nav-link" href="/news.html">News</a>
+    <a class="nav-link" href="/faq.html">FAQ</a>
+    <a class="nav-link" href="/help.html">Help</a>
+    <a class="nav-link" href="/about.html">About</a>
+  </div>
+  <div class="nav-right">
+    <button class="hamburger" id="hamburger" aria-label="Open menu"><span></span><span></span><span></span></button>
+    <a href="/index.html#waitlist" class="nav-cta">Join the waitlist</a>
+  </div>
 </nav>
+
+<div class="mobile-overlay" id="mobile-overlay">
+  <div class="mob-header">
+    <a href="/index.html" class="logo">
+      <div class="logo-icon">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="1" y="3" width="3" height="10" rx="0.5" fill="white"/>
+          <rect x="6" y="6" width="3" height="7" rx="0.5" fill="white"/>
+          <rect x="11" y="9" width="3" height="4" rx="0.5" fill="white"/>
+          <polyline points="2.5,3 7.5,6 12.5,9" stroke="white" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        </svg>
+      </div>
+      <span class="logo-text">Mandate <span>OpEx</span></span>
+    </a>
+    <button class="mob-close" id="mob-close">&#x2715;</button>
+  </div>
+  <a class="mob-link" href="/tools.html">Tools</a>
+  <a class="mob-link" href="/guides.html">Guides</a>
+  <a class="mob-link" href="/news.html">News</a>
+  <a class="mob-link" href="/faq.html">FAQ</a>
+  <a class="mob-link" href="/help.html">Help</a>
+  <a class="mob-link" href="/about.html">About</a>
+  <a class="mob-wl" href="/index.html#waitlist">Join the waitlist</a>
+</div>
 
 <div class="page">
 
@@ -420,5 +468,17 @@
 </div>
 
 <script src="calculator.js"></script>
+<script>
+(function() {
+  var hamburger = document.getElementById('hamburger');
+  var overlay   = document.getElementById('mobile-overlay');
+  var closeBtn  = document.getElementById('mob-close');
+  function openOverlay()  { overlay.classList.add('open');    document.body.style.overflow='hidden'; }
+  function closeOverlay() { overlay.classList.remove('open'); document.body.style.overflow=''; }
+  if (hamburger) hamburger.addEventListener('click', openOverlay);
+  if (closeBtn)  closeBtn.addEventListener('click', closeOverlay);
+  overlay.addEventListener('click', function(e){ if(e.target===overlay) closeOverlay(); });
+})();
+</script>
 </body>
 </html>

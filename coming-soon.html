@@ -21,71 +21,26 @@
     }
 
     /* ── NAV ────────────────────────────────────────────────────────────────── */
-    nav {
-      width: 100%;
-      height: 54px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 28px;
-      background: #0B1929;
-      border-bottom: 1px solid rgba(255,255,255,0.07);
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      flex-shrink: 0;
-    }
-
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      text-decoration: none;
-    }
-
-    .logo-icon {
-      width: 30px;
-      height: 30px;
-      background: #F0A500;
-      border-radius: 7px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-    }
-
-    .logo-icon .bar {
-      background: #fff;
-      border-radius: 1px;
-      width: 4px;
-    }
-
-    .logo-text { font-size: 14px; font-weight: 500; color: #F4F1EA; }
-    .logo-text span { color: #F0A500; }
-
-    .nav-cta {
-      background: #F0A500;
-      color: #0B1929;
-      font-weight: 700;
-      font-size: 11px;
-      padding: 7px 16px;
-      border-radius: 6px;
-      text-decoration: none;
-      white-space: nowrap;
-    }
-
-    /* ── BACK LINK ──────────────────────────────────────────────────────────── */
-    .back-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      color: #F0A500;
-      text-decoration: none;
-      font-size: 12px;
-      padding: 20px 28px;
-    }
-
-    .back-link:hover { opacity: 0.8; }
+    nav { width:100%; height:54px; display:flex; align-items:center; justify-content:space-between; padding:0 28px; background:#0B1929; border-bottom:1px solid rgba(255,255,255,0.07); position:sticky; top:0; z-index:1000; flex-shrink:0; }
+    .logo { display:flex; align-items:center; gap:8px; text-decoration:none; flex-shrink:0; }
+    .logo-icon { width:30px; height:30px; background:#F0A500; border-radius:7px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+    .logo-text { font-size:14px; font-weight:500; color:#F4F1EA; }
+    .logo-text span { color:#F0A500; }
+    .nav-links { display:flex; align-items:center; gap:2px; }
+    .nav-link { font-size:12px; color:rgba(255,255,255,0.5); padding:5px 12px; border-radius:5px; text-decoration:none; display:inline-block; transition:color 0.15s; white-space:nowrap; }
+    .nav-link:hover { color:#F4F1EA; }
+    .nav-link.active { color:#F0A500; background:rgba(240,165,0,0.08); }
+    .nav-right { display:flex; align-items:center; gap:12px; flex-shrink:0; }
+    .nav-cta { background:#F0A500; color:#0B1929; font-weight:700; font-size:11px; padding:7px 16px; border-radius:6px; border:none; text-decoration:none; white-space:nowrap; }
+    .hamburger { display:none; flex-direction:column; gap:4px; cursor:pointer; padding:6px; background:none; border:none; }
+    .hamburger span { display:block; width:18px; height:2px; background:#F0A500; border-radius:1px; }
+    .mobile-overlay { display:none; position:fixed; inset:0; background:#0B1929; z-index:9999; padding:24px; overflow-y:auto; }
+    .mobile-overlay.open { display:block; }
+    .mob-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:24px; }
+    .mob-close { background:none; border:none; color:#F0A500; font-size:24px; cursor:pointer; padding:4px; line-height:1; }
+    .mob-link { display:block; font-size:16px; color:rgba(255,255,255,0.7); text-decoration:none; padding:14px 0; border-bottom:1px solid rgba(255,255,255,0.07); }
+    .mob-link.active { color:#F0A500; }
+    .mob-wl { margin-top:24px; display:block; text-align:center; background:#F0A500; color:#0B1929; font-weight:700; font-size:14px; padding:12px; border-radius:7px; text-decoration:none; }
 
     /* ── MAIN CONTENT ───────────────────────────────────────────────────────── */
     .main {
@@ -335,8 +290,7 @@
     }
 
     @media (max-width: 768px) {
-      nav { padding: 0 16px; }
-      .back-link { padding: 16px; }
+      .nav-links { display:none; } .hamburger { display:flex; } nav { padding: 0 16px; }
       .main { padding: 0 16px 40px; }
       h1 { font-size: 22px; }
       footer { padding: 16px; }
@@ -345,9 +299,8 @@
 </head>
 <body>
 
-<!-- ── NAV ──────────────────────────────────────────────────────────────────── -->
 <nav>
-  <a href="/" class="logo">
+  <a href="/index.html" class="logo">
     <div class="logo-icon">
       <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
         <rect x="1" y="3" width="3" height="10" rx="0.5" fill="white"/>
@@ -358,16 +311,43 @@
     </div>
     <span class="logo-text">Mandate <span>OpEx</span></span>
   </a>
-  <a href="/index.html#waitlist" class="nav-cta">Join the waitlist</a>
+  <div class="nav-links">
+    <a class="nav-link" href="/tools.html">Tools</a>
+    <a class="nav-link" href="/guides.html">Guides</a>
+    <a class="nav-link" href="/news.html">News</a>
+    <a class="nav-link" href="/faq.html">FAQ</a>
+    <a class="nav-link" href="/help.html">Help</a>
+    <a class="nav-link" href="/about.html">About</a>
+  </div>
+  <div class="nav-right">
+    <button class="hamburger" id="hamburger" aria-label="Open menu"><span></span><span></span><span></span></button>
+    <a href="/index.html#waitlist" class="nav-cta">Join the waitlist</a>
+  </div>
 </nav>
 
-<!-- ── BACK LINK ─────────────────────────────────────────────────────────────── -->
-<a href="/index.html" class="back-link">
-  <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M8 1L3 6l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-  </svg>
-  Back to all tools
-</a>
+<div class="mobile-overlay" id="mobile-overlay">
+  <div class="mob-header">
+    <a href="/index.html" class="logo">
+      <div class="logo-icon">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="1" y="3" width="3" height="10" rx="0.5" fill="white"/>
+          <rect x="6" y="6" width="3" height="7" rx="0.5" fill="white"/>
+          <rect x="11" y="9" width="3" height="4" rx="0.5" fill="white"/>
+          <polyline points="2.5,3 7.5,6 12.5,9" stroke="white" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        </svg>
+      </div>
+      <span class="logo-text">Mandate <span>OpEx</span></span>
+    </a>
+    <button class="mob-close" id="mob-close">&#x2715;</button>
+  </div>
+  <a class="mob-link" href="/tools.html">Tools</a>
+  <a class="mob-link" href="/guides.html">Guides</a>
+  <a class="mob-link" href="/news.html">News</a>
+  <a class="mob-link" href="/faq.html">FAQ</a>
+  <a class="mob-link" href="/help.html">Help</a>
+  <a class="mob-link" href="/about.html">About</a>
+  <a class="mob-wl" href="/index.html#waitlist">Join the waitlist</a>
+</div>
 
 <!-- ── MAIN ──────────────────────────────────────────────────────────────────── -->
 <main class="main">
@@ -482,6 +462,16 @@
 
     pillsRow.innerHTML = html;
   }
+
+  // Hamburger
+  var hamburger = document.getElementById('hamburger');
+  var overlay   = document.getElementById('mobile-overlay');
+  var closeBtn  = document.getElementById('mob-close');
+  function openOverlay()  { overlay.classList.add('open');    document.body.style.overflow='hidden'; }
+  function closeOverlay() { overlay.classList.remove('open'); document.body.style.overflow=''; }
+  if (hamburger) hamburger.addEventListener('click', openOverlay);
+  if (closeBtn)  closeBtn.addEventListener('click', closeOverlay);
+  overlay.addEventListener('click', function(e){ if(e.target===overlay) closeOverlay(); });
 
   // Notify form
   var form = document.getElementById('notify-form');
