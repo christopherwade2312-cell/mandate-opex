@@ -503,6 +503,28 @@
       });
     });
   }
+
+  // Dynamic waitlist counter
+  (function() {
+    var TOTAL    = 50;
+    var FALLBACK = 12;
+    function updateCounter(count) {
+      var remaining    = Math.max(0, TOTAL - count);
+      var pct          = Math.min(100, Math.round(count / TOTAL * 100));
+      var spotsLeft    = document.querySelector('.spots-left');
+      var spotsRemain  = document.querySelector('.spots-remain');
+      var progressFill = document.querySelector('.progress-fill');
+      if (spotsLeft)    spotsLeft.textContent   = count + ' of 50 founder spots claimed';
+      if (spotsRemain)  spotsRemain.textContent = remaining + ' remaining';
+      if (progressFill) progressFill.style.width = pct + '%';
+    }
+    fetch('https://api.airtable.com/v0/appyLNjk2cKIk6swM/Waitlist?pageSize=100&fields%5B%5D=Email', {
+      headers: { 'Authorization': 'Bearer patmoq442wmkNDGhD.edfe94549612aa6395252343786a7d8cb5f3d074f9a8db406ccb2578fe9baaf4' }
+    }).then(function(r) { return r.json(); })
+      .then(function(d) { updateCounter((d.records && d.records.length) || FALLBACK); })
+      .catch(function()  { updateCounter(FALLBACK); });
+  })();
+
 })();
 </script>
 </body>
