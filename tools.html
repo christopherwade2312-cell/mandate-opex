@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>All Tools — Mandate OpEx</title>
+  <meta name="description" content="25 operational diagnostic tools, assessments and management systems. Start with an assessment, then use the tool packs to sustain improvement.">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { background: #0B1929; color: #F4F1EA; font-family: system-ui,-apple-system,sans-serif; font-size: 14px; line-height: 1.6; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+    ::-webkit-scrollbar { width: 6px; } ::-webkit-scrollbar-track { background: transparent; } ::-webkit-scrollbar-thumb { background: rgba(240,165,0,0.3); border-radius: 3px; }
+    ::selection { background: rgba(240,165,0,0.2); }
+
+    nav { width:100%; height:54px; display:flex; align-items:center; justify-content:space-between; padding:0 28px; background:#0B1929; border-bottom:1px solid rgba(255,255,255,0.07); position:sticky; top:0; z-index:1000; }
+    .logo { display:flex; align-items:center; gap:8px; text-decoration:none; flex-shrink:0; }
+    .logo-icon { width:30px; height:30px; background:#F0A500; border-radius:7px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+    .logo-text { font-size:14px; font-weight:500; color:#F4F1EA; }
+    .logo-text span { color:#F0A500; }
+    .nav-links { display:flex; align-items:center; gap:2px; }
+    .nav-link { font-size:12px; color:rgba(255,255,255,0.5); padding:5px 12px; border-radius:5px; text-decoration:none; display:inline-block; transition:color 0.15s; white-space:nowrap; }
+    .nav-link:hover { color:#F4F1EA; }
+    .nav-link.active { color:#F0A500; background:rgba(240,165,0,0.08); }
+    .nav-right { display:flex; align-items:center; gap:12px; flex-shrink:0; }
+    .nav-cta { background:#F0A500; color:#0B1929; font-weight:700; font-size:11px; padding:7px 16px; border-radius:6px; border:none; text-decoration:none; white-space:nowrap; }
+    .hamburger { display:none; flex-direction:column; gap:4px; cursor:pointer; padding:6px; background:none; border:none; }
+    .hamburger span { display:block; width:18px; height:2px; background:#F0A500; border-radius:1px; }
+
+    .mobile-overlay { display:none; position:fixed; inset:0; background:#0B1929; z-index:9999; padding:24px; overflow-y:auto; }
+    .mobile-overlay.open { display:block; }
+    .mob-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:24px; }
+    .mob-close { background:none; border:none; color:#F0A500; font-size:24px; cursor:pointer; padding:4px; line-height:1; }
+    .mob-link { display:block; font-size:16px; color:rgba(255,255,255,0.7); text-decoration:none; padding:14px 0; border-bottom:1px solid rgba(255,255,255,0.07); }
+    .mob-link.active { color:#F0A500; }
+    .mob-wl { margin-top:24px; display:block; text-align:center; background:#F0A500; color:#0B1929; font-weight:700; font-size:14px; padding:12px; border-radius:7px; text-decoration:none; }
+
+    footer { border-top:1px solid rgba(255,255,255,0.06); padding:16px 28px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; background:#0B1929; }
+    .footer-left p { font-size:10px; color:rgba(255,255,255,0.28); line-height:1.6; margin-bottom:3px; }
+    .footer-left p strong { font-weight:500; color:rgba(255,255,255,0.55); }
+    .footer-privacy { font-size:10px; color:rgba(255,255,255,0.25); text-decoration:underline; }
+    .footer-right { display:flex; align-items:center; gap:16px; }
+    .footer-email { font-size:11px; color:#F0A500; text-decoration:none; }
+    .footer-wl-btn { background:rgba(240,165,0,0.1); border:1px solid rgba(240,165,0,0.22); border-radius:5px; padding:6px 13px; font-size:11px; color:#F0A500; text-decoration:none; }
+
+    /* Page header */
+    .page-header { padding: 32px 28px 24px; max-width: 1060px; margin: 0 auto; }
+    .eyebrow { display:flex; align-items:center; gap:8px; font-size:10px; font-weight:500; letter-spacing:0.13em; text-transform:uppercase; color:#F0A500; margin-bottom:12px; }
+    .eyebrow::before { content:''; display:block; width:20px; height:1.5px; background:#F0A500; flex-shrink:0; }
+    h1 { font-family:Georgia,serif; font-size:26px; font-weight:700; color:#F4F1EA; line-height:1.15; letter-spacing:-0.02em; margin-bottom:10px; }
+    .page-sub { font-size:13px; color:rgba(255,255,255,0.45); line-height:1.65; max-width:580px; margin-bottom:20px; }
+    .jump-row { display:flex; gap:10px; flex-wrap:wrap; }
+    .jump-btn { font-size:12px; color:#F0A500; padding:7px 16px; border-radius:6px; border:1px solid rgba(240,165,0,0.3); text-decoration:none; background:rgba(240,165,0,0.05); }
+    .jump-btn:hover { background:rgba(240,165,0,0.1); }
+
+    /* Sections */
+    .tools-section { padding: 24px 28px; max-width: 1060px; margin: 0 auto; }
+    .toolpacks-section { border-top:1px solid rgba(255,255,255,0.06); padding-top:32px; margin-top:8px; }
+    h2 { font-family:Georgia,serif; font-size:20px; font-weight:700; color:#F4F1EA; margin-bottom:5px; }
+    h2 em { font-style:italic; color:#F0A500; }
+    .section-sub { font-size:11px; color:rgba(255,255,255,0.4); line-height:1.65; max-width:520px; margin-bottom:16px; }
+
+    /* Tabs */
+    .tabs { display:flex; border-bottom:1px solid rgba(255,255,255,0.07); margin-bottom:14px; overflow-x:auto; -webkit-overflow-scrolling:touch; scrollbar-width:none; }
+    .tabs::-webkit-scrollbar { display:none; }
+    .tab { font-size:11px; color:rgba(255,255,255,0.38); padding:7px 14px; cursor:pointer; border-bottom:2px solid transparent; margin-bottom:-1px; white-space:nowrap; background:none; border-top:none; border-left:none; border-right:none; font-family:inherit; }
+    .tab.on { color:#F0A500; border-bottom-color:#F0A500; font-weight:500; }
+
+    /* Tool cards */
+    .tools-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; }
+    .tc { background:#0F2036; border:1px solid rgba(255,255,255,0.06); border-radius:9px; padding:12px; }
+    .tc-live { border-color:rgba(34,201,151,0.2); }
+    .tc-top { display:flex; justify-content:space-between; gap:6px; margin-bottom:5px; }
+    .tc-name { font-size:11px; font-weight:500; color:#F4F1EA; line-height:1.3; }
+    .badge { font-size:8px; font-weight:700; text-transform:uppercase; letter-spacing:0.04em; padding:2px 6px; border-radius:3px; white-space:nowrap; flex-shrink:0; align-self:flex-start; }
+    .badge-live { background:rgba(34,201,151,0.12); color:#22C997; }
+    .badge-soon { background:rgba(255,255,255,0.05); color:rgba(255,255,255,0.28); }
+    .tc-desc { font-size:10px; color:rgba(255,255,255,0.35); line-height:1.55; margin-bottom:7px; }
+    .tc-amber-note { font-size:9px; color:rgba(240,165,0,0.7); margin-bottom:7px; margin-top:-3px; }
+    .tc-bottom { display:flex; justify-content:space-between; align-items:center; }
+    .cat-pill { font-size:8px; font-weight:600; text-transform:uppercase; letter-spacing:0.06em; padding:2px 6px; border-radius:3px; }
+    .cat-operations { background:rgba(240,165,0,0.09); color:rgba(240,165,0,0.7); }
+    .cat-quality    { background:rgba(34,201,151,0.09); color:rgba(34,201,151,0.65); }
+    .cat-strategy   { background:rgba(110,150,255,0.09); color:rgba(110,150,255,0.7); }
+    .cat-people     { background:rgba(190,120,210,0.09); color:rgba(190,120,210,0.7); }
+    .cat-commercial { background:rgba(240,100,90,0.09); color:rgba(240,100,90,0.65); }
+    .tc-link { font-size:10px; color:#F0A500; text-decoration:none; }
+
+    /* Suggest section */
+    .suggest-section { background:#0F2036; border-top:1px solid rgba(255,255,255,0.06); padding:24px 28px; }
+    .suggest-inner { max-width:1060px; margin:0 auto; }
+    h2.suggest-h2 { font-size:18px; margin-bottom:6px; }
+    .suggest-sub { font-size:11px; color:rgba(255,255,255,0.4); line-height:1.6; max-width:500px; margin-bottom:16px; }
+    .suggest-form { max-width:480px; }
+    .suggest-textarea { width:100%; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:7px; padding:10px; font-size:12px; color:rgba(255,255,255,0.65); font-family:inherit; resize:vertical; min-height:80px; margin-bottom:8px; outline:none; }
+    .suggest-textarea::placeholder { color:rgba(255,255,255,0.25); }
+    .suggest-textarea:focus { border-color:rgba(240,165,0,0.3); }
+    .suggest-email { width:100%; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:7px; padding:8px 10px; font-size:12px; color:rgba(255,255,255,0.65); font-family:inherit; margin-bottom:8px; outline:none; }
+    .suggest-email::placeholder { color:rgba(255,255,255,0.25); }
+    .suggest-email:focus { border-color:rgba(240,165,0,0.3); }
+    .suggest-btn { background:transparent; border:1px solid rgba(240,165,0,0.4); color:#F0A500; font-size:12px; font-weight:500; padding:8px 18px; border-radius:7px; cursor:pointer; font-family:inherit; }
+    .suggest-btn:hover { background:rgba(240,165,0,0.06); }
+    .suggest-confirm { font-size:11px; color:#22C997; margin-top:10px; display:none; line-height:1.5; }
+
+    @media (max-width:768px) {
+      .nav-links { display:none; } .hamburger { display:flex; } nav { padding:0 16px; }
+      footer { padding:16px; flex-direction:column; align-items:flex-start; }
+      .page-header { padding:24px 16px 20px; }
+      .tools-section { padding:20px 16px; }
+      .suggest-section { padding:20px 16px; }
+      .tools-grid { grid-template-columns:1fr; }
+      h1 { font-size:20px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="/index.html" class="logo">
+    <div class="logo-icon">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="1" y="3" width="3" height="10" rx="0.5" fill="white"/>
+        <rect x="6" y="6" width="3" height="7" rx="0.5" fill="white"/>
+        <rect x="11" y="9" width="3" height="4" rx="0.5" fill="white"/>
+        <polyline points="2.5,3 7.5,6 12.5,9" stroke="white" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      </svg>
+    </div>
+    <span class="logo-text">Mandate <span>OpEx</span></span>
+  </a>
+  <div class="nav-links">
+    <a class="nav-link active" href="/tools.html">Tools</a>
+    <a class="nav-link" href="/guides.html">Guides</a>
+    <a class="nav-link" href="/news.html">News</a>
+    <a class="nav-link" href="/faq.html">FAQ</a>
+    <a class="nav-link" href="/help.html">Help</a>
+    <a class="nav-link" href="/about.html">About</a>
+  </div>
+  <div class="nav-right">
+    <button class="hamburger" id="hamburger" aria-label="Open menu"><span></span><span></span><span></span></button>
+    <a href="/index.html#waitlist" class="nav-cta">Join the waitlist</a>
+  </div>
+</nav>
+
+<div class="mobile-overlay" id="mobile-overlay">
+  <div class="mob-header">
+    <a href="/index.html" class="logo">
+      <div class="logo-icon">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="1" y="3" width="3" height="10" rx="0.5" fill="white"/>
+          <rect x="6" y="6" width="3" height="7" rx="0.5" fill="white"/>
+          <rect x="11" y="9" width="3" height="4" rx="0.5" fill="white"/>
+          <polyline points="2.5,3 7.5,6 12.5,9" stroke="white" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        </svg>
+      </div>
+      <span class="logo-text">Mandate <span>OpEx</span></span>
+    </a>
+    <button class="mob-close" id="mob-close">&#x2715;</button>
+  </div>
+  <a class="mob-link active" href="/tools.html">Tools</a>
+  <a class="mob-link" href="/guides.html">Guides</a>
+  <a class="mob-link" href="/news.html">News</a>
+  <a class="mob-link" href="/faq.html">FAQ</a>
+  <a class="mob-link" href="/help.html">Help</a>
+  <a class="mob-link" href="/about.html">About</a>
+  <a class="mob-wl" href="/index.html#waitlist">Join the waitlist</a>
+</div>
+
+<!-- PAGE HEADER -->
+<div class="page-header">
+  <div class="eyebrow">The toolkit</div>
+  <h1>25 tools, assessments and management systems.</h1>
+  <p class="page-sub">Start with an assessment to understand where you are. Then use the tool packs to fix it and build the operating rhythm.</p>
+  <div class="jump-row">
+    <a href="#assessments" class="jump-btn">Assessments and audits</a>
+    <a href="#tool-packs" class="jump-btn">Tool packs</a>
+  </div>
+</div>
+
+<!-- SECTION A: ASSESSMENTS -->
+<div class="tools-section" id="assessments">
+  <div class="eyebrow">Assessments and audit forms</div>
+  <h2>Understand where you are. <em>Then fix it.</em></h2>
+  <p class="section-sub">Each assessment gives you a score, a gap analysis, and a prioritised action plan. Start here.</p>
+
+  <div class="tabs" id="assessment-tabs">
+    <button class="tab on" data-tab="all">All</button>
+    <button class="tab" data-tab="operations">Operations</button>
+    <button class="tab" data-tab="quality">Quality</button>
+    <button class="tab" data-tab="people">People</button>
+    <button class="tab" data-tab="strategy">Strategy</button>
+    <button class="tab" data-tab="commercial">Commercial</button>
+  </div>
+
+  <div class="tools-grid" id="assessment-grid">
+
+    <div class="tc tc-live" data-category="operations">
+      <div class="tc-top"><div class="tc-name">Cost of Waste Calculator</div><span class="badge badge-live">Live now</span></div>
+      <div class="tc-desc">Quantify hidden waste in pounds per year across 8 sectors. Sector-specific questions, benchmarks, and a plain-English action plan.</div>
+      <div class="tc-bottom"><span class="cat-pill cat-operations">Operations</span><a href="/waste-calculator.html" class="tc-link">Try it now &rarr;</a></div>
+    </div>
+
+    <div class="tc" data-category="operations">
+      <div class="tc-top"><div class="tc-name">OEE Diagnostic</div><span class="badge badge-soon">Coming soon</span></div>
+      <div class="tc-desc">Score availability, performance and quality. Find which pillar is dragging you down.</div>
+      <div class="tc-bottom"><span class="cat-pill cat-operations">Operations</span><a href="/coming-soon.html?tool=OEE+Diagnostic&amp;category=operations&amp;type=assessment&amp;desc=Score+your+availability+performance+and+quality.+Find+which+pillar+is+dragging+you+down+and+get+a+ranked+fix+list." class="tc-link">Notify me &rarr;</a></div>
+    </div>
+
+    <div class="tc" data-category="operations">
+      <div class="tc-top"><div class="tc-name">SMED Changeover Assessment</div><span class="badge badge-soon">Coming soon</span></div>
+      <div class="tc-desc">Calculate pounds per month lost to changeover. Identify internal vs external waste.</div>
+      <div class="tc-bottom"><span class="cat-pill cat-operations">Operations</span><a href="/coming-soon.html?tool=SMED+Changeover+Assessment&amp;category=operations&amp;type=assessment&amp;desc=Calculate+pounds+per+month+lost+to+changeover.+Identify+internal+vs+external+waste+and+get+a+ranked+action+list." class="tc-link">Notify me &rarr;</a></div>
+    </div>
+
+    <div class="tc" data-category="operations">
+      <div class="tc-top"><div class="tc-name">Capacity Assessment</div><span class="badge badge-soon">Coming soon</span></div>
+      <div class="tc-desc">Calculate your true available capacity. Find the bottlenecks before you take on the next order.</div>
+      <div class="tc-bottom"><span class="cat-pill cat-operations">Operations</span><a href="/coming-soon.html?tool=Capacity+Assessment&amp;category=operations&amp;type=assessment&amp;desc=Calculate+your+true+available+capacity+and+find+the+bottlenecks+before+you+take+on+the+next+order." class="tc-link">Notify me &rarr;</a></div>
+    </div>
+
+    <div class="tc" data-category="operations">
+      <div class="tc-top"><div class="tc-name">Maintenance Maturity Assessment</div><span class="badge badge-soon">Coming soon</span></div>
+      <div class="tc-desc">Score your maintenance operation across all 8 TPM pillars.</div>
+      <div class="tc-bottom"><span class="cat-pill cat-operations">Operations</span><a href="/coming-soon.html?tool=Maintenance+Maturity+Assessment&amp;category=operations&amp;type=assessment&amp;desc=Score+your+maintenance+operation+across+all+8+TPM+pillars.+Understand+where+your+availability+losses+are+coming+from." class="tc-link">Notify me &rarr;</a></div>
+    </div>
+
+    <div class="tc" data-category="quality">
+      <div class="tc-top"><div class="tc-name">Operational Audit</div><span class="badge badge-soon">Coming soon</span></div>
+      <div class="tc-desc">Full health check across Safety, Quality, Cost, Delivery, People. Traffic light output.</div>
+      <div class="tc-bottom"><span class="cat-pill cat-quality">Quality</span><a href="/coming-soon.html?tool=Operational+Audit&amp;category=quality&amp;type=assessment&amp;desc=Full+health+check+across+Safety+Quality+Cost+Delivery+People.+Traffic+light+output+with+prioritised+action+plan." class="tc-link">Notify me &rarr;</a></div>
+    </div>
+
+    <div class="tc" data-category="quality">
+      <div class="tc-top"><div class="tc-name">5S Readiness Assessment</div><span class="badge badge-soon">Coming soon</span></div>
+      <div class="tc-desc">Score workplace organisation across all 5 pillars. Gap analysis and improvement plan.</div>
+      <div class="tc-bottom"><span class="cat-pill cat-quality">Quality</span><a href="/coming-soon.html?tool=5S+Readiness+Assessment&amp;category=quality&amp;type=assessment&amp;desc=Score+workplace+organisation+across+all+5+pillars.+Get+a+gap+analysis+and+prioritised+improvement+plan." class="tc-link">Notify me &rarr;</a></div>
+    </div>
+
+    <div class="tc" data-category="quality">
+      <div class="tc-top"><div class="tc-name">Quality Culture Assessment</div><span class="badge badge-soon">Coming soon</span></div>
+      <div class="tc-desc">Assess quality culture strength across leadership, process, people and systems.</div>
+      <div class="tc-bottom"><span class="cat-pill cat-quality">Quality</span><a href="/coming-soon.html?tool=Quality+Culture+Assessment&amp;category=quality&amp;type=assessment&amp;desc=Assess+quality+culture+strength+across+leadership+process+people+and+systems." class="tc-link">Notify me &rarr;</a></div>
+    </div>
+
+    <div class="tc" data-category="quality">
+      <div class="tc-top"><div class="tc-name">Root Cause Analysis Form</div><span class="badge badge-soon">Coming soon</span></div>
+      <div class="tc-desc">Structured problem solving from symptom to root cause. Stop the same problems recurring.</div>
+      <div class="tc-bottom"><span class="cat-pill cat-quality">Quality</span><a href="/coming-soon.html?tool=Root+Cause+Analysis+Form&amp;category=quality&amp;type=assessment&amp;desc=Structured+problem+solving+from+symptom+to+root+cause.+Stop+the+same+problems+recurring." class="tc-link">Notify me &rarr;</a></div>
+    </div>
+
+    <div class="tc" data-category="people">
+      <div class="tc-top"><div class="tc-name">Skills Matrix Assessment</div><span class="badge badge-soon">Coming soon</span></div>
+      <div class="tc-desc">Map skills coverage and identify single points of failure.</div>
+      <div class="tc-bottom"><span class="cat-pill cat-people">People</span><a href="/coming-soon.html?tool=Skills+Matrix+Assessment&amp;category=people&amp;type=assessment&amp;desc=Map+skills+coverage+and+identify+single+points+of+failure.+Know+if+you+can+run+every+line+every+shift." class="tc-link">Notify me &rarr;</a></div>
+    </div>
+
+    <div class="tc" data-category="people">
+      <div class="tc-top"><div class="tc-name">Change Readiness Assessment</div><span class="badge badge-soon">Coming soon</span></div>
+      <div class="tc-desc">Assess how ready your organisation is to absorb and sustain change.</div>
+      <div class="tc-bottom"><span class="cat-pill cat-people">People</span><a href="/coming-soon.html?tool=Change+Readiness+Assessment&amp;category=people&amp;type=assessment&amp;desc=Assess+how+ready+your+organisation+is+to+absorb+and+sustain+change+before+your+next+initiative." class="tc-link">Notify me &rarr;</a></div>
+    </div>
+
+    <div class="tc" data-category="strategy">
+      <div class="tc-top"><div class="tc-name">AI Readiness Diagnostic</div><span class="badge badge-soon">Coming soon</span></div>
+      <div class="tc-desc">5 operation-specific dimensions. Know if your business is ready for AI.</div>
+      <div class="tc-bottom"><span class="cat-pill cat-strategy">Strategy</span><a href="/coming-soon.html?tool=AI+Readiness+Diagnostic&amp;category=strategy&amp;type=assessment&amp;desc=5+operation-specific+dimensions.+Know+if+your+business+is+ready+for+AI+before+spending+anything+on+it." class="tc-link">Notify me &rarr;</a></div>
+    </div>
+
+    <div class="tc" data-category="strategy">
+      <div class="tc-top"><div class="tc-name">Strategy Deployment Assessment</div><span class="badge badge-soon">Coming soon</span></div>
+      <div class="tc-desc">Assess how well your strategy cascades from boardroom to shop floor.</div>
+      <div class="tc-bottom"><span class="cat-pill cat-strategy">Strategy</span><a href="/coming-soon.html?tool=Strategy+Deployment+Assessment&amp;category=strategy&amp;type=assessment&amp;desc=Assess+how+well+your+strategy+cascades+from+boardroom+to+shop+floor.+Find+the+gaps+in+your+deployment." class="tc-link">Notify me &rarr;</a></div>
+    </div>
+
+    <div class="tc" data-category="commercial">
+      <div class="tc-top"><div class="tc-name">Supplier Audit Form</div><span class="badge badge-soon">Coming soon</span></div>
+      <div class="tc-desc">Structured audit covering quality, delivery, responsiveness and risk.</div>
+      <div class="tc-bottom"><span class="cat-pill cat-commercial">Commercial</span><a href="/coming-soon.html?tool=Supplier+Audit+Form&amp;category=commercial&amp;type=assessment&amp;desc=Structured+audit+covering+quality+delivery+responsiveness+financial+stability+and+risk.+Score+each+supplier+and+generate+a+report." class="tc-link">Notify me &rarr;</a></div>
+    </div>
+
+  </div><!-- /#assessment-grid -->
+
+  <!-- SECTION B: TOOL PACKS -->
+  <div class="toolpacks-section" id="tool-packs">
+    <div class="eyebrow">Tool packs</div>
+    <h2>Fix the gaps. <em>Build the operating rhythm.</em></h2>
+    <p class="section-sub">Use alongside your assessment results. Each tool pack gives you the ongoing management system to sustain improvement.</p>
+
+    <div class="tabs" id="toolpack-tabs">
+      <button class="tab on" data-tab="all">All</button>
+      <button class="tab" data-tab="operations">Operations</button>
+      <button class="tab" data-tab="quality">Quality</button>
+      <button class="tab" data-tab="strategy">Strategy</button>
+      <button class="tab" data-tab="commercial">Commercial</button>
+    </div>
+
+    <div class="tools-grid" id="toolpack-grid">
+
+      <div class="tc" data-category="operations">
+        <div class="tc-top"><div class="tc-name">SQCDP Live</div><span class="badge badge-soon">Coming soon</span></div>
+        <div class="tc-desc">The daily management system. Safety, Quality, Cost, Delivery, People. Your operational heartbeat.</div>
+        <div class="tc-bottom"><span class="cat-pill cat-operations">Operations</span><a href="/coming-soon.html?tool=SQCDP+Live&amp;category=operations&amp;type=toolpack&amp;desc=The+daily+management+system.+Safety+Quality+Cost+Delivery+People.+Visual+management+KPI+tracking+escalation+process+and+shift+handover.+Your+operational+heartbeat." class="tc-link">Notify me &rarr;</a></div>
+      </div>
+
+      <div class="tc" data-category="operations">
+        <div class="tc-top"><div class="tc-name">Maintenance Maturity Tracker</div><span class="badge badge-soon">Coming soon</span></div>
+        <div class="tc-desc">Ongoing TPM improvement planner. Track progress across all 8 pillars.</div>
+        <div class="tc-bottom"><span class="cat-pill cat-operations">Operations</span><a href="/coming-soon.html?tool=Maintenance+Maturity+Tracker&amp;category=operations&amp;type=toolpack&amp;desc=Ongoing+TPM+improvement+planner.+Track+progress+across+all+8+pillars+and+manage+your+maintenance+improvement+programme." class="tc-link">Notify me &rarr;</a></div>
+      </div>
+
+      <div class="tc" data-category="operations">
+        <div class="tc-top"><div class="tc-name">SMED Improvement Planner</div><span class="badge badge-soon">Coming soon</span></div>
+        <div class="tc-desc">Action plan and tracker for changeover reduction. Measure improvement over time.</div>
+        <div class="tc-bottom"><span class="cat-pill cat-operations">Operations</span><a href="/coming-soon.html?tool=SMED+Improvement+Planner&amp;category=operations&amp;type=toolpack&amp;desc=Action+plan+and+tracker+for+changeover+reduction.+Convert+internal+to+external+activities+and+measure+improvement." class="tc-link">Notify me &rarr;</a></div>
+      </div>
+
+      <div class="tc" data-category="operations">
+        <div class="tc-top"><div class="tc-name">Capacity Planner</div><span class="badge badge-soon">Coming soon</span></div>
+        <div class="tc-desc">Ongoing capacity management and scenario planning. Load vs resource visibility.</div>
+        <div class="tc-bottom"><span class="cat-pill cat-operations">Operations</span><a href="/coming-soon.html?tool=Capacity+Planner&amp;category=operations&amp;type=toolpack&amp;desc=Ongoing+capacity+management+and+scenario+planning.+Load+vs+resource+visibility+across+your+operation." class="tc-link">Notify me &rarr;</a></div>
+      </div>
+
+      <div class="tc" data-category="operations">
+        <div class="tc-top"><div class="tc-name">Kaizen Log</div><span class="badge badge-soon">Coming soon</span></div>
+        <div class="tc-desc">Capture ideas, assign owners, track progress. Build a culture of improvement.</div>
+        <div class="tc-bottom"><span class="cat-pill cat-operations">Operations</span><a href="/coming-soon.html?tool=Kaizen+Log&amp;category=operations&amp;type=toolpack&amp;desc=Capture+improvement+ideas+assign+owners+track+progress+measure+impact+and+build+a+culture+of+continuous+improvement." class="tc-link">Notify me &rarr;</a></div>
+      </div>
+
+      <div class="tc" data-category="quality">
+        <div class="tc-top"><div class="tc-name">5S Improvement Tool Pack</div><span class="badge badge-soon">Coming soon</span></div>
+        <div class="tc-desc">Implementation tracker, audit schedule and sustain checklist. Keep 5S alive.</div>
+        <div class="tc-bottom"><span class="cat-pill cat-quality">Quality</span><a href="/coming-soon.html?tool=5S+Improvement+Tool+Pack&amp;category=quality&amp;type=toolpack&amp;desc=Implementation+tracker+audit+schedule+and+sustain+checklist.+Keep+5S+alive+beyond+the+initial+sort+and+shine." class="tc-link">Notify me &rarr;</a></div>
+      </div>
+
+      <div class="tc" data-category="strategy">
+        <div class="tc-top"><div class="tc-name">Strategy Deployment Planner</div><span class="badge badge-soon">Coming soon</span></div>
+        <div class="tc-desc">Hoshin Kanri in plain English. Set breakthrough objectives and cascade them to the front line.</div>
+        <div class="tc-bottom"><span class="cat-pill cat-strategy">Strategy</span><a href="/coming-soon.html?tool=Strategy+Deployment+Planner&amp;category=strategy&amp;type=toolpack&amp;desc=Hoshin+Kanri+in+plain+English.+Set+breakthrough+objectives+and+cascade+them+to+the+front+line+with+clear+ownership." class="tc-link">Notify me &rarr;</a></div>
+      </div>
+
+      <div class="tc" data-category="strategy">
+        <div class="tc-top"><div class="tc-name">MD Cockpit</div><span class="badge badge-soon">Coming soon</span></div>
+        <div class="tc-desc">Aggregates all scores into one business dashboard. See your entire operation at a glance.</div>
+        <div class="tc-amber-note">Builds last — aggregates everything</div>
+        <div class="tc-bottom"><span class="cat-pill cat-strategy">Strategy</span><a href="/coming-soon.html?tool=MD+Cockpit&amp;category=strategy&amp;type=toolpack&amp;desc=Aggregates+all+your+scores+from+every+tool+into+one+business+dashboard.+See+the+health+of+your+entire+operation+at+a+glance.+Builds+last." class="tc-link">Notify me &rarr;</a></div>
+      </div>
+
+      <div class="tc" data-category="commercial">
+        <div class="tc-top"><div class="tc-name">Supply Chain Performance Tracker</div><span class="badge badge-soon">Coming soon</span></div>
+        <div class="tc-desc">Track OTIF, PPM, lead time and risk rating across your supplier base.</div>
+        <div class="tc-bottom"><span class="cat-pill cat-commercial">Commercial</span><a href="/coming-soon.html?tool=Supply+Chain+Performance+Tracker&amp;category=commercial&amp;type=toolpack&amp;desc=Track+OTIF+PPM+lead+time+price+variance+and+risk+rating+across+your+supplier+base.+Manage+with+data+not+gut+feel." class="tc-link">Notify me &rarr;</a></div>
+      </div>
+
+      <div class="tc" data-category="commercial">
+        <div class="tc-top"><div class="tc-name">Mandate CRM</div><span class="badge badge-soon">Coming soon</span></div>
+        <div class="tc-desc">Lightweight CRM for operational SMEs. Pipeline management with board-level reporting.</div>
+        <div class="tc-bottom"><span class="cat-pill cat-commercial">Commercial</span><a href="/coming-soon.html?tool=Mandate+CRM&amp;category=commercial&amp;type=toolpack&amp;desc=Lightweight+CRM+for+operational+SMEs.+Pipeline+management+across+multiple+revenue+streams+with+board-level+financial+summaries." class="tc-link">Notify me &rarr;</a></div>
+      </div>
+
+      <div class="tc" data-category="commercial">
+        <div class="tc-top"><div class="tc-name">Mandate Jobs</div><span class="badge badge-soon">Coming soon</span></div>
+        <div class="tc-desc">The executive job search platform for operations and manufacturing leaders.</div>
+        <div class="tc-bottom"><span class="cat-pill cat-commercial">Commercial</span><a href="/coming-soon.html?tool=Mandate+Jobs&amp;category=commercial&amp;type=toolpack&amp;desc=The+executive+job+search+platform+for+operations+and+manufacturing+leaders.+Built+for+your+level." class="tc-link">Notify me &rarr;</a></div>
+      </div>
+
+    </div><!-- /#toolpack-grid -->
+  </div><!-- /.toolpacks-section -->
+</div><!-- /.tools-section -->
+
+<!-- SECTION C: SUGGEST -->
+<div class="suggest-section" id="suggest">
+  <div class="suggest-inner">
+    <div class="eyebrow">Your input</div>
+    <h2 class="suggest-h2">Help us build what you need</h2>
+    <p class="suggest-sub">Tell us what tool would have the biggest impact on your operation. The most requested tools get built next.</p>
+    <div class="suggest-form">
+      <form id="suggest-form">
+        <textarea class="suggest-textarea" name="suggestion" placeholder="What tool would help your operation most?"></textarea>
+        <input class="suggest-email" type="email" name="suggest-email" placeholder="Your email (optional)">
+        <button type="submit" class="suggest-btn">Submit suggestion</button>
+      </form>
+      <div class="suggest-confirm" id="suggest-confirm">Thanks — we read every suggestion. If you left your email we will let you know when it gets built.</div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-left">
+    <p><strong>Pricing announced at launch.</strong> Founder pricing guaranteed to the first 50 members.</p>
+    <a href="/privacy.html" class="footer-privacy">Privacy policy</a>
+  </div>
+  <div class="footer-right">
+    <a href="mailto:hello@mandateopex.com" class="footer-email">hello@mandateopex.com</a>
+    <a href="/index.html#waitlist" class="footer-wl-btn">Join the waitlist &rarr;</a>
+  </div>
+</footer>
+
+<script>
+(function() {
+  var hamburger = document.getElementById('hamburger');
+  var overlay   = document.getElementById('mobile-overlay');
+  var closeBtn  = document.getElementById('mob-close');
+  function openOverlay()  { overlay.classList.add('open');    document.body.style.overflow='hidden'; }
+  function closeOverlay() { overlay.classList.remove('open'); document.body.style.overflow=''; }
+  if (hamburger) hamburger.addEventListener('click', openOverlay);
+  if (closeBtn)  closeBtn.addEventListener('click', closeOverlay);
+  overlay.addEventListener('click', function(e){ if(e.target===overlay) closeOverlay(); });
+
+  // Assessment tabs
+  (function() {
+    var tabs  = document.querySelectorAll('#assessment-tabs .tab');
+    var cards = document.querySelectorAll('#assessment-grid .tc');
+    tabs.forEach(function(tab) {
+      tab.addEventListener('click', function() {
+        tabs.forEach(function(t){ t.classList.remove('on'); });
+        tab.classList.add('on');
+        var f = tab.getAttribute('data-tab');
+        cards.forEach(function(c){ c.style.display = (f==='all'||c.getAttribute('data-category')===f) ? '' : 'none'; });
+      });
+    });
+  })();
+
+  // Toolpack tabs
+  (function() {
+    var tabs  = document.querySelectorAll('#toolpack-tabs .tab');
+    var cards = document.querySelectorAll('#toolpack-grid .tc');
+    tabs.forEach(function(tab) {
+      tab.addEventListener('click', function() {
+        tabs.forEach(function(t){ t.classList.remove('on'); });
+        tab.classList.add('on');
+        var f = tab.getAttribute('data-tab');
+        cards.forEach(function(c){ c.style.display = (f==='all'||c.getAttribute('data-category')===f) ? '' : 'none'; });
+      });
+    });
+  })();
+
+  // Suggestion form
+  var sf = document.getElementById('suggest-form');
+  var sc = document.getElementById('suggest-confirm');
+  if (sf) {
+    sf.addEventListener('submit', function(e) {
+      e.preventDefault();
+      var subs = JSON.parse(localStorage.getItem('tool_suggestions') || '[]');
+      subs.push({ suggestion: sf.querySelector('[name="suggestion"]').value.trim(), email: sf.querySelector('[name="suggest-email"]').value.trim(), timestamp: new Date().toISOString() });
+      localStorage.setItem('tool_suggestions', JSON.stringify(subs));
+      sf.style.display = 'none';
+      if (sc) sc.style.display = 'block';
+    });
+  }
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Help — Mandate OpEx</title>
+  <meta name="description" content="Get help with Mandate OpEx tools, report a bug, or get in touch with the team.">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { background: #0B1929; color: #F4F1EA; font-family: system-ui,-apple-system,sans-serif; font-size: 14px; line-height: 1.6; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+    ::-webkit-scrollbar { width: 6px; } ::-webkit-scrollbar-track { background: transparent; } ::-webkit-scrollbar-thumb { background: rgba(240,165,0,0.3); border-radius: 3px; }
+    ::selection { background: rgba(240,165,0,0.2); }
+
+    nav { width:100%; height:54px; display:flex; align-items:center; justify-content:space-between; padding:0 28px; background:#0B1929; border-bottom:1px solid rgba(255,255,255,0.07); position:sticky; top:0; z-index:1000; }
+    .logo { display:flex; align-items:center; gap:8px; text-decoration:none; flex-shrink:0; }
+    .logo-icon { width:30px; height:30px; background:#F0A500; border-radius:7px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+    .logo-text { font-size:14px; font-weight:500; color:#F4F1EA; }
+    .logo-text span { color:#F0A500; }
+    .nav-links { display:flex; align-items:center; gap:2px; }
+    .nav-link { font-size:12px; color:rgba(255,255,255,0.5); padding:5px 12px; border-radius:5px; text-decoration:none; display:inline-block; transition:color 0.15s; white-space:nowrap; }
+    .nav-link:hover { color:#F4F1EA; }
+    .nav-link.active { color:#F0A500; background:rgba(240,165,0,0.08); }
+    .nav-right { display:flex; align-items:center; gap:12px; flex-shrink:0; }
+    .nav-cta { background:#F0A500; color:#0B1929; font-weight:700; font-size:11px; padding:7px 16px; border-radius:6px; border:none; text-decoration:none; white-space:nowrap; }
+    .hamburger { display:none; flex-direction:column; gap:4px; cursor:pointer; padding:6px; background:none; border:none; }
+    .hamburger span { display:block; width:18px; height:2px; background:#F0A500; border-radius:1px; }
+
+    .mobile-overlay { display:none; position:fixed; inset:0; background:#0B1929; z-index:9999; padding:24px; overflow-y:auto; }
+    .mobile-overlay.open { display:block; }
+    .mob-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:24px; }
+    .mob-close { background:none; border:none; color:#F0A500; font-size:24px; cursor:pointer; padding:4px; line-height:1; }
+    .mob-link { display:block; font-size:16px; color:rgba(255,255,255,0.7); text-decoration:none; padding:14px 0; border-bottom:1px solid rgba(255,255,255,0.07); }
+    .mob-link.active { color:#F0A500; }
+    .mob-wl { margin-top:24px; display:block; text-align:center; background:#F0A500; color:#0B1929; font-weight:700; font-size:14px; padding:12px; border-radius:7px; text-decoration:none; }
+
+    footer { border-top:1px solid rgba(255,255,255,0.06); padding:16px 28px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; background:#0B1929; }
+    .footer-left p { font-size:10px; color:rgba(255,255,255,0.28); line-height:1.6; margin-bottom:3px; }
+    .footer-left p strong { font-weight:500; color:rgba(255,255,255,0.55); }
+    .footer-privacy { font-size:10px; color:rgba(255,255,255,0.25); text-decoration:underline; }
+    .footer-right { display:flex; align-items:center; gap:16px; }
+    .footer-email { font-size:11px; color:#F0A500; text-decoration:none; }
+    .footer-wl-btn { background:rgba(240,165,0,0.1); border:1px solid rgba(240,165,0,0.22); border-radius:5px; padding:6px 13px; font-size:11px; color:#F0A500; text-decoration:none; }
+
+    /* Page */
+    .page-header { padding: 32px 28px 24px; max-width: 1060px; margin: 0 auto; }
+    .eyebrow { display:flex; align-items:center; gap:8px; font-size:10px; font-weight:500; letter-spacing:0.13em; text-transform:uppercase; color:#F0A500; margin-bottom:12px; }
+    .eyebrow::before { content:''; display:block; width:20px; height:1.5px; background:#F0A500; flex-shrink:0; }
+    h1 { font-family:Georgia,serif; font-size:24px; font-weight:700; color:#F4F1EA; line-height:1.15; letter-spacing:-0.02em; margin-bottom:8px; }
+    .page-sub { font-size:13px; color:rgba(255,255,255,0.45); line-height:1.65; max-width:560px; }
+
+    /* Body */
+    .help-body { display: grid; grid-template-columns: 1fr 340px; gap: 32px; padding: 0 28px 48px; max-width: 1060px; margin: 0 auto; align-items: start; }
+
+    /* Help topic cards */
+    .topic-card { background: #112236; border: 1px solid rgba(255,255,255,0.07); border-radius: 10px; padding: 16px; margin-bottom: 10px; }
+    .topic-card:last-child { margin-bottom: 0; }
+    .topic-title { font-size: 13px; font-weight: 500; color: #F4F1EA; margin-bottom: 6px; }
+    .topic-body { font-size: 12px; color: rgba(255,255,255,0.45); line-height: 1.65; }
+
+    /* Contact card */
+    .contact-card { background: #132840; border: 1px solid rgba(240,165,0,0.22); border-radius: 14px; padding: 20px; position: relative; overflow: hidden; }
+    .contact-card::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:#F0A500; }
+    .contact-title { font-family:Georgia,serif; font-size:15px; font-weight:700; color:#F4F1EA; margin-bottom:4px; }
+    .contact-sub { font-size:11px; color:rgba(255,255,255,0.38); margin-bottom:14px; }
+    .contact-email { display:block; font-size:16px; font-weight:600; color:#F0A500; text-decoration:none; margin-bottom:16px; }
+    .contact-email:hover { opacity:0.85; }
+    .form-divider { border:none; border-top:1px solid rgba(255,255,255,0.07); margin-bottom:14px; }
+    .cf-input { width:100%; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:7px; padding:8px 10px; font-size:12px; color:rgba(255,255,255,0.65); font-family:inherit; outline:none; margin-bottom:7px; }
+    .cf-input::placeholder { color:rgba(255,255,255,0.28); }
+    .cf-input:focus { border-color:rgba(240,165,0,0.35); }
+    textarea.cf-input { min-height:100px; resize:vertical; }
+    .cf-submit { width:100%; background:#F0A500; color:#0B1929; font-size:12px; font-weight:700; padding:9px; border-radius:7px; border:none; cursor:pointer; font-family:inherit; margin-top:2px; }
+    .cf-submit:hover { background:#e09900; }
+    .cf-success { background:rgba(34,201,151,0.08); border:1px solid rgba(34,201,151,0.2); border-radius:7px; padding:14px; text-align:center; font-size:12px; color:#22C997; display:none; }
+    .contact-linkedin { display:block; margin-top:12px; font-size:11px; color:rgba(255,255,255,0.4); text-align:center; }
+    .contact-linkedin a { color:#F0A500; text-decoration:none; }
+
+    @media (max-width:768px) {
+      .nav-links { display:none; } .hamburger { display:flex; } nav { padding:0 16px; }
+      footer { padding:16px; flex-direction:column; align-items:flex-start; }
+      .page-header { padding:24px 16px 20px; }
+      .help-body { grid-template-columns:1fr; padding:0 16px 32px; gap:20px; }
+      h1 { font-size:20px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="/index.html" class="logo">
+    <div class="logo-icon">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="1" y="3" width="3" height="10" rx="0.5" fill="white"/>
+        <rect x="6" y="6" width="3" height="7" rx="0.5" fill="white"/>
+        <rect x="11" y="9" width="3" height="4" rx="0.5" fill="white"/>
+        <polyline points="2.5,3 7.5,6 12.5,9" stroke="white" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      </svg>
+    </div>
+    <span class="logo-text">Mandate <span>OpEx</span></span>
+  </a>
+  <div class="nav-links">
+    <a class="nav-link" href="/tools.html">Tools</a>
+    <a class="nav-link" href="/guides.html">Guides</a>
+    <a class="nav-link" href="/news.html">News</a>
+    <a class="nav-link" href="/faq.html">FAQ</a>
+    <a class="nav-link active" href="/help.html">Help</a>
+    <a class="nav-link" href="/about.html">About</a>
+  </div>
+  <div class="nav-right">
+    <button class="hamburger" id="hamburger" aria-label="Open menu"><span></span><span></span><span></span></button>
+    <a href="/index.html#waitlist" class="nav-cta">Join the waitlist</a>
+  </div>
+</nav>
+
+<div class="mobile-overlay" id="mobile-overlay">
+  <div class="mob-header">
+    <a href="/index.html" class="logo">
+      <div class="logo-icon">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="1" y="3" width="3" height="10" rx="0.5" fill="white"/>
+          <rect x="6" y="6" width="3" height="7" rx="0.5" fill="white"/>
+          <rect x="11" y="9" width="3" height="4" rx="0.5" fill="white"/>
+          <polyline points="2.5,3 7.5,6 12.5,9" stroke="white" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        </svg>
+      </div>
+      <span class="logo-text">Mandate <span>OpEx</span></span>
+    </a>
+    <button class="mob-close" id="mob-close">&#x2715;</button>
+  </div>
+  <a class="mob-link" href="/tools.html">Tools</a>
+  <a class="mob-link" href="/guides.html">Guides</a>
+  <a class="mob-link" href="/news.html">News</a>
+  <a class="mob-link" href="/faq.html">FAQ</a>
+  <a class="mob-link active" href="/help.html">Help</a>
+  <a class="mob-link" href="/about.html">About</a>
+  <a class="mob-wl" href="/index.html#waitlist">Join the waitlist</a>
+</div>
+
+<div class="page-header">
+  <div class="eyebrow">Help</div>
+  <h1>How can we help?</h1>
+  <p class="page-sub">We are a small team building something we care about. If you have a question, a bug report, or just want to say hello — we read everything.</p>
+</div>
+
+<div class="help-body">
+  <!-- LEFT: topics -->
+  <div>
+    <div class="topic-card">
+      <div class="topic-title">Using the tools</div>
+      <div class="topic-body">If you are having trouble with the Cost of Waste Calculator or any other tool, check that you are using a modern browser (Chrome, Edge, Firefox, Safari). If it is still not working, email us with the tool name and what happened.</div>
+    </div>
+    <div class="topic-card">
+      <div class="topic-title">Reporting a bug</div>
+      <div class="topic-body">If you find something that is not working correctly, we want to know. Email hello@mandateopex.com with a description of what you expected to happen and what happened instead. Screenshots help.</div>
+    </div>
+    <div class="topic-card">
+      <div class="topic-title">Suggesting a tool</div>
+      <div class="topic-body">The most requested tools get built next. Go to the <a href="/tools.html#suggest" style="color:#F0A500;text-decoration:none;">tools page</a> and use the suggestion box, or email us directly. Tell us what the tool would do and what problem it solves.</div>
+    </div>
+    <div class="topic-card">
+      <div class="topic-title">Waitlist and early access</div>
+      <div class="topic-body">If you have signed up and have not heard from us, check your spam folder. We send one email when we launch, nothing else. If you want to update your details, email us.</div>
+    </div>
+  </div>
+
+  <!-- RIGHT: contact card -->
+  <div>
+    <div class="contact-card">
+      <div class="contact-title">Get in touch</div>
+      <div class="contact-sub">We aim to respond within one working day.</div>
+      <a class="contact-email" href="mailto:hello@mandateopex.com">hello@mandateopex.com</a>
+      <hr class="form-divider">
+      <div id="cf-wrap">
+        <form id="contact-form">
+          <input class="cf-input" type="text" name="name" placeholder="Your name">
+          <input class="cf-input" type="email" name="email" placeholder="Your email">
+          <textarea class="cf-input" name="message" placeholder="Your message"></textarea>
+          <button type="submit" class="cf-submit">Send message</button>
+        </form>
+        <div class="cf-success" id="cf-success">Thanks — we will be in touch shortly.</div>
+      </div>
+      <span class="contact-linkedin">Or find us on <a href="https://www.linkedin.com/in/christopher-lee-wade" target="_blank" rel="noopener">LinkedIn</a></span>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-left">
+    <p><strong>Pricing announced at launch.</strong> Founder pricing guaranteed to the first 50 members.</p>
+    <a href="/privacy.html" class="footer-privacy">Privacy policy</a>
+  </div>
+  <div class="footer-right">
+    <a href="mailto:hello@mandateopex.com" class="footer-email">hello@mandateopex.com</a>
+    <a href="/index.html#waitlist" class="footer-wl-btn">Join the waitlist &rarr;</a>
+  </div>
+</footer>
+
+<script>
+(function() {
+  var hamburger = document.getElementById('hamburger');
+  var overlay   = document.getElementById('mobile-overlay');
+  var closeBtn  = document.getElementById('mob-close');
+  function openOverlay()  { overlay.classList.add('open');    document.body.style.overflow='hidden'; }
+  function closeOverlay() { overlay.classList.remove('open'); document.body.style.overflow=''; }
+  if (hamburger) hamburger.addEventListener('click', openOverlay);
+  if (closeBtn)  closeBtn.addEventListener('click', closeOverlay);
+  overlay.addEventListener('click', function(e){ if(e.target===overlay) closeOverlay(); });
+
+  var form    = document.getElementById('contact-form');
+  var success = document.getElementById('cf-success');
+  if (form) {
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      var msgs = JSON.parse(localStorage.getItem('contact_messages') || '[]');
+      msgs.push({
+        name:      form.querySelector('[name="name"]').value.trim(),
+        email:     form.querySelector('[name="email"]').value.trim(),
+        message:   form.querySelector('[name="message"]').value.trim(),
+        timestamp: new Date().toISOString()
+      });
+      localStorage.setItem('contact_messages', JSON.stringify(msgs));
+      form.style.display = 'none';
+      if (success) success.style.display = 'block';
+    });
+  }
+})();
+</script>
+</body>
+</html>

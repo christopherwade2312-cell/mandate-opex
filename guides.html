@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Free Guides — Mandate OpEx</title>
+  <meta name="description" content="Plain-English guides to operational excellence — 5S, SMED, OEE, Hoshin Kanri, TPM and more. Written by practitioners. Coming soon.">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { background: #0B1929; color: #F4F1EA; font-family: system-ui,-apple-system,sans-serif; font-size: 14px; line-height: 1.6; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+    ::-webkit-scrollbar { width: 6px; } ::-webkit-scrollbar-track { background: transparent; } ::-webkit-scrollbar-thumb { background: rgba(240,165,0,0.3); border-radius: 3px; }
+    ::selection { background: rgba(240,165,0,0.2); }
+
+    nav { width:100%; height:54px; display:flex; align-items:center; justify-content:space-between; padding:0 28px; background:#0B1929; border-bottom:1px solid rgba(255,255,255,0.07); position:sticky; top:0; z-index:1000; }
+    .logo { display:flex; align-items:center; gap:8px; text-decoration:none; flex-shrink:0; }
+    .logo-icon { width:30px; height:30px; background:#F0A500; border-radius:7px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+    .logo-text { font-size:14px; font-weight:500; color:#F4F1EA; }
+    .logo-text span { color:#F0A500; }
+    .nav-links { display:flex; align-items:center; gap:2px; }
+    .nav-link { font-size:12px; color:rgba(255,255,255,0.5); padding:5px 12px; border-radius:5px; text-decoration:none; display:inline-block; transition:color 0.15s; white-space:nowrap; }
+    .nav-link:hover { color:#F4F1EA; }
+    .nav-link.active { color:#F0A500; background:rgba(240,165,0,0.08); }
+    .nav-right { display:flex; align-items:center; gap:12px; flex-shrink:0; }
+    .nav-cta { background:#F0A500; color:#0B1929; font-weight:700; font-size:11px; padding:7px 16px; border-radius:6px; border:none; text-decoration:none; white-space:nowrap; }
+    .hamburger { display:none; flex-direction:column; gap:4px; cursor:pointer; padding:6px; background:none; border:none; }
+    .hamburger span { display:block; width:18px; height:2px; background:#F0A500; border-radius:1px; }
+
+    .mobile-overlay { display:none; position:fixed; inset:0; background:#0B1929; z-index:9999; padding:24px; overflow-y:auto; }
+    .mobile-overlay.open { display:block; }
+    .mob-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:24px; }
+    .mob-close { background:none; border:none; color:#F0A500; font-size:24px; cursor:pointer; padding:4px; line-height:1; }
+    .mob-link { display:block; font-size:16px; color:rgba(255,255,255,0.7); text-decoration:none; padding:14px 0; border-bottom:1px solid rgba(255,255,255,0.07); }
+    .mob-link.active { color:#F0A500; }
+    .mob-wl { margin-top:24px; display:block; text-align:center; background:#F0A500; color:#0B1929; font-weight:700; font-size:14px; padding:12px; border-radius:7px; text-decoration:none; }
+
+    footer { border-top:1px solid rgba(255,255,255,0.06); padding:16px 28px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; background:#0B1929; }
+    .footer-left p { font-size:10px; color:rgba(255,255,255,0.28); line-height:1.6; margin-bottom:3px; }
+    .footer-left p strong { font-weight:500; color:rgba(255,255,255,0.55); }
+    .footer-privacy { font-size:10px; color:rgba(255,255,255,0.25); text-decoration:underline; }
+    .footer-right { display:flex; align-items:center; gap:16px; }
+    .footer-email { font-size:11px; color:#F0A500; text-decoration:none; }
+    .footer-wl-btn { background:rgba(240,165,0,0.1); border:1px solid rgba(240,165,0,0.22); border-radius:5px; padding:6px 13px; font-size:11px; color:#F0A500; text-decoration:none; }
+
+    /* Page */
+    .page-header { padding: 32px 28px 24px; max-width: 1060px; margin: 0 auto; }
+    .eyebrow { display:flex; align-items:center; gap:8px; font-size:10px; font-weight:500; letter-spacing:0.13em; text-transform:uppercase; color:#F0A500; margin-bottom:12px; }
+    .eyebrow::before { content:''; display:block; width:20px; height:1.5px; background:#F0A500; flex-shrink:0; }
+    h1 { font-family:Georgia,serif; font-size:24px; font-weight:700; color:#F4F1EA; line-height:1.15; letter-spacing:-0.02em; margin-bottom:8px; }
+    .page-sub { font-size:13px; color:rgba(255,255,255,0.45); line-height:1.65; max-width:560px; }
+
+    /* Coming soon card */
+    .cs-wrap { padding: 0 28px 40px; max-width: 1060px; margin: 0 auto; }
+    .cs-card { background: #112236; border: 1px solid rgba(240,165,0,0.15); border-radius: 14px; padding: 40px; text-align: center; max-width: 500px; margin: 0 auto 40px; }
+    .cs-icon { margin-bottom: 16px; }
+    .cs-title { font-family:Georgia,serif; font-size:20px; font-weight:700; color:#F4F1EA; margin-bottom:10px; }
+    .cs-body { font-size:12px; color:rgba(255,255,255,0.5); line-height:1.7; margin-bottom:20px; }
+    .cs-input { width:100%; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:7px; padding:9px 11px; font-size:12px; color:rgba(255,255,255,0.65); font-family:inherit; outline:none; margin-bottom:8px; }
+    .cs-input::placeholder { color:rgba(255,255,255,0.28); }
+    .cs-input:focus { border-color:rgba(240,165,0,0.35); }
+    .cs-btn { width:100%; background:#F0A500; color:#0B1929; font-size:12px; font-weight:700; padding:10px; border-radius:7px; border:none; cursor:pointer; font-family:inherit; }
+    .cs-btn:hover { background:#e09900; }
+    .cs-success { font-size:12px; color:#22C997; margin-top:8px; display:none; }
+
+    /* Preview grid */
+    .preview-label { font-size:10px; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; color:rgba(255,255,255,0.25); margin-bottom:12px; }
+    .preview-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; opacity:0.4; pointer-events:none; }
+    .pg-card { background:#0F2036; border:1px dashed rgba(255,255,255,0.07); border-radius:9px; padding:12px; }
+    .pg-name { font-size:11px; font-weight:500; color:rgba(255,255,255,0.6); margin-bottom:5px; }
+    .pg-pill { display:inline-block; font-size:8px; font-weight:600; text-transform:uppercase; letter-spacing:0.06em; padding:2px 6px; border-radius:3px; margin-bottom:5px; }
+    .pg-ops { background:rgba(240,165,0,0.09); color:rgba(240,165,0,0.7); }
+    .pg-qual { background:rgba(34,201,151,0.09); color:rgba(34,201,151,0.65); }
+    .pg-strat { background:rgba(110,150,255,0.09); color:rgba(110,150,255,0.7); }
+    .pg-soon { font-size:9px; color:rgba(255,255,255,0.25); }
+
+    @media (max-width:768px) {
+      .nav-links { display:none; } .hamburger { display:flex; } nav { padding:0 16px; }
+      footer { padding:16px; flex-direction:column; align-items:flex-start; }
+      .page-header { padding:24px 16px 20px; }
+      .cs-wrap { padding:0 16px 32px; }
+      .cs-card { padding:28px 20px; }
+      .preview-grid { grid-template-columns:1fr; }
+      h1 { font-size:20px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="/index.html" class="logo">
+    <div class="logo-icon">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="1" y="3" width="3" height="10" rx="0.5" fill="white"/>
+        <rect x="6" y="6" width="3" height="7" rx="0.5" fill="white"/>
+        <rect x="11" y="9" width="3" height="4" rx="0.5" fill="white"/>
+        <polyline points="2.5,3 7.5,6 12.5,9" stroke="white" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      </svg>
+    </div>
+    <span class="logo-text">Mandate <span>OpEx</span></span>
+  </a>
+  <div class="nav-links">
+    <a class="nav-link" href="/tools.html">Tools</a>
+    <a class="nav-link active" href="/guides.html">Guides</a>
+    <a class="nav-link" href="/news.html">News</a>
+    <a class="nav-link" href="/faq.html">FAQ</a>
+    <a class="nav-link" href="/help.html">Help</a>
+    <a class="nav-link" href="/about.html">About</a>
+  </div>
+  <div class="nav-right">
+    <button class="hamburger" id="hamburger" aria-label="Open menu"><span></span><span></span><span></span></button>
+    <a href="/index.html#waitlist" class="nav-cta">Join the waitlist</a>
+  </div>
+</nav>
+
+<div class="mobile-overlay" id="mobile-overlay">
+  <div class="mob-header">
+    <a href="/index.html" class="logo">
+      <div class="logo-icon">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="1" y="3" width="3" height="10" rx="0.5" fill="white"/>
+          <rect x="6" y="6" width="3" height="7" rx="0.5" fill="white"/>
+          <rect x="11" y="9" width="3" height="4" rx="0.5" fill="white"/>
+          <polyline points="2.5,3 7.5,6 12.5,9" stroke="white" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        </svg>
+      </div>
+      <span class="logo-text">Mandate <span>OpEx</span></span>
+    </a>
+    <button class="mob-close" id="mob-close">&#x2715;</button>
+  </div>
+  <a class="mob-link" href="/tools.html">Tools</a>
+  <a class="mob-link active" href="/guides.html">Guides</a>
+  <a class="mob-link" href="/news.html">News</a>
+  <a class="mob-link" href="/faq.html">FAQ</a>
+  <a class="mob-link" href="/help.html">Help</a>
+  <a class="mob-link" href="/about.html">About</a>
+  <a class="mob-wl" href="/index.html#waitlist">Join the waitlist</a>
+</div>
+
+<div class="page-header">
+  <div class="eyebrow">Free guides</div>
+  <h1>Plain-English guides to operational excellence</h1>
+  <p class="page-sub">We are writing practical guides to 5S, SMED, OEE, Hoshin Kanri, TPM, and more. Each one is free, written by practitioners, and links to the relevant tool.</p>
+</div>
+
+<div class="cs-wrap">
+  <div class="cs-card">
+    <div class="cs-icon">
+      <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="6" y="10" width="20" height="14" rx="2" stroke="#F0A500" stroke-width="1.5"/>
+        <path d="M11 10V8a5 5 0 0110 0v2" stroke="#F0A500" stroke-width="1.5" stroke-linecap="round"/>
+        <path d="M16 18v-3M16 22v-1" stroke="#F0A500" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <div class="cs-title">Guides coming soon</div>
+    <div class="cs-body">We are writing these now. Topics include 5S, SMED, OEE, Hoshin Kanri, TPM, Theory of Constraints, Daily Management, and more. Each one links directly to the relevant tool so you can move from understanding to action.</div>
+    <input class="cs-input" type="email" id="guides-email" placeholder="Your email address">
+    <button class="cs-btn" id="guides-notify">Notify me when guides launch</button>
+    <div class="cs-success" id="guides-success">You are on the list. We will email you when the first guides go live.</div>
+  </div>
+
+  <div class="preview-label">Topics we are writing</div>
+  <div class="preview-grid">
+    <div class="pg-card"><div class="pg-name">5S — Workplace Organisation</div><span class="pg-pill pg-ops">Operations</span><div class="pg-soon">Coming soon</div></div>
+    <div class="pg-card"><div class="pg-name">SMED — Changeover Reduction</div><span class="pg-pill pg-ops">Operations</span><div class="pg-soon">Coming soon</div></div>
+    <div class="pg-card"><div class="pg-name">OEE — Overall Equipment Effectiveness</div><span class="pg-pill pg-ops">Operations</span><div class="pg-soon">Coming soon</div></div>
+    <div class="pg-card"><div class="pg-name">Hoshin Kanri — Strategy Deployment</div><span class="pg-pill pg-strat">Strategy</span><div class="pg-soon">Coming soon</div></div>
+    <div class="pg-card"><div class="pg-name">TPM — Total Productive Maintenance</div><span class="pg-pill pg-ops">Operations</span><div class="pg-soon">Coming soon</div></div>
+    <div class="pg-card"><div class="pg-name">Theory of Constraints</div><span class="pg-pill pg-strat">Strategy</span><div class="pg-soon">Coming soon</div></div>
+    <div class="pg-card"><div class="pg-name">Daily Management Systems</div><span class="pg-pill pg-ops">Operations</span><div class="pg-soon">Coming soon</div></div>
+    <div class="pg-card"><div class="pg-name">Root Cause Analysis</div><span class="pg-pill pg-qual">Quality</span><div class="pg-soon">Coming soon</div></div>
+    <div class="pg-card"><div class="pg-name">5 Why and Fishbone</div><span class="pg-pill pg-qual">Quality</span><div class="pg-soon">Coming soon</div></div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-left">
+    <p><strong>Pricing announced at launch.</strong> Founder pricing guaranteed to the first 50 members.</p>
+    <a href="/privacy.html" class="footer-privacy">Privacy policy</a>
+  </div>
+  <div class="footer-right">
+    <a href="mailto:hello@mandateopex.com" class="footer-email">hello@mandateopex.com</a>
+    <a href="/index.html#waitlist" class="footer-wl-btn">Join the waitlist &rarr;</a>
+  </div>
+</footer>
+
+<script>
+(function() {
+  var hamburger = document.getElementById('hamburger');
+  var overlay   = document.getElementById('mobile-overlay');
+  var closeBtn  = document.getElementById('mob-close');
+  function openOverlay()  { overlay.classList.add('open');    document.body.style.overflow='hidden'; }
+  function closeOverlay() { overlay.classList.remove('open'); document.body.style.overflow=''; }
+  if (hamburger) hamburger.addEventListener('click', openOverlay);
+  if (closeBtn)  closeBtn.addEventListener('click', closeOverlay);
+  overlay.addEventListener('click', function(e){ if(e.target===overlay) closeOverlay(); });
+
+  var btn     = document.getElementById('guides-notify');
+  var input   = document.getElementById('guides-email');
+  var success = document.getElementById('guides-success');
+  if (btn) {
+    btn.addEventListener('click', function() {
+      var email = input.value.trim();
+      if (!email) { input.focus(); return; }
+      var subs = JSON.parse(localStorage.getItem('guides_notify') || '[]');
+      subs.push({ email: email, timestamp: new Date().toISOString() });
+      localStorage.setItem('guides_notify', JSON.stringify(subs));
+      input.style.display = 'none';
+      btn.style.display = 'none';
+      if (success) success.style.display = 'block';
+    });
+  }
+})();
+</script>
+</body>
+</html>

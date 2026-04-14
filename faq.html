@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>FAQ — Mandate OpEx</title>
+  <meta name="description" content="Common questions about Mandate OpEx — the operational diagnostic toolkit for businesses that make, move or fix things.">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { background: #0B1929; color: #F4F1EA; font-family: system-ui,-apple-system,sans-serif; font-size: 14px; line-height: 1.6; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+    ::-webkit-scrollbar { width: 6px; } ::-webkit-scrollbar-track { background: transparent; } ::-webkit-scrollbar-thumb { background: rgba(240,165,0,0.3); border-radius: 3px; }
+    ::selection { background: rgba(240,165,0,0.2); }
+
+    nav { width:100%; height:54px; display:flex; align-items:center; justify-content:space-between; padding:0 28px; background:#0B1929; border-bottom:1px solid rgba(255,255,255,0.07); position:sticky; top:0; z-index:1000; }
+    .logo { display:flex; align-items:center; gap:8px; text-decoration:none; flex-shrink:0; }
+    .logo-icon { width:30px; height:30px; background:#F0A500; border-radius:7px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+    .logo-text { font-size:14px; font-weight:500; color:#F4F1EA; }
+    .logo-text span { color:#F0A500; }
+    .nav-links { display:flex; align-items:center; gap:2px; }
+    .nav-link { font-size:12px; color:rgba(255,255,255,0.5); padding:5px 12px; border-radius:5px; text-decoration:none; display:inline-block; transition:color 0.15s; white-space:nowrap; }
+    .nav-link:hover { color:#F4F1EA; }
+    .nav-link.active { color:#F0A500; background:rgba(240,165,0,0.08); }
+    .nav-right { display:flex; align-items:center; gap:12px; flex-shrink:0; }
+    .nav-cta { background:#F0A500; color:#0B1929; font-weight:700; font-size:11px; padding:7px 16px; border-radius:6px; border:none; text-decoration:none; white-space:nowrap; }
+    .hamburger { display:none; flex-direction:column; gap:4px; cursor:pointer; padding:6px; background:none; border:none; }
+    .hamburger span { display:block; width:18px; height:2px; background:#F0A500; border-radius:1px; }
+
+    .mobile-overlay { display:none; position:fixed; inset:0; background:#0B1929; z-index:9999; padding:24px; overflow-y:auto; }
+    .mobile-overlay.open { display:block; }
+    .mob-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:24px; }
+    .mob-close { background:none; border:none; color:#F0A500; font-size:24px; cursor:pointer; padding:4px; line-height:1; }
+    .mob-link { display:block; font-size:16px; color:rgba(255,255,255,0.7); text-decoration:none; padding:14px 0; border-bottom:1px solid rgba(255,255,255,0.07); }
+    .mob-link.active { color:#F0A500; }
+    .mob-wl { margin-top:24px; display:block; text-align:center; background:#F0A500; color:#0B1929; font-weight:700; font-size:14px; padding:12px; border-radius:7px; text-decoration:none; }
+
+    footer { border-top:1px solid rgba(255,255,255,0.06); padding:16px 28px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; background:#0B1929; }
+    .footer-left p { font-size:10px; color:rgba(255,255,255,0.28); line-height:1.6; margin-bottom:3px; }
+    .footer-left p strong { font-weight:500; color:rgba(255,255,255,0.55); }
+    .footer-privacy { font-size:10px; color:rgba(255,255,255,0.25); text-decoration:underline; }
+    .footer-right { display:flex; align-items:center; gap:16px; }
+    .footer-email { font-size:11px; color:#F0A500; text-decoration:none; }
+    .footer-wl-btn { background:rgba(240,165,0,0.1); border:1px solid rgba(240,165,0,0.22); border-radius:5px; padding:6px 13px; font-size:11px; color:#F0A500; text-decoration:none; }
+
+    /* Page */
+    .page-header { padding: 32px 28px 24px; max-width: 760px; margin: 0 auto; }
+    .eyebrow { display:flex; align-items:center; gap:8px; font-size:10px; font-weight:500; letter-spacing:0.13em; text-transform:uppercase; color:#F0A500; margin-bottom:12px; }
+    .eyebrow::before { content:''; display:block; width:20px; height:1.5px; background:#F0A500; flex-shrink:0; }
+    h1 { font-family:Georgia,serif; font-size:24px; font-weight:700; color:#F4F1EA; line-height:1.15; letter-spacing:-0.02em; margin-bottom:8px; }
+    .page-sub { font-size:13px; color:rgba(255,255,255,0.45); line-height:1.65; }
+
+    /* FAQ */
+    .faq-body { max-width: 760px; margin: 0 auto; padding: 0 28px 40px; }
+    .faq-section { margin-bottom: 32px; }
+    .faq-section-title { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.3); margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid rgba(255,255,255,0.06); }
+
+    .faq-item { border-bottom: 1px solid rgba(255,255,255,0.07); }
+    .faq-q {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 14px 0; cursor: pointer; gap: 16px;
+      font-size: 13px; font-weight: 500; color: #F4F1EA;
+      background: none; border: none; width: 100%; text-align: left; font-family: inherit;
+    }
+    .faq-q:hover { color: rgba(255,255,255,0.85); }
+    .faq-chevron {
+      width: 16px; height: 16px; flex-shrink: 0;
+      color: rgba(255,255,255,0.3);
+      transition: transform 0.25s;
+    }
+    .faq-item.open .faq-chevron { transform: rotate(180deg); color: #F0A500; }
+    .faq-item.open .faq-q { color: #F0A500; }
+    .faq-a {
+      max-height: 0; overflow: hidden;
+      transition: max-height 0.3s ease, padding 0.3s ease;
+    }
+    .faq-a-inner { font-size: 13px; color: rgba(255,255,255,0.6); line-height: 1.7; padding: 0 0 14px 0; }
+    .faq-item.open .faq-a { max-height: 300px; }
+
+    .faq-cta { margin-top: 32px; padding: 20px; background: #0F2036; border: 1px solid rgba(255,255,255,0.06); border-radius: 10px; text-align: center; }
+    .faq-cta p { font-size: 13px; color: rgba(255,255,255,0.5); margin-bottom: 8px; }
+    .faq-cta a { color: #F0A500; text-decoration: none; font-weight: 500; }
+    .faq-cta a:hover { text-decoration: underline; }
+
+    @media (max-width:768px) {
+      .nav-links { display:none; } .hamburger { display:flex; } nav { padding:0 16px; }
+      footer { padding:16px; flex-direction:column; align-items:flex-start; }
+      .page-header { padding:24px 16px 20px; }
+      .faq-body { padding:0 16px 32px; }
+      h1 { font-size:20px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="/index.html" class="logo">
+    <div class="logo-icon">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="1" y="3" width="3" height="10" rx="0.5" fill="white"/>
+        <rect x="6" y="6" width="3" height="7" rx="0.5" fill="white"/>
+        <rect x="11" y="9" width="3" height="4" rx="0.5" fill="white"/>
+        <polyline points="2.5,3 7.5,6 12.5,9" stroke="white" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      </svg>
+    </div>
+    <span class="logo-text">Mandate <span>OpEx</span></span>
+  </a>
+  <div class="nav-links">
+    <a class="nav-link" href="/tools.html">Tools</a>
+    <a class="nav-link" href="/guides.html">Guides</a>
+    <a class="nav-link" href="/news.html">News</a>
+    <a class="nav-link active" href="/faq.html">FAQ</a>
+    <a class="nav-link" href="/help.html">Help</a>
+    <a class="nav-link" href="/about.html">About</a>
+  </div>
+  <div class="nav-right">
+    <button class="hamburger" id="hamburger" aria-label="Open menu"><span></span><span></span><span></span></button>
+    <a href="/index.html#waitlist" class="nav-cta">Join the waitlist</a>
+  </div>
+</nav>
+
+<div class="mobile-overlay" id="mobile-overlay">
+  <div class="mob-header">
+    <a href="/index.html" class="logo">
+      <div class="logo-icon">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="1" y="3" width="3" height="10" rx="0.5" fill="white"/>
+          <rect x="6" y="6" width="3" height="7" rx="0.5" fill="white"/>
+          <rect x="11" y="9" width="3" height="4" rx="0.5" fill="white"/>
+          <polyline points="2.5,3 7.5,6 12.5,9" stroke="white" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        </svg>
+      </div>
+      <span class="logo-text">Mandate <span>OpEx</span></span>
+    </a>
+    <button class="mob-close" id="mob-close">&#x2715;</button>
+  </div>
+  <a class="mob-link" href="/tools.html">Tools</a>
+  <a class="mob-link" href="/guides.html">Guides</a>
+  <a class="mob-link" href="/news.html">News</a>
+  <a class="mob-link active" href="/faq.html">FAQ</a>
+  <a class="mob-link" href="/help.html">Help</a>
+  <a class="mob-link" href="/about.html">About</a>
+  <a class="mob-wl" href="/index.html#waitlist">Join the waitlist</a>
+</div>
+
+<div class="page-header">
+  <div class="eyebrow">FAQ</div>
+  <h1>Common questions</h1>
+  <p class="page-sub">Everything you need to know about Mandate OpEx.</p>
+</div>
+
+<div class="faq-body">
+
+  <div class="faq-section">
+    <div class="faq-section-title">About the product</div>
+
+    <div class="faq-item open">
+      <button class="faq-q">Is this just another dashboard?<svg class="faq-chevron" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <div class="faq-a"><div class="faq-a-inner">No. Every tool tells you what to do next, not just what your score is. Diagnosis and prescription in one place, in plain English.</div></div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q">Who is this built for?<svg class="faq-chevron" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <div class="faq-a"><div class="faq-a-inner">Operations leaders, MDs, and GMs in businesses that make, move or fix things. Manufacturing, field service, logistics, facilities — anywhere an operation runs.</div></div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q">How is this different from consultancy?<svg class="faq-chevron" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <div class="faq-a"><div class="faq-a-inner">You do it yourself, at your own pace, in your own browser. No day rates. No implementation projects. No jargon. You get the same diagnostic rigour without the fee.</div></div>
+    </div>
+  </div>
+
+  <div class="faq-section">
+    <div class="faq-section-title">Using the tools</div>
+
+    <div class="faq-item open">
+      <button class="faq-q">Do I need to install anything?<svg class="faq-chevron" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <div class="faq-a"><div class="faq-a-inner">Nothing. It runs in your browser. No downloads, no IT sign-off, no setup required.</div></div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q">Is the Cost of Waste Calculator really free?<svg class="faq-chevron" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <div class="faq-a"><div class="faq-a-inner">Yes, permanently free. No credit card. No trial period. The diagnostic score on every tool is always free.</div></div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q">Can I use this on my phone?<svg class="faq-chevron" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <div class="faq-a"><div class="faq-a-inner">Yes. The site is fully mobile optimised. You can run an assessment on your phone in a few minutes.</div></div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q">How long does an assessment take?<svg class="faq-chevron" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <div class="faq-a"><div class="faq-a-inner">Most assessments take 5 to 15 minutes. The Cost of Waste Calculator takes about 3 minutes. You can save your progress and come back.</div></div>
+    </div>
+  </div>
+
+  <div class="faq-section">
+    <div class="faq-section-title">Data and privacy</div>
+
+    <div class="faq-item open">
+      <button class="faq-q">What happens to my data?<svg class="faq-chevron" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <div class="faq-a"><div class="faq-a-inner">Your numbers stay in your browser session. Nothing is stored on our servers without your consent.</div></div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q">Is my business data shared with anyone?<svg class="faq-chevron" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <div class="faq-a"><div class="faq-a-inner">No. Your operational data never leaves your browser. We do not sell data, share it, or use it for any purpose other than running the tool.</div></div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q">Where can I read the full privacy policy?<svg class="faq-chevron" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <div class="faq-a"><div class="faq-a-inner">At mandateopex.com/privacy.html — coming soon.</div></div>
+    </div>
+  </div>
+
+  <div class="faq-section">
+    <div class="faq-section-title">Pricing and access</div>
+
+    <div class="faq-item open">
+      <button class="faq-q">How much does it cost?<svg class="faq-chevron" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <div class="faq-a"><div class="faq-a-inner">The diagnostic score on every tool is always free. Pricing for full tool packs will be announced at launch. Join the waitlist for founder pricing.</div></div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q">What do the first 50 get?<svg class="faq-chevron" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <div class="faq-a"><div class="faq-a-inner">Three months free on any tool pack at launch, plus direct input into what gets built. You shape the product.</div></div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q">When does it launch?<svg class="faq-chevron" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <div class="faq-a"><div class="faq-a-inner">We are building now. Join the waitlist and we will email you when it is ready.</div></div>
+    </div>
+  </div>
+
+  <div class="faq-cta">
+    <p>Still have a question?</p>
+    <a href="/help.html">Get in touch &rarr;</a>
+  </div>
+
+</div>
+
+<footer>
+  <div class="footer-left">
+    <p><strong>Pricing announced at launch.</strong> Founder pricing guaranteed to the first 50 members.</p>
+    <a href="/privacy.html" class="footer-privacy">Privacy policy</a>
+  </div>
+  <div class="footer-right">
+    <a href="mailto:hello@mandateopex.com" class="footer-email">hello@mandateopex.com</a>
+    <a href="/index.html#waitlist" class="footer-wl-btn">Join the waitlist &rarr;</a>
+  </div>
+</footer>
+
+<script>
+(function() {
+  var hamburger = document.getElementById('hamburger');
+  var overlay   = document.getElementById('mobile-overlay');
+  var closeBtn  = document.getElementById('mob-close');
+  function openOverlay()  { overlay.classList.add('open');    document.body.style.overflow='hidden'; }
+  function closeOverlay() { overlay.classList.remove('open'); document.body.style.overflow=''; }
+  if (hamburger) hamburger.addEventListener('click', openOverlay);
+  if (closeBtn)  closeBtn.addEventListener('click', closeOverlay);
+  overlay.addEventListener('click', function(e){ if(e.target===overlay) closeOverlay(); });
+
+  document.querySelectorAll('.faq-q').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var item = this.closest('.faq-item');
+      var wasOpen = item.classList.contains('open');
+      // Close all in same section
+      var section = item.closest('.faq-section');
+      section.querySelectorAll('.faq-item').forEach(function(i){ i.classList.remove('open'); });
+      if (!wasOpen) item.classList.add('open');
+    });
+  });
+})();
+</script>
+</body>
+</html>

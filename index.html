@@ -4,21 +4,25 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Mandate OpEx — Operational diagnostic tools for businesses that make, move or fix things</title>
-  <meta name="description" content="Free operational diagnostic tools for manufacturing, field service and operational businesses. Quantify hidden waste, score your OEE, build your skills matrix. Plain English. No consultancy. No jargon.">
+  <meta name="description" content="Free operational diagnostic tools for manufacturing, field service and operational businesses. Score your operation. Get a prioritised action plan in plain English.">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
-
     body {
       background: #0B1929;
       color: #F4F1EA;
       font-family: system-ui, -apple-system, sans-serif;
+      font-size: 14px;
       line-height: 1.6;
       -webkit-font-smoothing: antialiased;
       overflow-x: hidden;
     }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: rgba(240,165,0,0.3); border-radius: 3px; }
+    ::selection { background: rgba(240,165,0,0.2); }
 
-    /* ── NAV ────────────────────────────────────────────────────────────────── */
+    /* ── NAV ──────────────────────────────────────────────────────────────── */
     nav {
       width: 100%;
       height: 54px;
@@ -32,277 +36,54 @@
       top: 0;
       z-index: 1000;
     }
-
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      text-decoration: none;
-      flex-shrink: 0;
-    }
-
+    .logo { display: flex; align-items: center; gap: 8px; text-decoration: none; flex-shrink: 0; }
     .logo-icon {
-      width: 30px;
-      height: 30px;
+      width: 30px; height: 30px;
       background: #F0A500;
       border-radius: 7px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      display: flex; align-items: center; justify-content: center;
       flex-shrink: 0;
     }
-
-    .logo-icon .bar {
-      background: #fff;
-      border-radius: 1px;
-      width: 4px;
-    }
-
-    .logo-text {
-      font-size: 14px;
-      font-weight: 500;
-      color: #F4F1EA;
-    }
-
+    .logo-text { font-size: 14px; font-weight: 500; color: #F4F1EA; }
     .logo-text span { color: #F0A500; }
-
-    /* Nav links (centre) */
-    .nav-links {
-      display: flex;
-      align-items: center;
-    }
-
-    .nav-item {
-      position: relative;
-    }
-
+    .nav-links { display: flex; align-items: center; gap: 2px; }
     .nav-link {
-      display: flex;
-      align-items: center;
-      gap: 4px;
       font-size: 12px;
       color: rgba(255,255,255,0.5);
       padding: 5px 12px;
-      cursor: pointer;
-      text-decoration: none;
-      white-space: nowrap;
-      transition: color 0.15s;
-      line-height: 54px;
-      height: 54px;
-    }
-
-    .nav-link:hover { color: #F4F1EA; }
-
-    .nav-chevron {
-      width: 8px;
-      height: 6px;
-      flex-shrink: 0;
-      opacity: 0.5;
-    }
-
-    /* Dropdown panels */
-    .nav-dropdown {
-      display: none;
-      position: absolute;
-      top: 54px;
-      left: 0;
-      background: #112236;
-      border: 1px solid rgba(255,255,255,0.08);
-      border-top: none;
-      border-radius: 0 0 10px 10px;
-      padding: 20px;
-      z-index: 999;
-      min-width: 260px;
-    }
-
-    .nav-dropdown.active { display: block; }
-    .nav-dropdown.dd-wide { min-width: 640px; }
-    .nav-dropdown.dd-wide.active { display: flex; gap: 0; }
-
-    .dd-col {
-      flex: 1;
-      min-width: 0;
-    }
-
-    .dd-col + .dd-col {
-      padding-left: 24px;
-      border-left: 1px solid rgba(255,255,255,0.06);
-      margin-left: 24px;
-    }
-
-    .dd-col-header {
-      font-size: 9px;
-      font-weight: 600;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: #F0A500;
-      margin-bottom: 12px;
-      padding-bottom: 6px;
-      border-bottom: 1px solid rgba(255,255,255,0.07);
-    }
-
-    .dd-cat-label {
-      font-size: 9px;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: rgba(255,255,255,0.3);
-      margin-bottom: 6px;
-      margin-top: 12px;
-    }
-
-    .dd-cat-label:first-of-type { margin-top: 0; }
-
-    .dd-tool-link {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      padding: 5px 8px;
       border-radius: 5px;
       text-decoration: none;
-      font-size: 12px;
-      color: #F4F1EA;
-    }
-
-    .dd-tool-link:hover { background: rgba(255,255,255,0.04); }
-    .dd-tool-link.soon { color: rgba(255,255,255,0.5); }
-
-    .dd-live-dot {
-      width: 5px;
-      height: 5px;
-      background: #22C997;
-      border-radius: 50%;
-      flex-shrink: 0;
-    }
-
-    /* Nav right */
-    .nav-right {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      flex-shrink: 0;
-    }
-
-    .nav-cta {
-      background: #F0A500;
-      color: #0B1929;
-      font-weight: 700;
-      font-size: 11px;
-      padding: 7px 16px;
-      border-radius: 6px;
-      border: none;
-      text-decoration: none;
-      cursor: pointer;
+      display: inline-block;
+      transition: color 0.15s;
       white-space: nowrap;
     }
-
-    /* Hamburger */
-    .hamburger {
-      display: none;
-      flex-direction: column;
-      gap: 4px;
-      cursor: pointer;
-      padding: 6px;
-      background: none;
-      border: none;
+    .nav-link:hover { color: #F4F1EA; }
+    .nav-link.active { color: #F0A500; background: rgba(240,165,0,0.08); }
+    .nav-right { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
+    .nav-cta {
+      background: #F0A500; color: #0B1929;
+      font-weight: 700; font-size: 11px;
+      padding: 7px 16px; border-radius: 6px;
+      border: none; text-decoration: none; white-space: nowrap;
     }
+    .hamburger { display: none; flex-direction: column; gap: 4px; cursor: pointer; padding: 6px; background: none; border: none; }
+    .hamburger span { display: block; width: 18px; height: 2px; background: #F0A500; border-radius: 1px; }
 
-    .hamburger span {
-      display: block;
-      width: 18px;
-      height: 2px;
-      background: #F0A500;
-      border-radius: 1px;
-    }
-
-    /* Mobile overlay */
+    /* ── MOBILE OVERLAY ────────────────────────────────────────────────────── */
     .mobile-overlay {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: #0B1929;
-      z-index: 9999;
-      overflow-y: auto;
+      display: none; position: fixed; inset: 0;
+      background: #0B1929; z-index: 9999;
+      padding: 24px; overflow-y: auto;
     }
-
     .mobile-overlay.open { display: block; }
+    .mob-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
+    .mob-close { background: none; border: none; color: #F0A500; font-size: 24px; cursor: pointer; padding: 4px; line-height: 1; }
+    .mob-link { display: block; font-size: 16px; color: rgba(255,255,255,0.7); text-decoration: none; padding: 14px 0; border-bottom: 1px solid rgba(255,255,255,0.07); }
+    .mob-link:hover { color: #F4F1EA; }
+    .mob-link.active { color: #F0A500; }
+    .mob-wl { margin-top: 24px; display: block; text-align: center; background: #F0A500; color: #0B1929; font-weight: 700; font-size: 14px; padding: 12px; border-radius: 7px; text-decoration: none; }
 
-    .mobile-overlay-nav {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 16px;
-      height: 54px;
-      border-bottom: 1px solid rgba(255,255,255,0.07);
-    }
-
-    .mobile-close {
-      background: none;
-      border: none;
-      color: rgba(255,255,255,0.5);
-      font-size: 24px;
-      cursor: pointer;
-      padding: 8px;
-      line-height: 1;
-    }
-
-    .mobile-nav-items { padding: 8px 0; }
-
-    .mobile-nav-section {
-      border-bottom: 1px solid rgba(255,255,255,0.06);
-    }
-
-    .mobile-nav-toggle {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 14px 20px;
-      cursor: pointer;
-      color: #F4F1EA;
-      font-size: 14px;
-      background: none;
-      border: none;
-      width: 100%;
-      text-align: left;
-      font-family: inherit;
-    }
-
-    .mobile-toggle-chevron {
-      color: rgba(255,255,255,0.3);
-      font-size: 12px;
-      transition: transform 0.2s;
-    }
-
-    .mobile-nav-toggle.open .mobile-toggle-chevron { transform: rotate(180deg); }
-
-    .mobile-nav-sub {
-      display: none;
-      padding: 0 20px 12px 32px;
-    }
-
-    .mobile-nav-sub.open { display: block; }
-
-    .mobile-nav-sub a {
-      display: block;
-      padding: 8px 0;
-      color: rgba(255,255,255,0.55);
-      text-decoration: none;
-      font-size: 13px;
-      border-bottom: 1px solid rgba(255,255,255,0.04);
-    }
-
-    .mobile-nav-sub a:last-child { border-bottom: none; }
-    .mobile-nav-sub a:hover { color: #F4F1EA; }
-
-    .mobile-nav-link {
-      display: block;
-      padding: 14px 20px;
-      color: rgba(255,255,255,0.6);
-      text-decoration: none;
-      font-size: 14px;
-      border-bottom: 1px solid rgba(255,255,255,0.06);
-    }
-
-    /* ── HERO ───────────────────────────────────────────────────────────────── */
+    /* ── HERO ──────────────────────────────────────────────────────────────── */
     .hero {
       display: grid;
       grid-template-columns: 1fr 308px;
@@ -310,892 +91,137 @@
       padding: 40px 28px 32px;
       max-width: 1060px;
       margin: 0 auto;
+      align-items: start;
     }
-
     .eyebrow {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 10px;
-      font-weight: 500;
-      letter-spacing: 0.13em;
-      text-transform: uppercase;
-      color: #F0A500;
-      margin-bottom: 12px;
+      display: flex; align-items: center; gap: 8px;
+      font-size: 10px; font-weight: 500; letter-spacing: 0.13em;
+      text-transform: uppercase; color: #F0A500; margin-bottom: 12px;
     }
-
-    .eyebrow::before {
-      content: '';
-      display: block;
-      width: 20px;
-      height: 1.5px;
-      background: #F0A500;
-      flex-shrink: 0;
-    }
-
-    h1 {
-      font-family: Georgia, serif;
-      font-size: 28px;
-      font-weight: 700;
-      color: #F4F1EA;
-      line-height: 1.1;
-      letter-spacing: -0.02em;
-      margin-bottom: 12px;
-    }
-
-    h1 em {
-      font-style: italic;
-      color: #F0A500;
-    }
-
-    .hero-sub {
-      font-size: 12px;
-      color: rgba(244,241,234,0.55);
-      line-height: 1.7;
-      margin-bottom: 18px;
-      max-width: 420px;
-    }
-
-    .cta-row {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      margin-bottom: 16px;
-    }
-
+    .eyebrow::before { content: ''; display: block; width: 20px; height: 1.5px; background: #F0A500; flex-shrink: 0; }
+    h1 { font-family: Georgia, serif; font-size: 28px; font-weight: 700; color: #F4F1EA; line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 12px; }
+    h1 em { font-style: italic; color: #F0A500; }
+    .hero-sub { font-size: 12px; color: rgba(244,241,234,0.55); line-height: 1.7; margin-bottom: 18px; max-width: 420px; }
+    .cta-row { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 16px; }
     .btn-primary {
-      background: #F0A500;
-      color: #0B1929;
-      font-size: 12px;
-      font-weight: 700;
-      padding: 10px 18px;
-      border-radius: 7px;
-      border: none;
-      text-decoration: none;
-      cursor: pointer;
-      white-space: nowrap;
-      display: inline-block;
+      background: #F0A500; color: #0B1929;
+      font-size: 12px; font-weight: 700;
+      padding: 10px 18px; border-radius: 7px; border: none;
+      text-decoration: none; cursor: pointer; white-space: nowrap; display: inline-block;
     }
-
     .btn-secondary {
-      background: transparent;
-      color: rgba(244,241,234,0.5);
-      font-size: 12px;
-      padding: 10px 16px;
-      border-radius: 7px;
-      border: 1px solid rgba(255,255,255,0.13);
-      text-decoration: none;
-      cursor: pointer;
-      white-space: nowrap;
-      display: inline-block;
+      background: transparent; color: rgba(244,241,234,0.5);
+      font-size: 12px; padding: 10px 16px; border-radius: 7px;
+      border: 1px solid rgba(255,255,255,0.13); text-decoration: none;
+      cursor: pointer; white-space: nowrap; display: inline-block;
     }
+    .live-line { display: flex; align-items: center; gap: 7px; margin-bottom: 20px; }
+    .pulse-dot { width: 6px; height: 6px; border-radius: 50%; background: #22C997; flex-shrink: 0; animation: pulse 2s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.35} }
+    .live-line p { font-size: 11px; color: rgba(255,255,255,0.35); line-height: 1.4; }
 
-    .live-line {
-      display: flex;
-      align-items: center;
-      gap: 7px;
-      margin-bottom: 20px;
-    }
+    /* Preview card */
+    .preview-card { background: #112236; border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; padding: 14px; margin-bottom: 16px; }
+    .preview-label { font-size: 9px; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.35); margin-bottom: 10px; }
+    .preview-number { font-family: Georgia,serif; font-size: 28px; font-weight: 700; color: #F4F1EA; line-height: 1; margin-bottom: 2px; }
+    .preview-sub { font-size: 10px; color: rgba(255,255,255,0.35); margin-bottom: 10px; }
+    .bar-row { display: flex; align-items: center; gap: 8px; margin-bottom: 5px; }
+    .bar-label { width: 110px; flex-shrink: 0; font-size: 10px; color: rgba(255,255,255,0.45); }
+    .bar-track { flex: 1; height: 5px; background: rgba(255,255,255,0.06); border-radius: 3px; overflow: hidden; }
+    .bar-fill { height: 100%; border-radius: 3px; background: #F0A500; }
+    .bar-val { width: 36px; text-align: right; font-size: 10px; color: rgba(255,255,255,0.55); flex-shrink: 0; }
+    .preview-note { font-size: 10px; color: #22C997; margin-top: 8px; }
 
-    .pulse-dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: #22C997;
-      flex-shrink: 0;
-      animation: pulse 2s infinite;
-    }
-
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.35; }
-    }
-
-    .live-line p {
-      font-size: 11px;
-      color: rgba(255,255,255,0.35);
-      line-height: 1.4;
-    }
-
-    .preview-card {
-      background: #112236;
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 10px;
-      padding: 14px;
-      margin-bottom: 16px;
-    }
-
-    .preview-label {
-      font-size: 9px;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: rgba(255,255,255,0.35);
-      margin-bottom: 10px;
-    }
-
-    .preview-number {
-      font-family: Georgia, serif;
-      font-size: 28px;
-      font-weight: 700;
-      color: #F4F1EA;
-      line-height: 1;
-      margin-bottom: 2px;
-    }
-
-    .preview-sub {
-      font-size: 10px;
-      color: rgba(255,255,255,0.35);
-      margin-bottom: 10px;
-    }
-
-    .bar-row {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 5px;
-    }
-
-    .bar-label {
-      width: 110px;
-      flex-shrink: 0;
-      font-size: 10px;
-      color: rgba(255,255,255,0.45);
-    }
-
-    .bar-track {
-      flex: 1;
-      height: 5px;
-      background: rgba(255,255,255,0.06);
-      border-radius: 3px;
-      overflow: hidden;
-    }
-
-    .bar-fill {
-      height: 100%;
-      border-radius: 3px;
-      background: #F0A500;
-    }
-
-    .bar-val {
-      width: 36px;
-      text-align: right;
-      font-size: 10px;
-      color: rgba(255,255,255,0.55);
-      flex-shrink: 0;
-    }
-
-    .preview-note {
-      font-size: 10px;
-      color: #22C997;
-      margin-top: 8px;
-    }
-
+    /* Stats inside hero */
     .stats-row {
       display: flex;
       border-top: 1px solid rgba(255,255,255,0.07);
-      padding-top: 16px;
-      margin-top: 4px;
+      padding-top: 16px; margin-top: 4px;
     }
+    .stat { flex: 1; padding: 0 14px; border-left: 1px solid rgba(255,255,255,0.07); }
+    .stat:first-child { border-left: none; padding-left: 0; }
+    .stat-num { font-family: Georgia,serif; font-size: 22px; font-weight: 700; color: #F4F1EA; margin-bottom: 2px; line-height: 1; }
+    .stat-label { font-size: 10px; color: rgba(255,255,255,0.3); line-height: 1.45; }
 
-    .stat {
-      flex: 1;
-      padding: 0 14px;
-      border-left: 1px solid rgba(255,255,255,0.07);
+    /* Stats strip (mobile only) */
+    .stats-strip {
+      display: none;
+      border-top: 1px solid rgba(255,255,255,0.07);
+      padding: 20px 28px;
     }
+    .stats-strip .stat { flex: 1; padding: 0 14px; border-left: 1px solid rgba(255,255,255,0.07); }
+    .stats-strip .stat:first-child { border-left: none; padding-left: 0; }
+    .stats-strip-inner { display: flex; width: 100%; }
 
-    .stat:first-child {
-      border-left: none;
-      padding-left: 0;
-    }
-
-    .stat-num {
-      font-family: Georgia, serif;
-      font-size: 22px;
-      font-weight: 700;
-      color: #F4F1EA;
-      margin-bottom: 2px;
-      line-height: 1;
-    }
-
-    .stat-label {
-      font-size: 10px;
-      color: rgba(255,255,255,0.3);
-      line-height: 1.45;
-    }
-
-    /* ── WAITLIST CARD ──────────────────────────────────────────────────────── */
+    /* ── WAITLIST CARD ─────────────────────────────────────────────────────── */
     .waitlist-card {
-      background: #132840;
-      border: 1px solid rgba(240,165,0,0.22);
-      border-radius: 14px;
-      padding: 20px;
-      position: relative;
-      overflow: hidden;
-      align-self: start;
+      background: #132840; border: 1px solid rgba(240,165,0,0.22);
+      border-radius: 14px; padding: 20px;
+      position: relative; overflow: hidden; align-self: start;
     }
-
-    .waitlist-card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 2px;
-      background: #F0A500;
-    }
-
-    .wl-label {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      font-size: 9px;
-      font-weight: 600;
-      letter-spacing: 0.13em;
-      text-transform: uppercase;
-      color: #22C997;
-      margin-bottom: 5px;
-    }
-
-    .wl-dot {
-      width: 4px;
-      height: 4px;
-      border-radius: 50%;
-      background: #22C997;
-      flex-shrink: 0;
-    }
-
-    .wl-title {
-      font-family: Georgia, serif;
-      font-size: 15px;
-      font-weight: 700;
-      color: #F4F1EA;
-      margin-bottom: 4px;
-    }
-
-    .wl-sub {
-      font-size: 11px;
-      color: rgba(255,255,255,0.38);
-      line-height: 1.55;
-      margin-bottom: 10px;
-    }
-
-    .spots-counter {
-      display: flex;
-      justify-content: space-between;
-      background: rgba(240,165,0,0.08);
-      border: 1px solid rgba(240,165,0,0.2);
-      border-radius: 6px;
-      padding: 6px 10px;
-      margin-bottom: 8px;
-    }
-
-    .spots-left {
-      font-size: 10px;
-      color: rgba(240,165,0,0.9);
-    }
-
-    .spots-remain {
-      font-size: 10px;
-      color: rgba(255,255,255,0.4);
-    }
-
-    .progress-bar {
-      height: 3px;
-      background: rgba(255,255,255,0.06);
-      border-radius: 2px;
-      margin-bottom: 12px;
-      overflow: hidden;
-    }
-
-    .progress-fill {
-      height: 100%;
-      width: 24%;
-      background: #F0A500;
-      border-radius: 2px;
-    }
-
-    .wl-input {
-      width: 100%;
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 7px;
-      padding: 8px 10px;
-      font-size: 11px;
-      color: rgba(255,255,255,0.55);
-      margin-bottom: 7px;
-      font-family: inherit;
-      outline: none;
-    }
-
+    .waitlist-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: #F0A500; }
+    .wl-label { display: flex; align-items: center; gap: 5px; font-size: 9px; font-weight: 600; letter-spacing: 0.13em; text-transform: uppercase; color: #22C997; margin-bottom: 5px; }
+    .wl-dot { width: 4px; height: 4px; border-radius: 50%; background: #22C997; flex-shrink: 0; }
+    .wl-title { font-family: Georgia,serif; font-size: 15px; font-weight: 700; color: #F4F1EA; margin-bottom: 4px; }
+    .wl-sub { font-size: 11px; color: rgba(255,255,255,0.38); line-height: 1.55; margin-bottom: 10px; }
+    .spots-counter { display: flex; justify-content: space-between; background: rgba(240,165,0,0.08); border: 1px solid rgba(240,165,0,0.2); border-radius: 6px; padding: 6px 10px; margin-bottom: 8px; }
+    .spots-left { font-size: 10px; color: rgba(240,165,0,0.9); }
+    .spots-remain { font-size: 10px; color: rgba(255,255,255,0.4); }
+    .progress-bar { height: 3px; background: rgba(255,255,255,0.06); border-radius: 2px; margin-bottom: 12px; overflow: hidden; }
+    .progress-fill { height: 100%; width: 24%; background: #F0A500; border-radius: 2px; }
+    .wl-input { width: 100%; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 7px; padding: 8px 10px; font-size: 11px; color: rgba(255,255,255,0.65); margin-bottom: 7px; font-family: inherit; outline: none; }
     .wl-input::placeholder { color: rgba(255,255,255,0.28); }
     .wl-input:focus { border-color: rgba(240,165,0,0.35); }
-
-    .wl-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 7px;
-      margin-bottom: 7px;
-    }
-
+    .wl-row { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; margin-bottom: 7px; }
     .wl-row .wl-input { margin-bottom: 0; }
-
-    .privacy-note {
-      font-size: 10px;
-      color: rgba(255,255,255,0.25);
-      margin-bottom: 8px;
-      line-height: 1.5;
-    }
-
-    .wl-submit {
-      width: 100%;
-      background: #F0A500;
-      color: #0B1929;
-      font-size: 12px;
-      font-weight: 700;
-      padding: 9px;
-      border-radius: 7px;
-      border: none;
-      cursor: pointer;
-      font-family: inherit;
-    }
-
+    .privacy-note { font-size: 10px; color: rgba(255,255,255,0.25); margin-bottom: 8px; line-height: 1.5; }
+    .wl-submit { width: 100%; background: #F0A500; color: #0B1929; font-size: 12px; font-weight: 700; padding: 9px; border-radius: 7px; border: none; cursor: pointer; font-family: inherit; }
     .wl-submit:hover { background: #e09900; }
-
-    .wl-footer {
-      font-size: 10px;
-      color: rgba(255,255,255,0.2);
-      text-align: center;
-      margin-top: 7px;
-    }
-
-    .wl-success {
-      background: rgba(34,201,151,0.08);
-      border: 1px solid rgba(34,201,151,0.2);
-      border-radius: 7px;
-      padding: 20px 16px;
-      text-align: center;
-    }
-
-    .wl-success-icon {
-      width: 20px;
-      height: 20px;
-      border-radius: 50%;
-      background: rgba(34,201,151,0.2);
-      border: 1px solid rgba(34,201,151,0.4);
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 11px;
-      color: #22C997;
-      margin-bottom: 8px;
-    }
-
-    .wl-success-title {
-      font-family: Georgia, serif;
-      font-size: 14px;
-      color: #F4F1EA;
-      margin-bottom: 5px;
-    }
-
-    .wl-success-sub {
-      font-size: 11px;
-      color: rgba(255,255,255,0.5);
-      line-height: 1.5;
-    }
-
-    /* ── TRUST BAR ──────────────────────────────────────────────────────────── */
-    .trust-bar {
-      border-top: 1px solid rgba(255,255,255,0.06);
-      border-bottom: 1px solid rgba(255,255,255,0.06);
-      padding: 10px 28px;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 16px;
-      justify-content: center;
-    }
-
-    .trust-item {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-    }
-
-    .trust-dot {
-      width: 3px;
-      height: 3px;
-      border-radius: 50%;
-      background: #F0A500;
-      flex-shrink: 0;
-    }
-
-    .trust-item span {
-      font-size: 10px;
-      color: rgba(255,255,255,0.3);
-    }
-
-    /* ── TESTIMONIAL ────────────────────────────────────────────────────────── */
-    .testimonial-section {
-      background: #0F2036;
-      border-top: 1px solid rgba(255,255,255,0.06);
-      padding: 20px 28px;
-    }
-
-    .testimonial-card {
-      background: #132840;
-      border: 1px solid rgba(255,255,255,0.07);
-      border-radius: 10px;
-      padding: 16px;
-      display: flex;
-      gap: 14px;
-      align-items: flex-start;
-      max-width: 600px;
-      margin: 0 auto;
-    }
-
-    .avatar {
-      width: 38px;
-      height: 38px;
-      border-radius: 50%;
-      background: #F0A500;
-      flex-shrink: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 13px;
-      font-weight: 700;
-      color: #0B1929;
-    }
-
-    .quote-text {
-      font-size: 12px;
-      color: rgba(255,255,255,0.7);
-      line-height: 1.6;
-      font-style: italic;
-      margin-bottom: 6px;
-    }
-
-    .attribution {
-      font-size: 10px;
-      color: rgba(255,255,255,0.35);
-    }
-
-    .attribution strong {
-      font-weight: 500;
-      color: rgba(255,255,255,0.6);
-    }
-
-    /* ── TOOLS / ASSESSMENT / TOOLPACK SECTIONS ─────────────────────────────── */
-    .tools-section {
-      padding: 24px 28px;
-      max-width: 1060px;
-      margin: 0 auto;
-    }
-
-    .toolpacks-section {
-      border-top: 1px solid rgba(255,255,255,0.06);
-      padding-top: 24px;
-      margin-top: 8px;
-    }
-
-    h2 {
-      font-family: Georgia, serif;
-      font-size: 20px;
-      font-weight: 700;
-      color: #F4F1EA;
-      margin-bottom: 5px;
-    }
-
-    h2 em {
-      font-style: italic;
-      color: #F0A500;
-    }
-
-    .section-sub {
-      font-size: 11px;
-      color: rgba(255,255,255,0.4);
-      line-height: 1.65;
-      max-width: 520px;
-      margin-bottom: 16px;
-    }
-
-    .tabs {
-      display: flex;
-      border-bottom: 1px solid rgba(255,255,255,0.07);
-      margin-bottom: 14px;
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
-      scrollbar-width: none;
-    }
-
-    .tabs::-webkit-scrollbar { display: none; }
-
-    .tab {
-      font-size: 11px;
-      color: rgba(255,255,255,0.38);
-      padding: 7px 14px;
-      cursor: pointer;
-      border-bottom: 2px solid transparent;
-      margin-bottom: -1px;
-      white-space: nowrap;
-      background: none;
-      border-top: none;
-      border-left: none;
-      border-right: none;
-      font-family: inherit;
-    }
-
-    .tab.on {
-      color: #F0A500;
-      border-bottom-color: #F0A500;
-      font-weight: 500;
-    }
-
-    .tools-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 8px;
-    }
-
-    .tc {
-      background: #0F2036;
-      border: 1px solid rgba(255,255,255,0.06);
-      border-radius: 9px;
-      padding: 12px;
-    }
-
-    .tc-live {
-      border-color: rgba(34,201,151,0.2);
-    }
-
-    .tc-top {
-      display: flex;
-      justify-content: space-between;
-      gap: 6px;
-      margin-bottom: 5px;
-    }
-
-    .tc-name {
-      font-size: 11px;
-      font-weight: 500;
-      color: #F4F1EA;
-      line-height: 1.3;
-    }
-
-    .badge {
-      font-size: 8px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-      padding: 2px 6px;
-      border-radius: 3px;
-      white-space: nowrap;
-      flex-shrink: 0;
-      align-self: flex-start;
-    }
-
-    .badge-live {
-      background: rgba(34,201,151,0.12);
-      color: #22C997;
-    }
-
-    .badge-soon {
-      background: rgba(255,255,255,0.05);
-      color: rgba(255,255,255,0.28);
-    }
-
-    .tc-desc {
-      font-size: 10px;
-      color: rgba(255,255,255,0.35);
-      line-height: 1.55;
-      margin-bottom: 7px;
-    }
-
-    .tc-amber-note {
-      font-size: 9px;
-      color: rgba(240,165,0,0.7);
-      margin-bottom: 7px;
-      margin-top: -3px;
-    }
-
-    .tc-bottom {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .cat-pill {
-      font-size: 8px;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      padding: 2px 6px;
-      border-radius: 3px;
-    }
-
-    .cat-operations  { background: rgba(240,165,0,0.09);   color: rgba(240,165,0,0.7); }
-    .cat-quality     { background: rgba(34,201,151,0.09);  color: rgba(34,201,151,0.65); }
-    .cat-strategy    { background: rgba(110,150,255,0.09); color: rgba(110,150,255,0.7); }
-    .cat-people      { background: rgba(190,120,210,0.09); color: rgba(190,120,210,0.7); }
-    .cat-commercial  { background: rgba(240,100,90,0.09);  color: rgba(240,100,90,0.65); }
-
-    .tc-link {
-      font-size: 10px;
-      color: #F0A500;
-      text-decoration: none;
-    }
-
-    /* ── SHAPE THE TOOLKIT ──────────────────────────────────────────────────── */
-    .suggest-section {
-      background: #0F2036;
-      border-top: 1px solid rgba(255,255,255,0.06);
-      padding: 24px 28px;
-    }
-
-    .suggest-inner {
-      max-width: 1060px;
-      margin: 0 auto;
-    }
-
-    .suggest-form {
-      max-width: 480px;
-    }
-
-    h2.suggest-h2 {
-      font-size: 18px;
-      margin-bottom: 6px;
-    }
-
-    .suggest-sub {
-      font-size: 11px;
-      color: rgba(255,255,255,0.4);
-      line-height: 1.6;
-      max-width: 500px;
-      margin-bottom: 16px;
-    }
-
-    .suggest-textarea {
-      width: 100%;
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 7px;
-      padding: 10px;
-      font-size: 12px;
-      color: rgba(255,255,255,0.65);
-      font-family: inherit;
-      resize: vertical;
-      min-height: 80px;
-      margin-bottom: 8px;
-      outline: none;
-    }
-
-    .suggest-textarea::placeholder { color: rgba(255,255,255,0.25); }
-    .suggest-textarea:focus { border-color: rgba(240,165,0,0.3); }
-
-    .suggest-email {
-      width: 100%;
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 7px;
-      padding: 8px 10px;
-      font-size: 12px;
-      color: rgba(255,255,255,0.65);
-      font-family: inherit;
-      margin-bottom: 8px;
-      outline: none;
-    }
-
-    .suggest-email::placeholder { color: rgba(255,255,255,0.25); }
-    .suggest-email:focus { border-color: rgba(240,165,0,0.3); }
-
-    .suggest-btn {
-      background: transparent;
-      border: 1px solid rgba(240,165,0,0.4);
-      color: #F0A500;
-      font-size: 12px;
-      font-weight: 500;
-      padding: 8px 18px;
-      border-radius: 7px;
-      cursor: pointer;
-      font-family: inherit;
-    }
-
-    .suggest-btn:hover { background: rgba(240,165,0,0.06); }
-
-    .suggest-confirm {
-      font-size: 11px;
-      color: #22C997;
-      margin-top: 10px;
-      display: none;
-      line-height: 1.5;
-    }
-
-    /* ── GUIDES / NEWS COMING SOON ──────────────────────────────────────────── */
-    .placeholder-section {
-      background: #0F2036;
-      border-top: 1px solid rgba(255,255,255,0.06);
-      padding: 24px 28px;
-    }
-
-    .placeholder-inner {
-      max-width: 1060px;
-      margin: 0 auto;
-    }
-
-    .placeholder-inner h2 {
-      font-size: 18px;
-      margin-bottom: 6px;
-    }
-
-    .placeholder-sub {
-      font-size: 11px;
-      color: rgba(255,255,255,0.4);
-      line-height: 1.6;
-      max-width: 520px;
-      margin-bottom: 12px;
-    }
-
-    .cs-badge {
-      display: inline-block;
-      background: rgba(240,165,0,0.1);
-      color: #F0A500;
-      font-size: 9px;
-      font-weight: 600;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      padding: 4px 10px;
-      border-radius: 20px;
-      border: 1px solid rgba(240,165,0,0.2);
-    }
-
-    /* ── FAQ ────────────────────────────────────────────────────────────────── */
-    .faq-section {
-      border-top: 1px solid rgba(255,255,255,0.06);
-      padding: 20px 28px;
-      max-width: 1060px;
-      margin: 0 auto;
-    }
-
-    .faq-section h2 {
-      font-family: system-ui, -apple-system, sans-serif;
-      font-size: 14px;
-      font-weight: 500;
-      color: #F4F1EA;
-      margin-bottom: 14px;
-    }
-
-    .faq-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-    }
-
-    .faq-card {
-      background: #0F2036;
-      border: 1px solid rgba(255,255,255,0.06);
-      border-radius: 8px;
-      padding: 12px;
-    }
-
-    .faq-q {
-      font-size: 11px;
-      font-weight: 500;
-      color: #F4F1EA;
-      margin-bottom: 4px;
-    }
-
-    .faq-a {
-      font-size: 10px;
-      color: rgba(255,255,255,0.38);
-      line-height: 1.55;
-    }
-
-    /* ── FOOTER ─────────────────────────────────────────────────────────────── */
-    footer {
-      border-top: 1px solid rgba(255,255,255,0.06);
-      padding: 16px 28px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
-
-    .footer-left p {
-      font-size: 10px;
-      color: rgba(255,255,255,0.28);
-      line-height: 1.6;
-      margin-bottom: 3px;
-    }
-
-    .footer-left p strong {
-      font-weight: 500;
-      color: rgba(255,255,255,0.55);
-    }
-
-    .footer-privacy {
-      font-size: 10px;
-      color: rgba(255,255,255,0.25);
-      text-decoration: underline;
-    }
-
-    .footer-right {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-    }
-
-    .footer-email {
-      font-size: 11px;
-      color: #F0A500;
-      text-decoration: none;
-    }
-
-    .footer-wl-btn {
-      background: rgba(240,165,0,0.1);
-      border: 1px solid rgba(240,165,0,0.22);
-      border-radius: 5px;
-      padding: 6px 13px;
-      font-size: 11px;
-      color: #F0A500;
-      cursor: pointer;
-      text-decoration: none;
-      font-family: inherit;
-      display: inline-block;
-    }
-
-    /* ── MOBILE ─────────────────────────────────────────────────────────────── */
+    .wl-footer { font-size: 10px; color: rgba(255,255,255,0.2); text-align: center; margin-top: 7px; }
+    .wl-success { background: rgba(34,201,151,0.08); border: 1px solid rgba(34,201,151,0.2); border-radius: 7px; padding: 20px 16px; text-align: center; }
+    .wl-success-icon { width: 20px; height: 20px; border-radius: 50%; background: rgba(34,201,151,0.2); border: 1px solid rgba(34,201,151,0.4); display: inline-flex; align-items: center; justify-content: center; font-size: 11px; color: #22C997; margin-bottom: 8px; }
+    .wl-success-title { font-family: Georgia,serif; font-size: 14px; color: #F4F1EA; margin-bottom: 5px; }
+    .wl-success-sub { font-size: 11px; color: rgba(255,255,255,0.5); line-height: 1.5; }
+
+    /* ── TRUST BAR ─────────────────────────────────────────────────────────── */
+    .trust-bar { border-top: 1px solid rgba(255,255,255,0.06); border-bottom: 1px solid rgba(255,255,255,0.06); padding: 10px 28px; display: flex; flex-wrap: wrap; gap: 16px; justify-content: center; }
+    .trust-item { display: flex; align-items: center; gap: 5px; }
+    .trust-dot { width: 3px; height: 3px; border-radius: 50%; background: #F0A500; flex-shrink: 0; }
+    .trust-item span { font-size: 10px; color: rgba(255,255,255,0.3); }
+
+    /* ── TESTIMONIAL ───────────────────────────────────────────────────────── */
+    .testimonial-section { background: #0F2036; border-top: 1px solid rgba(255,255,255,0.06); padding: 20px 28px; }
+    .testimonial-card { background: #132840; border: 1px solid rgba(255,255,255,0.07); border-radius: 10px; padding: 16px; display: flex; gap: 14px; align-items: flex-start; max-width: 600px; margin: 0 auto; }
+    .avatar { width: 38px; height: 38px; border-radius: 50%; background: #F0A500; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; color: #0B1929; }
+    .quote-text { font-size: 12px; color: rgba(255,255,255,0.7); line-height: 1.6; font-style: italic; margin-bottom: 6px; }
+    .attribution { font-size: 10px; color: rgba(255,255,255,0.35); }
+    .attribution strong { font-weight: 500; color: rgba(255,255,255,0.6); }
+
+    /* ── FOOTER ────────────────────────────────────────────────────────────── */
+    footer { border-top: 1px solid rgba(255,255,255,0.06); padding: 16px 28px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; background: #0B1929; }
+    .footer-left p { font-size: 10px; color: rgba(255,255,255,0.28); line-height: 1.6; margin-bottom: 3px; }
+    .footer-left p strong { font-weight: 500; color: rgba(255,255,255,0.55); }
+    .footer-privacy { font-size: 10px; color: rgba(255,255,255,0.25); text-decoration: underline; }
+    .footer-right { display: flex; align-items: center; gap: 16px; }
+    .footer-email { font-size: 11px; color: #F0A500; text-decoration: none; }
+    .footer-wl-btn { background: rgba(240,165,0,0.1); border: 1px solid rgba(240,165,0,0.22); border-radius: 5px; padding: 6px 13px; font-size: 11px; color: #F0A500; text-decoration: none; }
+
+    /* ── MOBILE ────────────────────────────────────────────────────────────── */
     @media (max-width: 768px) {
       .nav-links { display: none; }
       .hamburger { display: flex; }
-
-      .hero {
-        grid-template-columns: 1fr;
-        padding: 24px 16px 24px;
-      }
-
-      h1 { font-size: 22px; }
-
-      .tools-section { padding: 24px 16px; }
-      .suggest-section { padding: 24px 16px; }
-      .faq-section { padding: 20px 16px; }
-      .testimonial-section { padding: 16px; }
-      .trust-bar { padding: 10px 16px; }
-      .placeholder-section { padding: 20px 16px; }
-      footer { padding: 16px; }
       nav { padding: 0 16px; }
+      footer { padding: 16px; flex-direction: column; align-items: flex-start; }
 
-      .tools-grid { grid-template-columns: 1fr; }
-      .faq-grid { grid-template-columns: 1fr; }
-
-      .stats-row {
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
-      }
-
-      .stat { min-width: 110px; }
-      .waitlist-card { margin-top: 8px; }
+      .hero { grid-template-columns: 1fr; padding: 24px 16px; gap: 20px; }
+      h1 { font-size: 22px; }
+      .hero-sub { max-width: 100%; }
+      .stats-row { display: none; }
+      .stats-strip { display: block; padding: 20px 16px; }
+      .trust-bar { padding: 10px 16px; }
+      .testimonial-section { padding: 16px; }
     }
-
     @media (max-width: 480px) {
-      .nav-cta { font-size: 10px; padding: 6px 12px; }
       .cta-row { flex-direction: column; }
       .btn-primary, .btn-secondary { text-align: center; }
     }
@@ -1203,9 +229,9 @@
 </head>
 <body>
 
-<!-- ── NAV ──────────────────────────────────────────────────────────────────── -->
+<!-- ── NAV ───────────────────────────────────────────────────────────────────── -->
 <nav>
-  <a href="/" class="logo">
+  <a href="/index.html" class="logo">
     <div class="logo-icon">
       <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
         <rect x="1" y="3" width="3" height="10" rx="0.5" fill="white"/>
@@ -1216,118 +242,14 @@
     </div>
     <span class="logo-text">Mandate <span>OpEx</span></span>
   </a>
-
-  <!-- Centre nav links (desktop) -->
   <div class="nav-links">
-
-    <!-- Tools dropdown (all 25) -->
-    <div class="nav-item" id="ni-tools">
-      <a class="nav-link" href="#" data-drop="dd-tools">Tools
-        <svg class="nav-chevron" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-      </a>
-      <div class="nav-dropdown dd-wide" id="dd-tools">
-        <div class="dd-col">
-          <div class="dd-col-header">Assessments</div>
-          <div class="dd-cat-label" style="margin-top:0;">Operations</div>
-          <a class="dd-tool-link" href="/waste-calculator.html"><span class="dd-live-dot"></span>Cost of Waste Calculator</a>
-          <a class="dd-tool-link soon" href="/coming-soon.html?tool=OEE+Diagnostic&amp;category=operations&amp;type=assessment">OEE Diagnostic</a>
-          <a class="dd-tool-link soon" href="/coming-soon.html?tool=SMED+Changeover+Assessment&amp;category=operations&amp;type=assessment">SMED Changeover Assessment</a>
-          <a class="dd-tool-link soon" href="/coming-soon.html?tool=Capacity+Assessment&amp;category=operations&amp;type=assessment">Capacity Assessment</a>
-          <a class="dd-tool-link soon" href="/coming-soon.html?tool=Maintenance+Maturity+Assessment&amp;category=operations&amp;type=assessment">Maintenance Maturity Assessment</a>
-          <div class="dd-cat-label">Quality</div>
-          <a class="dd-tool-link soon" href="/coming-soon.html?tool=Operational+Audit&amp;category=quality&amp;type=assessment">Operational Audit</a>
-          <a class="dd-tool-link soon" href="/coming-soon.html?tool=5S+Readiness+Assessment&amp;category=quality&amp;type=assessment">5S Readiness Assessment</a>
-          <a class="dd-tool-link soon" href="/coming-soon.html?tool=Quality+Culture+Assessment&amp;category=quality&amp;type=assessment">Quality Culture Assessment</a>
-          <a class="dd-tool-link soon" href="/coming-soon.html?tool=Root+Cause+Analysis+Form&amp;category=quality&amp;type=assessment">Root Cause Analysis Form</a>
-          <div class="dd-cat-label">People</div>
-          <a class="dd-tool-link soon" href="/coming-soon.html?tool=Skills+Matrix+Assessment&amp;category=people&amp;type=assessment">Skills Matrix Assessment</a>
-          <a class="dd-tool-link soon" href="/coming-soon.html?tool=Change+Readiness+Assessment&amp;category=people&amp;type=assessment">Change Readiness Assessment</a>
-          <div class="dd-cat-label">Strategy</div>
-          <a class="dd-tool-link soon" href="/coming-soon.html?tool=AI+Readiness+Diagnostic&amp;category=strategy&amp;type=assessment">AI Readiness Diagnostic</a>
-          <a class="dd-tool-link soon" href="/coming-soon.html?tool=Strategy+Deployment+Assessment&amp;category=strategy&amp;type=assessment">Strategy Deployment Assessment</a>
-          <div class="dd-cat-label">Commercial</div>
-          <a class="dd-tool-link soon" href="/coming-soon.html?tool=Supplier+Audit+Form&amp;category=commercial&amp;type=assessment">Supplier Audit Form</a>
-        </div>
-        <div class="dd-col">
-          <div class="dd-col-header">Tool Packs</div>
-          <div class="dd-cat-label" style="margin-top:0;">Operations</div>
-          <a class="dd-tool-link soon" href="/coming-soon.html?tool=SQCDP+Live&amp;category=operations&amp;type=toolpack">SQCDP Live</a>
-          <a class="dd-tool-link soon" href="/coming-soon.html?tool=Maintenance+Maturity+Tracker&amp;category=operations&amp;type=toolpack">Maintenance Maturity Tracker</a>
-          <a class="dd-tool-link soon" href="/coming-soon.html?tool=SMED+Improvement+Planner&amp;category=operations&amp;type=toolpack">SMED Improvement Planner</a>
-          <a class="dd-tool-link soon" href="/coming-soon.html?tool=Capacity+Planner&amp;category=operations&amp;type=toolpack">Capacity Planner</a>
-          <a class="dd-tool-link soon" href="/coming-soon.html?tool=Kaizen+Log&amp;category=operations&amp;type=toolpack">Kaizen Log</a>
-          <div class="dd-cat-label">Quality</div>
-          <a class="dd-tool-link soon" href="/coming-soon.html?tool=5S+Improvement+Tool+Pack&amp;category=quality&amp;type=toolpack">5S Improvement Tool Pack</a>
-          <div class="dd-cat-label">Strategy</div>
-          <a class="dd-tool-link soon" href="/coming-soon.html?tool=Strategy+Deployment+Planner&amp;category=strategy&amp;type=toolpack">Strategy Deployment Planner</a>
-          <a class="dd-tool-link soon" href="/coming-soon.html?tool=MD+Cockpit&amp;category=strategy&amp;type=toolpack">MD Cockpit</a>
-          <div class="dd-cat-label">Commercial</div>
-          <a class="dd-tool-link soon" href="/coming-soon.html?tool=Supply+Chain+Performance+Tracker&amp;category=commercial&amp;type=toolpack">Supply Chain Performance Tracker</a>
-          <a class="dd-tool-link soon" href="/coming-soon.html?tool=Mandate+CRM&amp;category=commercial&amp;type=toolpack">Mandate CRM</a>
-          <a class="dd-tool-link soon" href="/coming-soon.html?tool=Mandate+Jobs&amp;category=commercial&amp;type=toolpack">Mandate Jobs</a>
-        </div>
-      </div>
-    </div>
-
-    <!-- Assessments dropdown -->
-    <div class="nav-item" id="ni-assessments">
-      <a class="nav-link" href="#" data-drop="dd-assessments">Assessments
-        <svg class="nav-chevron" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-      </a>
-      <div class="nav-dropdown" id="dd-assessments">
-        <div class="dd-col-header">Assessments and Audit Forms</div>
-        <div class="dd-cat-label" style="margin-top:0;">Operations</div>
-        <a class="dd-tool-link" href="/waste-calculator.html"><span class="dd-live-dot"></span>Cost of Waste Calculator</a>
-        <a class="dd-tool-link soon" href="/coming-soon.html?tool=OEE+Diagnostic&amp;category=operations&amp;type=assessment">OEE Diagnostic</a>
-        <a class="dd-tool-link soon" href="/coming-soon.html?tool=SMED+Changeover+Assessment&amp;category=operations&amp;type=assessment">SMED Changeover Assessment</a>
-        <a class="dd-tool-link soon" href="/coming-soon.html?tool=Capacity+Assessment&amp;category=operations&amp;type=assessment">Capacity Assessment</a>
-        <a class="dd-tool-link soon" href="/coming-soon.html?tool=Maintenance+Maturity+Assessment&amp;category=operations&amp;type=assessment">Maintenance Maturity Assessment</a>
-        <div class="dd-cat-label">Quality</div>
-        <a class="dd-tool-link soon" href="/coming-soon.html?tool=Operational+Audit&amp;category=quality&amp;type=assessment">Operational Audit</a>
-        <a class="dd-tool-link soon" href="/coming-soon.html?tool=5S+Readiness+Assessment&amp;category=quality&amp;type=assessment">5S Readiness Assessment</a>
-        <a class="dd-tool-link soon" href="/coming-soon.html?tool=Quality+Culture+Assessment&amp;category=quality&amp;type=assessment">Quality Culture Assessment</a>
-        <a class="dd-tool-link soon" href="/coming-soon.html?tool=Root+Cause+Analysis+Form&amp;category=quality&amp;type=assessment">Root Cause Analysis Form</a>
-        <div class="dd-cat-label">People</div>
-        <a class="dd-tool-link soon" href="/coming-soon.html?tool=Skills+Matrix+Assessment&amp;category=people&amp;type=assessment">Skills Matrix Assessment</a>
-        <a class="dd-tool-link soon" href="/coming-soon.html?tool=Change+Readiness+Assessment&amp;category=people&amp;type=assessment">Change Readiness Assessment</a>
-        <div class="dd-cat-label">Strategy</div>
-        <a class="dd-tool-link soon" href="/coming-soon.html?tool=AI+Readiness+Diagnostic&amp;category=strategy&amp;type=assessment">AI Readiness Diagnostic</a>
-        <a class="dd-tool-link soon" href="/coming-soon.html?tool=Strategy+Deployment+Assessment&amp;category=strategy&amp;type=assessment">Strategy Deployment Assessment</a>
-        <div class="dd-cat-label">Commercial</div>
-        <a class="dd-tool-link soon" href="/coming-soon.html?tool=Supplier+Audit+Form&amp;category=commercial&amp;type=assessment">Supplier Audit Form</a>
-      </div>
-    </div>
-
-    <!-- Tool Packs dropdown -->
-    <div class="nav-item" id="ni-toolpacks">
-      <a class="nav-link" href="#" data-drop="dd-toolpacks">Tool Packs
-        <svg class="nav-chevron" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-      </a>
-      <div class="nav-dropdown" id="dd-toolpacks">
-        <div class="dd-col-header">Tool Packs</div>
-        <div class="dd-cat-label" style="margin-top:0;">Operations</div>
-        <a class="dd-tool-link soon" href="/coming-soon.html?tool=SQCDP+Live&amp;category=operations&amp;type=toolpack">SQCDP Live</a>
-        <a class="dd-tool-link soon" href="/coming-soon.html?tool=Maintenance+Maturity+Tracker&amp;category=operations&amp;type=toolpack">Maintenance Maturity Tracker</a>
-        <a class="dd-tool-link soon" href="/coming-soon.html?tool=SMED+Improvement+Planner&amp;category=operations&amp;type=toolpack">SMED Improvement Planner</a>
-        <a class="dd-tool-link soon" href="/coming-soon.html?tool=Capacity+Planner&amp;category=operations&amp;type=toolpack">Capacity Planner</a>
-        <a class="dd-tool-link soon" href="/coming-soon.html?tool=Kaizen+Log&amp;category=operations&amp;type=toolpack">Kaizen Log</a>
-        <div class="dd-cat-label">Quality</div>
-        <a class="dd-tool-link soon" href="/coming-soon.html?tool=5S+Improvement+Tool+Pack&amp;category=quality&amp;type=toolpack">5S Improvement Tool Pack</a>
-        <div class="dd-cat-label">Strategy</div>
-        <a class="dd-tool-link soon" href="/coming-soon.html?tool=Strategy+Deployment+Planner&amp;category=strategy&amp;type=toolpack">Strategy Deployment Planner</a>
-        <a class="dd-tool-link soon" href="/coming-soon.html?tool=MD+Cockpit&amp;category=strategy&amp;type=toolpack">MD Cockpit</a>
-        <div class="dd-cat-label">Commercial</div>
-        <a class="dd-tool-link soon" href="/coming-soon.html?tool=Supply+Chain+Performance+Tracker&amp;category=commercial&amp;type=toolpack">Supply Chain Performance Tracker</a>
-        <a class="dd-tool-link soon" href="/coming-soon.html?tool=Mandate+CRM&amp;category=commercial&amp;type=toolpack">Mandate CRM</a>
-        <a class="dd-tool-link soon" href="/coming-soon.html?tool=Mandate+Jobs&amp;category=commercial&amp;type=toolpack">Mandate Jobs</a>
-      </div>
-    </div>
-
-    <a class="nav-link" href="#guides-coming-soon">Free Guides</a>
-    <a class="nav-link" href="#news-coming-soon">Industry News</a>
-    <a class="nav-link" href="#footer">About</a>
+    <a class="nav-link" href="/tools.html">Tools</a>
+    <a class="nav-link" href="/guides.html">Guides</a>
+    <a class="nav-link" href="/news.html">News</a>
+    <a class="nav-link" href="/faq.html">FAQ</a>
+    <a class="nav-link" href="/help.html">Help</a>
+    <a class="nav-link" href="/about.html">About</a>
   </div>
-
   <div class="nav-right">
     <button class="hamburger" id="hamburger" aria-label="Open menu">
       <span></span><span></span><span></span>
@@ -1338,8 +260,8 @@
 
 <!-- ── MOBILE OVERLAY ────────────────────────────────────────────────────────── -->
 <div class="mobile-overlay" id="mobile-overlay">
-  <div class="mobile-overlay-nav">
-    <a href="/" class="logo">
+  <div class="mob-header">
+    <a href="/index.html" class="logo">
       <div class="logo-icon">
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
           <rect x="1" y="3" width="3" height="10" rx="0.5" fill="white"/>
@@ -1350,75 +272,34 @@
       </div>
       <span class="logo-text">Mandate <span>OpEx</span></span>
     </a>
-    <button class="mobile-close" id="mobile-close" aria-label="Close menu">&#x2715;</button>
+    <button class="mob-close" id="mob-close" aria-label="Close menu">&#x2715;</button>
   </div>
-  <div class="mobile-nav-items">
-    <div class="mobile-nav-section">
-      <button class="mobile-nav-toggle" data-target="mob-tools">Assessments <span class="mobile-toggle-chevron">&#9660;</span></button>
-      <div class="mobile-nav-sub" id="mob-tools">
-        <a href="/waste-calculator.html">Cost of Waste Calculator <span style="color:#22C997;font-size:10px;">&#9679; Live</span></a>
-        <a href="/coming-soon.html?tool=OEE+Diagnostic&category=operations&type=assessment">OEE Diagnostic</a>
-        <a href="/coming-soon.html?tool=SMED+Changeover+Assessment&category=operations&type=assessment">SMED Changeover Assessment</a>
-        <a href="/coming-soon.html?tool=Capacity+Assessment&category=operations&type=assessment">Capacity Assessment</a>
-        <a href="/coming-soon.html?tool=Maintenance+Maturity+Assessment&category=operations&type=assessment">Maintenance Maturity Assessment</a>
-        <a href="/coming-soon.html?tool=Operational+Audit&category=quality&type=assessment">Operational Audit</a>
-        <a href="/coming-soon.html?tool=5S+Readiness+Assessment&category=quality&type=assessment">5S Readiness Assessment</a>
-        <a href="/coming-soon.html?tool=Quality+Culture+Assessment&category=quality&type=assessment">Quality Culture Assessment</a>
-        <a href="/coming-soon.html?tool=Root+Cause+Analysis+Form&category=quality&type=assessment">Root Cause Analysis Form</a>
-        <a href="/coming-soon.html?tool=Skills+Matrix+Assessment&category=people&type=assessment">Skills Matrix Assessment</a>
-        <a href="/coming-soon.html?tool=Change+Readiness+Assessment&category=people&type=assessment">Change Readiness Assessment</a>
-        <a href="/coming-soon.html?tool=AI+Readiness+Diagnostic&category=strategy&type=assessment">AI Readiness Diagnostic</a>
-        <a href="/coming-soon.html?tool=Strategy+Deployment+Assessment&category=strategy&type=assessment">Strategy Deployment Assessment</a>
-        <a href="/coming-soon.html?tool=Supplier+Audit+Form&category=commercial&type=assessment">Supplier Audit Form</a>
-      </div>
-    </div>
-    <div class="mobile-nav-section">
-      <button class="mobile-nav-toggle" data-target="mob-toolpacks">Tool Packs <span class="mobile-toggle-chevron">&#9660;</span></button>
-      <div class="mobile-nav-sub" id="mob-toolpacks">
-        <a href="/coming-soon.html?tool=SQCDP+Live&category=operations&type=toolpack">SQCDP Live</a>
-        <a href="/coming-soon.html?tool=Maintenance+Maturity+Tracker&category=operations&type=toolpack">Maintenance Maturity Tracker</a>
-        <a href="/coming-soon.html?tool=SMED+Improvement+Planner&category=operations&type=toolpack">SMED Improvement Planner</a>
-        <a href="/coming-soon.html?tool=Capacity+Planner&category=operations&type=toolpack">Capacity Planner</a>
-        <a href="/coming-soon.html?tool=Kaizen+Log&category=operations&type=toolpack">Kaizen Log</a>
-        <a href="/coming-soon.html?tool=5S+Improvement+Tool+Pack&category=quality&type=toolpack">5S Improvement Tool Pack</a>
-        <a href="/coming-soon.html?tool=Strategy+Deployment+Planner&category=strategy&type=toolpack">Strategy Deployment Planner</a>
-        <a href="/coming-soon.html?tool=MD+Cockpit&category=strategy&type=toolpack">MD Cockpit</a>
-        <a href="/coming-soon.html?tool=Supply+Chain+Performance+Tracker&category=commercial&type=toolpack">Supply Chain Performance Tracker</a>
-        <a href="/coming-soon.html?tool=Mandate+CRM&category=commercial&type=toolpack">Mandate CRM</a>
-        <a href="/coming-soon.html?tool=Mandate+Jobs&category=commercial&type=toolpack">Mandate Jobs</a>
-      </div>
-    </div>
-    <a class="mobile-nav-link" href="#guides-coming-soon" onclick="document.getElementById('mobile-overlay').classList.remove('open');document.body.style.overflow='';">Free Guides</a>
-    <a class="mobile-nav-link" href="#news-coming-soon" onclick="document.getElementById('mobile-overlay').classList.remove('open');document.body.style.overflow='';">Industry News</a>
-    <a class="mobile-nav-link" href="#footer" onclick="document.getElementById('mobile-overlay').classList.remove('open');document.body.style.overflow='';">About</a>
-    <div style="padding:16px 20px;">
-      <a href="#waitlist" class="wl-submit" style="display:block;text-align:center;text-decoration:none;" onclick="document.getElementById('mobile-overlay').classList.remove('open');document.body.style.overflow='';">Join the waitlist</a>
-    </div>
-  </div>
+  <a class="mob-link" href="/tools.html">Tools</a>
+  <a class="mob-link" href="/guides.html">Guides</a>
+  <a class="mob-link" href="/news.html">News</a>
+  <a class="mob-link" href="/faq.html">FAQ</a>
+  <a class="mob-link" href="/help.html">Help</a>
+  <a class="mob-link" href="/about.html">About</a>
+  <a class="mob-wl" href="#waitlist" id="mob-wl-link">Join the waitlist</a>
 </div>
 
-<!-- ── HERO ─────────────────────────────────────────────────────────────────── -->
+<!-- ── HERO ──────────────────────────────────────────────────────────────────── -->
 <div class="hero">
-
   <!-- Left column -->
   <div>
     <div class="eyebrow">For businesses that make, move or fix things</div>
-
     <h1>Your margin is leaking somewhere in your operation.<br><em>Here is how to find it.</em></h1>
-
     <p class="hero-sub">Operational diagnostic tools built with practitioners across industry. Score your operation. Get a prioritised action plan in plain English. No consultancy. No jargon. No implementation fee.</p>
-
     <div class="cta-row">
       <a href="/waste-calculator.html" class="btn-primary">Try the free Cost of Waste Calculator</a>
-      <a href="#waitlist" class="btn-secondary">Join the waitlist</a>
+      <a href="/tools.html" class="btn-secondary">Explore all tools</a>
     </div>
-
     <div class="live-line">
       <div class="pulse-dot"></div>
-      <p>Building this now — join 12 others on the waitlist shaping what gets built first</p>
+      <p>Building this now — join 12 others shaping what gets built first</p>
     </div>
 
-    <!-- Tool preview card -->
+    <!-- Preview card -->
     <div class="preview-card">
       <div class="preview-label">Cost of Waste Calculator — live result example</div>
       <div class="preview-number">£531k</div>
@@ -1446,7 +327,7 @@
       <div class="preview-note">Select your sector. Answer plain-English questions. Get your number in 3 minutes.</div>
     </div>
 
-    <!-- Stats row -->
+    <!-- Stats (desktop) -->
     <div class="stats-row">
       <div class="stat">
         <div class="stat-num">£340k</div>
@@ -1463,7 +344,7 @@
     </div>
   </div>
 
-  <!-- Right column — waitlist form -->
+  <!-- Right column — waitlist -->
   <div id="waitlist" class="waitlist-card">
     <div class="wl-label"><div class="wl-dot"></div>Early access open</div>
     <div class="wl-title">Reserve your place</div>
@@ -1475,10 +356,10 @@
     <div class="progress-bar"><div class="progress-fill"></div></div>
     <div id="wl-form-wrap">
       <form id="wl-form" novalidate>
-        <input class="wl-input" type="text"  name="name"         placeholder="Your full name">
-        <input class="wl-input" type="email" name="email"        placeholder="Work email address">
+        <input class="wl-input" type="text" name="name" placeholder="Your full name">
+        <input class="wl-input" type="email" name="email" placeholder="Work email address">
         <div class="wl-row">
-          <input class="wl-input" type="text" name="role"         placeholder="Your role">
+          <input class="wl-input" type="text" name="role" placeholder="Your role">
           <input class="wl-input" type="text" name="company_size" placeholder="Company size">
         </div>
         <p class="privacy-note">By signing up you agree to our privacy policy. No spam.</p>
@@ -1487,10 +368,27 @@
     </div>
     <div class="wl-footer">No credit card required. One email when we launch.</div>
   </div>
-
 </div>
 
-<!-- ── TRUST BAR ─────────────────────────────────────────────────────────────── -->
+<!-- ── STATS STRIP (mobile only) ─────────────────────────────────────────────── -->
+<div class="stats-strip">
+  <div class="stats-strip-inner">
+    <div class="stat">
+      <div class="stat-num">£340k</div>
+      <div class="stat-label">Average hidden waste per year in a 50-person operation</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">25</div>
+      <div class="stat-label">Tools, assessments and management systems</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">Free</div>
+      <div class="stat-label">Diagnostic score on every tool. Always.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ── TRUST BAR ──────────────────────────────────────────────────────────────── -->
 <div class="trust-bar">
   <div class="trust-item"><div class="trust-dot"></div><span>Built with practitioners across manufacturing, TIC and capital equipment</span></div>
   <div class="trust-item"><div class="trust-dot"></div><span>Diagnosis AND prescription — not just a score</span></div>
@@ -1498,7 +396,7 @@
   <div class="trust-item"><div class="trust-dot"></div><span>Tools that talk to each other</span></div>
 </div>
 
-<!-- ── TESTIMONIAL ───────────────────────────────────────────────────────────── -->
+<!-- ── TESTIMONIAL ────────────────────────────────────────────────────────────── -->
 <div class="testimonial-section">
   <div class="testimonial-card">
     <div class="avatar">JR</div>
@@ -1509,434 +407,8 @@
   </div>
 </div>
 
-<!-- ── SECTION A: ASSESSMENTS ─────────────────────────────────────────────────── -->
-<div class="tools-section">
-  <div class="eyebrow">Assessments and audit forms</div>
-  <h2>Understand where you are. <em>Then fix it.</em></h2>
-  <p class="section-sub">Each assessment gives you a score, a gap analysis, and a prioritised action plan. Start here before you pick a tool pack.</p>
-
-  <div class="tabs" id="assessment-tabs">
-    <button class="tab on" data-tab="all">All</button>
-    <button class="tab" data-tab="operations">Operations</button>
-    <button class="tab" data-tab="quality">Quality</button>
-    <button class="tab" data-tab="people">People</button>
-    <button class="tab" data-tab="strategy">Strategy</button>
-    <button class="tab" data-tab="commercial">Commercial</button>
-  </div>
-
-  <div class="tools-grid" id="assessment-grid">
-
-    <!-- 1. Cost of Waste Calculator — LIVE -->
-    <div class="tc tc-live" data-category="operations">
-      <div class="tc-top">
-        <div class="tc-name">Cost of Waste Calculator</div>
-        <span class="badge badge-live">Live now</span>
-      </div>
-      <div class="tc-desc">Quantify hidden waste in pounds per year across 8 sectors. Sector-specific questions, industry benchmarks, and a plain-English action plan.</div>
-      <div class="tc-bottom">
-        <span class="cat-pill cat-operations">Operations</span>
-        <a href="/waste-calculator.html" class="tc-link">Try it now &rarr;</a>
-      </div>
-    </div>
-
-    <!-- 2. OEE Diagnostic -->
-    <div class="tc" data-category="operations">
-      <div class="tc-top">
-        <div class="tc-name">OEE Diagnostic</div>
-        <span class="badge badge-soon">Coming soon</span>
-      </div>
-      <div class="tc-desc">Score availability, performance and quality. Find which pillar is dragging you down.</div>
-      <div class="tc-bottom">
-        <span class="cat-pill cat-operations">Operations</span>
-        <a href="/coming-soon.html?tool=OEE+Diagnostic&amp;category=operations&amp;type=assessment" class="tc-link">Notify me &rarr;</a>
-      </div>
-    </div>
-
-    <!-- 3. SMED Changeover Assessment -->
-    <div class="tc" data-category="operations">
-      <div class="tc-top">
-        <div class="tc-name">SMED Changeover Assessment</div>
-        <span class="badge badge-soon">Coming soon</span>
-      </div>
-      <div class="tc-desc">Calculate pounds per month lost to changeover. Get a ranked internal vs external action list.</div>
-      <div class="tc-bottom">
-        <span class="cat-pill cat-operations">Operations</span>
-        <a href="/coming-soon.html?tool=SMED+Changeover+Assessment&amp;category=operations&amp;type=assessment" class="tc-link">Notify me &rarr;</a>
-      </div>
-    </div>
-
-    <!-- 4. Capacity Assessment -->
-    <div class="tc" data-category="operations">
-      <div class="tc-top">
-        <div class="tc-name">Capacity Assessment</div>
-        <span class="badge badge-soon">Coming soon</span>
-      </div>
-      <div class="tc-desc">Calculate your true available capacity and find the bottlenecks before you take on the next order.</div>
-      <div class="tc-bottom">
-        <span class="cat-pill cat-operations">Operations</span>
-        <a href="/coming-soon.html?tool=Capacity+Assessment&amp;category=operations&amp;type=assessment" class="tc-link">Notify me &rarr;</a>
-      </div>
-    </div>
-
-    <!-- 5. Maintenance Maturity Assessment -->
-    <div class="tc" data-category="operations">
-      <div class="tc-top">
-        <div class="tc-name">Maintenance Maturity Assessment</div>
-        <span class="badge badge-soon">Coming soon</span>
-      </div>
-      <div class="tc-desc">Score your maintenance operation across all 8 TPM pillars. Know exactly why your availability is low.</div>
-      <div class="tc-bottom">
-        <span class="cat-pill cat-operations">Operations</span>
-        <a href="/coming-soon.html?tool=Maintenance+Maturity+Assessment&amp;category=operations&amp;type=assessment" class="tc-link">Notify me &rarr;</a>
-      </div>
-    </div>
-
-    <!-- 6. Operational Audit -->
-    <div class="tc" data-category="quality">
-      <div class="tc-top">
-        <div class="tc-name">Operational Audit</div>
-        <span class="badge badge-soon">Coming soon</span>
-      </div>
-      <div class="tc-desc">Full SQCDP-based health check across Safety, Quality, Cost, Delivery, People. Traffic light output with prioritised action plan.</div>
-      <div class="tc-bottom">
-        <span class="cat-pill cat-quality">Quality</span>
-        <a href="/coming-soon.html?tool=Operational+Audit&amp;category=quality&amp;type=assessment" class="tc-link">Notify me &rarr;</a>
-      </div>
-    </div>
-
-    <!-- 7. 5S Readiness Assessment -->
-    <div class="tc" data-category="quality">
-      <div class="tc-top">
-        <div class="tc-name">5S Readiness Assessment</div>
-        <span class="badge badge-soon">Coming soon</span>
-      </div>
-      <div class="tc-desc">Score workplace organisation across all 5 pillars with gap analysis and a prioritised improvement plan.</div>
-      <div class="tc-bottom">
-        <span class="cat-pill cat-quality">Quality</span>
-        <a href="/coming-soon.html?tool=5S+Readiness+Assessment&amp;category=quality&amp;type=assessment" class="tc-link">Notify me &rarr;</a>
-      </div>
-    </div>
-
-    <!-- 8. Quality Culture Assessment -->
-    <div class="tc" data-category="quality">
-      <div class="tc-top">
-        <div class="tc-name">Quality Culture Assessment</div>
-        <span class="badge badge-soon">Coming soon</span>
-      </div>
-      <div class="tc-desc">Assess quality culture strength across leadership, process, people and systems. Find where culture is undermining quality performance.</div>
-      <div class="tc-bottom">
-        <span class="cat-pill cat-quality">Quality</span>
-        <a href="/coming-soon.html?tool=Quality+Culture+Assessment&amp;category=quality&amp;type=assessment" class="tc-link">Notify me &rarr;</a>
-      </div>
-    </div>
-
-    <!-- 9. Root Cause Analysis Form -->
-    <div class="tc" data-category="quality">
-      <div class="tc-top">
-        <div class="tc-name">Root Cause Analysis Form</div>
-        <span class="badge badge-soon">Coming soon</span>
-      </div>
-      <div class="tc-desc">Structured problem solving from symptom to root cause. Stop the same problems recurring.</div>
-      <div class="tc-bottom">
-        <span class="cat-pill cat-quality">Quality</span>
-        <a href="/coming-soon.html?tool=Root+Cause+Analysis+Form&amp;category=quality&amp;type=assessment" class="tc-link">Notify me &rarr;</a>
-      </div>
-    </div>
-
-    <!-- 10. Skills Matrix Assessment -->
-    <div class="tc" data-category="people">
-      <div class="tc-top">
-        <div class="tc-name">Skills Matrix Assessment</div>
-        <span class="badge badge-soon">Coming soon</span>
-      </div>
-      <div class="tc-desc">Map skills coverage and identify single points of failure. Know if you can run every line, every shift.</div>
-      <div class="tc-bottom">
-        <span class="cat-pill cat-people">People</span>
-        <a href="/coming-soon.html?tool=Skills+Matrix+Assessment&amp;category=people&amp;type=assessment" class="tc-link">Notify me &rarr;</a>
-      </div>
-    </div>
-
-    <!-- 11. Change Readiness Assessment -->
-    <div class="tc" data-category="people">
-      <div class="tc-top">
-        <div class="tc-name">Change Readiness Assessment</div>
-        <span class="badge badge-soon">Coming soon</span>
-      </div>
-      <div class="tc-desc">Assess how ready your organisation is to absorb and sustain change before you launch your next initiative.</div>
-      <div class="tc-bottom">
-        <span class="cat-pill cat-people">People</span>
-        <a href="/coming-soon.html?tool=Change+Readiness+Assessment&amp;category=people&amp;type=assessment" class="tc-link">Notify me &rarr;</a>
-      </div>
-    </div>
-
-    <!-- 12. AI Readiness Diagnostic -->
-    <div class="tc" data-category="strategy">
-      <div class="tc-top">
-        <div class="tc-name">AI Readiness Diagnostic</div>
-        <span class="badge badge-soon">Coming soon</span>
-      </div>
-      <div class="tc-desc">5 operation-specific dimensions. Know if your business is ready for AI before spending anything on it.</div>
-      <div class="tc-bottom">
-        <span class="cat-pill cat-strategy">Strategy</span>
-        <a href="/coming-soon.html?tool=AI+Readiness+Diagnostic&amp;category=strategy&amp;type=assessment" class="tc-link">Notify me &rarr;</a>
-      </div>
-    </div>
-
-    <!-- 13. Strategy Deployment Assessment -->
-    <div class="tc" data-category="strategy">
-      <div class="tc-top">
-        <div class="tc-name">Strategy Deployment Assessment</div>
-        <span class="badge badge-soon">Coming soon</span>
-      </div>
-      <div class="tc-desc">Assess how well your strategy cascades from boardroom to shop floor. Hoshin Kanri diagnostic in plain English.</div>
-      <div class="tc-bottom">
-        <span class="cat-pill cat-strategy">Strategy</span>
-        <a href="/coming-soon.html?tool=Strategy+Deployment+Assessment&amp;category=strategy&amp;type=assessment" class="tc-link">Notify me &rarr;</a>
-      </div>
-    </div>
-
-    <!-- 14. Supplier Audit Form -->
-    <div class="tc" data-category="commercial">
-      <div class="tc-top">
-        <div class="tc-name">Supplier Audit Form</div>
-        <span class="badge badge-soon">Coming soon</span>
-      </div>
-      <div class="tc-desc">Structured audit covering quality, delivery, responsiveness and risk. Know where your supply chain is vulnerable before it fails.</div>
-      <div class="tc-bottom">
-        <span class="cat-pill cat-commercial">Commercial</span>
-        <a href="/coming-soon.html?tool=Supplier+Audit+Form&amp;category=commercial&amp;type=assessment" class="tc-link">Notify me &rarr;</a>
-      </div>
-    </div>
-
-  </div><!-- /#assessment-grid -->
-
-  <!-- ── SECTION B: TOOL PACKS ───────────────────────────────────────────────── -->
-  <div class="toolpacks-section">
-    <div class="eyebrow">Tool packs</div>
-    <h2>Fix the gaps. <em>Build the operating rhythm.</em></h2>
-    <p class="section-sub">Use these alongside your assessment results. Each tool pack gives you the ongoing management system to sustain improvement.</p>
-
-    <div class="tabs" id="toolpack-tabs">
-      <button class="tab on" data-tab="all">All</button>
-      <button class="tab" data-tab="operations">Operations</button>
-      <button class="tab" data-tab="quality">Quality</button>
-      <button class="tab" data-tab="strategy">Strategy</button>
-      <button class="tab" data-tab="commercial">Commercial</button>
-    </div>
-
-    <div class="tools-grid" id="toolpack-grid">
-
-      <!-- 15. SQCDP Live -->
-      <div class="tc" data-category="operations">
-        <div class="tc-top">
-          <div class="tc-name">SQCDP Live</div>
-          <span class="badge badge-soon">Coming soon</span>
-        </div>
-        <div class="tc-desc">The daily management system. Your operational heartbeat. Safety, Quality, Cost, Delivery, People — tracked live.</div>
-        <div class="tc-bottom">
-          <span class="cat-pill cat-operations">Operations</span>
-          <a href="/coming-soon.html?tool=SQCDP+Live&amp;category=operations&amp;type=toolpack" class="tc-link">Notify me &rarr;</a>
-        </div>
-      </div>
-
-      <!-- 16. Maintenance Maturity Tracker -->
-      <div class="tc" data-category="operations">
-        <div class="tc-top">
-          <div class="tc-name">Maintenance Maturity Tracker</div>
-          <span class="badge badge-soon">Coming soon</span>
-        </div>
-        <div class="tc-desc">Ongoing TPM improvement planner across all 8 pillars. Track progress, assign owners, measure impact.</div>
-        <div class="tc-bottom">
-          <span class="cat-pill cat-operations">Operations</span>
-          <a href="/coming-soon.html?tool=Maintenance+Maturity+Tracker&amp;category=operations&amp;type=toolpack" class="tc-link">Notify me &rarr;</a>
-        </div>
-      </div>
-
-      <!-- 17. SMED Improvement Planner -->
-      <div class="tc" data-category="operations">
-        <div class="tc-top">
-          <div class="tc-name">SMED Improvement Planner</div>
-          <span class="badge badge-soon">Coming soon</span>
-        </div>
-        <div class="tc-desc">Action plan and tracker for changeover reduction. Separate internal from external time. Measure gains as you go.</div>
-        <div class="tc-bottom">
-          <span class="cat-pill cat-operations">Operations</span>
-          <a href="/coming-soon.html?tool=SMED+Improvement+Planner&amp;category=operations&amp;type=toolpack" class="tc-link">Notify me &rarr;</a>
-        </div>
-      </div>
-
-      <!-- 18. Capacity Planner -->
-      <div class="tc" data-category="operations">
-        <div class="tc-top">
-          <div class="tc-name">Capacity Planner</div>
-          <span class="badge badge-soon">Coming soon</span>
-        </div>
-        <div class="tc-desc">Ongoing capacity management and scenario planning. Know your headroom before you commit to the next order.</div>
-        <div class="tc-bottom">
-          <span class="cat-pill cat-operations">Operations</span>
-          <a href="/coming-soon.html?tool=Capacity+Planner&amp;category=operations&amp;type=toolpack" class="tc-link">Notify me &rarr;</a>
-        </div>
-      </div>
-
-      <!-- 19. Kaizen Log -->
-      <div class="tc" data-category="operations">
-        <div class="tc-top">
-          <div class="tc-name">Kaizen Log</div>
-          <span class="badge badge-soon">Coming soon</span>
-        </div>
-        <div class="tc-desc">Capture ideas, assign owners, track progress, measure impact. Build a visible culture of continuous improvement.</div>
-        <div class="tc-bottom">
-          <span class="cat-pill cat-operations">Operations</span>
-          <a href="/coming-soon.html?tool=Kaizen+Log&amp;category=operations&amp;type=toolpack" class="tc-link">Notify me &rarr;</a>
-        </div>
-      </div>
-
-      <!-- 20. 5S Improvement Tool Pack -->
-      <div class="tc" data-category="quality">
-        <div class="tc-top">
-          <div class="tc-name">5S Improvement Tool Pack</div>
-          <span class="badge badge-soon">Coming soon</span>
-        </div>
-        <div class="tc-desc">Implementation tracker, audit schedule and sustain checklist. From assessment result to embedded 5S discipline.</div>
-        <div class="tc-bottom">
-          <span class="cat-pill cat-quality">Quality</span>
-          <a href="/coming-soon.html?tool=5S+Improvement+Tool+Pack&amp;category=quality&amp;type=toolpack" class="tc-link">Notify me &rarr;</a>
-        </div>
-      </div>
-
-      <!-- 21. Strategy Deployment Planner -->
-      <div class="tc" data-category="strategy">
-        <div class="tc-top">
-          <div class="tc-name">Strategy Deployment Planner</div>
-          <span class="badge badge-soon">Coming soon</span>
-        </div>
-        <div class="tc-desc">Hoshin Kanri in plain English. Set breakthrough objectives and cascade them to the front line.</div>
-        <div class="tc-bottom">
-          <span class="cat-pill cat-strategy">Strategy</span>
-          <a href="/coming-soon.html?tool=Strategy+Deployment+Planner&amp;category=strategy&amp;type=toolpack" class="tc-link">Notify me &rarr;</a>
-        </div>
-      </div>
-
-      <!-- 22. MD Cockpit -->
-      <div class="tc" data-category="strategy">
-        <div class="tc-top">
-          <div class="tc-name">MD Cockpit</div>
-          <span class="badge badge-soon">Coming soon</span>
-        </div>
-        <div class="tc-desc">Aggregates scores from every tool into one business dashboard. See the health of your entire operation at a glance.</div>
-        <div class="tc-amber-note">Builds last — aggregates everything</div>
-        <div class="tc-bottom">
-          <span class="cat-pill cat-strategy">Strategy</span>
-          <a href="/coming-soon.html?tool=MD+Cockpit&amp;category=strategy&amp;type=toolpack" class="tc-link">Notify me &rarr;</a>
-        </div>
-      </div>
-
-      <!-- 23. Supply Chain Performance Tracker -->
-      <div class="tc" data-category="commercial">
-        <div class="tc-top">
-          <div class="tc-name">Supply Chain Performance Tracker</div>
-          <span class="badge badge-soon">Coming soon</span>
-        </div>
-        <div class="tc-desc">Track OTIF, PPM, lead time and risk across your supplier base. Catch problems before they hit your production floor.</div>
-        <div class="tc-bottom">
-          <span class="cat-pill cat-commercial">Commercial</span>
-          <a href="/coming-soon.html?tool=Supply+Chain+Performance+Tracker&amp;category=commercial&amp;type=toolpack" class="tc-link">Notify me &rarr;</a>
-        </div>
-      </div>
-
-      <!-- 24. Mandate CRM -->
-      <div class="tc" data-category="commercial">
-        <div class="tc-top">
-          <div class="tc-name">Mandate CRM</div>
-          <span class="badge badge-soon">Coming soon</span>
-        </div>
-        <div class="tc-desc">Lightweight CRM for operational SMEs. Manage prospects, track pipeline across multiple revenue streams, board-level reporting without enterprise complexity.</div>
-        <div class="tc-bottom">
-          <span class="cat-pill cat-commercial">Commercial</span>
-          <a href="/coming-soon.html?tool=Mandate+CRM&amp;category=commercial&amp;type=toolpack" class="tc-link">Notify me &rarr;</a>
-        </div>
-      </div>
-
-      <!-- 25. Mandate Jobs -->
-      <div class="tc" data-category="commercial">
-        <div class="tc-top">
-          <div class="tc-name">Mandate Jobs</div>
-          <span class="badge badge-soon">Coming soon</span>
-        </div>
-        <div class="tc-desc">The executive job search platform for operations and manufacturing leaders. Built for your level.</div>
-        <div class="tc-bottom">
-          <span class="cat-pill cat-commercial">Commercial</span>
-          <a href="/coming-soon.html?tool=Mandate+Jobs&amp;category=commercial&amp;type=toolpack" class="tc-link">Notify me &rarr;</a>
-        </div>
-      </div>
-
-    </div><!-- /#toolpack-grid -->
-  </div><!-- /.toolpacks-section -->
-
-</div><!-- /.tools-section -->
-
-<!-- ── SHAPE THE TOOLKIT ──────────────────────────────────────────────────────── -->
-<div class="suggest-section">
-  <div class="suggest-inner">
-    <div class="eyebrow">Your input</div>
-    <h2 class="suggest-h2">Help us build what you need</h2>
-    <p class="suggest-sub">Tell us what tool would have the biggest impact on your operation. The most requested tools get built next.</p>
-    <div class="suggest-form">
-      <form id="suggest-form">
-        <textarea class="suggest-textarea" name="suggestion" placeholder="What tool would help your operation most? E.g. a shift handover tool, a labour efficiency planner..."></textarea>
-        <input class="suggest-email" type="email" name="suggest-email" placeholder="Your email (optional — so we can tell you when it is built)">
-        <button type="submit" class="suggest-btn">Submit suggestion</button>
-      </form>
-      <div class="suggest-confirm" id="suggest-confirm">Thanks — we read every suggestion. If you left your email we will let you know when it gets built.</div>
-    </div>
-  </div>
-</div>
-
-<!-- ── GUIDES COMING SOON ─────────────────────────────────────────────────────── -->
-<div class="placeholder-section" id="guides-coming-soon">
-  <div class="placeholder-inner">
-    <div class="eyebrow">Free guides</div>
-    <h2>Plain-English guides to operational excellence</h2>
-    <p class="placeholder-sub">We are writing practical guides to 5S, SMED, OEE, Hoshin Kanri, TPM, and more. Each one links to the relevant tool so you can move straight from understanding to action. Coming soon.</p>
-    <span class="cs-badge">Coming soon</span>
-  </div>
-</div>
-
-<!-- ── NEWS COMING SOON ───────────────────────────────────────────────────────── -->
-<div class="placeholder-section" id="news-coming-soon">
-  <div class="placeholder-inner">
-    <div class="eyebrow">Industry news</div>
-    <h2>Sector news from credible sources</h2>
-    <p class="placeholder-sub">Curated manufacturing and operations news from The Manufacturer, Make UK, Food Manufacture, Machinery Magazine and more. Updated weekly. Coming soon.</p>
-    <span class="cs-badge">Coming soon</span>
-  </div>
-</div>
-
-<!-- ── FAQ ───────────────────────────────────────────────────────────────────── -->
-<div class="faq-section">
-  <h2>Common questions</h2>
-  <div class="faq-grid">
-    <div class="faq-card">
-      <div class="faq-q">Is this just another dashboard?</div>
-      <div class="faq-a">No. Every tool tells you what to do next, not just what your score is. Diagnosis and prescription in one place, in plain English.</div>
-    </div>
-    <div class="faq-card">
-      <div class="faq-q">Do I need to install anything?</div>
-      <div class="faq-a">Nothing. It runs in your browser. No downloads, no IT sign-off, no setup required.</div>
-    </div>
-    <div class="faq-card">
-      <div class="faq-q">Is the Cost of Waste Calculator really free?</div>
-      <div class="faq-a">Yes, permanently free. No credit card. No trial period. The diagnostic score on every tool is always free.</div>
-    </div>
-    <div class="faq-card">
-      <div class="faq-q">What happens to my data?</div>
-      <div class="faq-a">Your numbers stay in your browser session. Nothing is stored on our servers without your consent. Read our privacy policy for full details.</div>
-    </div>
-  </div>
-</div>
-
 <!-- ── FOOTER ─────────────────────────────────────────────────────────────────── -->
-<footer id="footer">
+<footer>
   <div class="footer-left">
     <p><strong>Pricing announced at launch.</strong> Founder pricing guaranteed to the first 50 members. No credit card required.</p>
     <a href="/privacy.html" class="footer-privacy">Privacy policy</a>
@@ -1948,178 +420,46 @@
 </footer>
 
 <script>
-// ── NAV DROPDOWN ─────────────────────────────────────────────────────────────
-(function() {
-  var items = [
-    { ni: 'ni-tools',      dd: 'dd-tools' },
-    { ni: 'ni-assessments', dd: 'dd-assessments' },
-    { ni: 'ni-toolpacks',  dd: 'dd-toolpacks' }
-  ];
-
-  function closeAll() {
-    items.forEach(function(x) {
-      var d = document.getElementById(x.dd);
-      if (d) d.classList.remove('active');
-    });
-  }
-
-  items.forEach(function(x) {
-    var navItem = document.getElementById(x.ni);
-    var dropdown = document.getElementById(x.dd);
-    if (!navItem || !dropdown) return;
-
-    var timer = null;
-
-    function openDrop() {
-      clearTimeout(timer);
-      closeAll();
-      dropdown.classList.add('active');
-    }
-
-    function startClose() {
-      timer = setTimeout(function() {
-        dropdown.classList.remove('active');
-      }, 150);
-    }
-
-    function cancelClose() {
-      clearTimeout(timer);
-    }
-
-    navItem.addEventListener('mouseenter', openDrop);
-    navItem.addEventListener('mouseleave', startClose);
-    dropdown.addEventListener('mouseenter', cancelClose);
-    dropdown.addEventListener('mouseleave', startClose);
-  });
-
-  // Close on click outside
-  document.addEventListener('click', function(e) {
-    var inside = false;
-    items.forEach(function(x) {
-      var ni = document.getElementById(x.ni);
-      if (ni && ni.contains(e.target)) inside = true;
-    });
-    if (!inside) closeAll();
-  });
-})();
-
-// ── MOBILE HAMBURGER ─────────────────────────────────────────────────────────
 (function() {
   var hamburger = document.getElementById('hamburger');
   var overlay   = document.getElementById('mobile-overlay');
-  var closeBtn  = document.getElementById('mobile-close');
+  var closeBtn  = document.getElementById('mob-close');
+  var wlLink    = document.getElementById('mob-wl-link');
 
-  if (hamburger) {
-    hamburger.addEventListener('click', function() {
-      overlay.classList.add('open');
-      document.body.style.overflow = 'hidden';
-    });
-  }
+  function openOverlay()  { overlay.classList.add('open');    document.body.style.overflow = 'hidden'; }
+  function closeOverlay() { overlay.classList.remove('open'); document.body.style.overflow = ''; }
 
-  if (closeBtn) {
-    closeBtn.addEventListener('click', function() {
-      overlay.classList.remove('open');
-      document.body.style.overflow = '';
-    });
-  }
+  if (hamburger) hamburger.addEventListener('click', openOverlay);
+  if (closeBtn)  closeBtn.addEventListener('click', closeOverlay);
+  if (wlLink)    wlLink.addEventListener('click', closeOverlay);
 
-  document.querySelectorAll('.mobile-nav-toggle').forEach(function(toggle) {
-    toggle.addEventListener('click', function() {
-      var targetId = this.getAttribute('data-target');
-      var sub = document.getElementById(targetId);
-      var isOpen = sub.classList.contains('open');
-
-      // Close all
-      document.querySelectorAll('.mobile-nav-sub').forEach(function(s) { s.classList.remove('open'); });
-      document.querySelectorAll('.mobile-nav-toggle').forEach(function(t) { t.classList.remove('open'); });
-
-      if (!isOpen) {
-        sub.classList.add('open');
-        this.classList.add('open');
-      }
-    });
+  overlay.addEventListener('click', function(e) {
+    if (e.target === overlay) closeOverlay();
   });
-})();
 
-// ── ASSESSMENT TAB FILTERING ─────────────────────────────────────────────────
-(function() {
-  var tabs  = document.querySelectorAll('#assessment-tabs .tab');
-  var cards = document.querySelectorAll('#assessment-grid .tc');
-
-  tabs.forEach(function(tab) {
-    tab.addEventListener('click', function() {
-      tabs.forEach(function(t) { t.classList.remove('on'); });
-      tab.classList.add('on');
-      var filter = tab.getAttribute('data-tab');
-      cards.forEach(function(card) {
-        card.style.display = (filter === 'all' || card.getAttribute('data-category') === filter) ? '' : 'none';
-      });
-    });
-  });
-})();
-
-// ── TOOLPACK TAB FILTERING ───────────────────────────────────────────────────
-(function() {
-  var tabs  = document.querySelectorAll('#toolpack-tabs .tab');
-  var cards = document.querySelectorAll('#toolpack-grid .tc');
-
-  tabs.forEach(function(tab) {
-    tab.addEventListener('click', function() {
-      tabs.forEach(function(t) { t.classList.remove('on'); });
-      tab.classList.add('on');
-      var filter = tab.getAttribute('data-tab');
-      cards.forEach(function(card) {
-        card.style.display = (filter === 'all' || card.getAttribute('data-category') === filter) ? '' : 'none';
-      });
-    });
-  });
-})();
-
-// ── WAITLIST FORM ────────────────────────────────────────────────────────────
-(function() {
   var form = document.getElementById('wl-form');
-  if (!form) return;
-
-  form.addEventListener('submit', function(e) {
-    e.preventDefault();
-    var name        = form.querySelector('[name="name"]').value.trim();
-    var email       = form.querySelector('[name="email"]').value.trim();
-    var role        = form.querySelector('[name="role"]').value.trim();
-    var companySize = form.querySelector('[name="company_size"]').value.trim();
-
-    var submissions = JSON.parse(localStorage.getItem('waitlist_submissions') || '[]');
-    submissions.push({ name: name, email: email, role: role, company_size: companySize, timestamp: new Date().toISOString() });
-    localStorage.setItem('waitlist_submissions', JSON.stringify(submissions));
-
-    var wrap = document.getElementById('wl-form-wrap');
-    wrap.innerHTML = '<div class="wl-success">' +
-      '<div class="wl-success-icon">&#10003;</div>' +
-      '<div class="wl-success-title">You are on the list</div>' +
-      '<div class="wl-success-sub">We will be in touch when we launch. Thank you for being one of our first 50.</div>' +
-      '</div>';
-  });
-})();
-
-// ── SUGGESTION FORM ──────────────────────────────────────────────────────────
-(function() {
-  var form    = document.getElementById('suggest-form');
-  var confirm = document.getElementById('suggest-confirm');
-  if (!form) return;
-
-  form.addEventListener('submit', function(e) {
-    e.preventDefault();
-    var suggestion = form.querySelector('[name="suggestion"]').value.trim();
-    var email      = form.querySelector('[name="suggest-email"]').value.trim();
-
-    var suggestions = JSON.parse(localStorage.getItem('tool_suggestions') || '[]');
-    suggestions.push({ suggestion: suggestion, email: email, timestamp: new Date().toISOString() });
-    localStorage.setItem('tool_suggestions', JSON.stringify(suggestions));
-
-    form.style.display = 'none';
-    if (confirm) confirm.style.display = 'block';
-  });
+  if (form) {
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      var data = {
+        name:         form.querySelector('[name="name"]').value.trim(),
+        email:        form.querySelector('[name="email"]').value.trim(),
+        role:         form.querySelector('[name="role"]').value.trim(),
+        company_size: form.querySelector('[name="company_size"]').value.trim(),
+        timestamp:    new Date().toISOString()
+      };
+      var subs = JSON.parse(localStorage.getItem('waitlist_submissions') || '[]');
+      subs.push(data);
+      localStorage.setItem('waitlist_submissions', JSON.stringify(subs));
+      document.getElementById('wl-form-wrap').innerHTML =
+        '<div class="wl-success">' +
+        '<div class="wl-success-icon">&#10003;</div>' +
+        '<div class="wl-success-title">You are on the list</div>' +
+        '<div class="wl-success-sub">We will be in touch when we launch. Thank you for being one of our first 50.</div>' +
+        '</div>';
+    });
+  }
 })();
 </script>
-
 </body>
 </html>
