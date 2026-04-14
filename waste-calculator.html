@@ -231,10 +231,9 @@
     .cta-btn:hover { background:#ffb820; transform:translateY(-1px); }
     .cta-note { font-size:11px; color:rgba(244,241,234,0.22); text-align:center; }
 
-    /* METHOD */
-    .method-note { margin-top:2rem; margin-bottom:120px; grid-column:1/2; padding:1.5rem 1.75rem 80px; background:var(--navy-card); border:1px solid var(--border); border-radius:16px; }
+    /* METHOD — injected into last question card */
     .method-title { font-size:11px; font-weight:500; color:var(--w40); letter-spacing:0.08em; text-transform:uppercase; margin-bottom:0.75rem; }
-    .method-body { font-size:12px; color:var(--w40); line-height:1.75; max-width:700px; }
+    .method-body { font-size:12px; color:var(--w40); line-height:1.75; }
 
     /* RESPONSIVE */
     @media(max-width:940px) { .calc-grid { grid-template-columns:1fr; } .results-panel { position:static; } }
@@ -475,11 +474,7 @@
         </div>
       </div>
 
-      <!-- METHOD NOTE -->
-      <div class="method-note">
-        <div class="method-title">How we calculate this</div>
-        <div class="method-body" id="methodBody">Every figure is converted to an annual pound cost using your revenue, headcount, hourly rate, material cost percentage, and machine rate. Defects and scrap include both the labour and the material in every rejected part. Rework includes labour to fix plus additional material consumed. Downtime calculates idle labour, ongoing machine running cost, and lost production capacity. Changeovers include idle labour and machine time. Waiting and unnecessary tasks use your total workforce cost. Excess inventory applies a 25% annual holding cost — the industry benchmark covering storage, insurance, obsolescence risk, and capital tied up. These are conservative estimates. Most businesses who complete a detailed audit find the true figure is 30 to 50% higher.</div>
-      </div>
+
 
     </div>
   </div>

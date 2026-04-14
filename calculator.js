@@ -354,7 +354,7 @@ function buildCalculator() {
   document.getElementById('matLabel').title          = cfg.matHint;
   document.getElementById('machineLabel').textContent = cfg.machineLabel;
   document.getElementById('machineRate').placeholder  = cfg.machinePlaceholder;
-  document.getElementById('methodBody').textContent   = cfg.methodNote;
+  // methodNote is injected into the last question card below
 
   // Hide machine rate for service (use vehicle cost instead)
   document.getElementById('machineRateWrap').style.display = 'block';
@@ -414,6 +414,7 @@ function buildCalculator() {
         </div>
       </div>` : '';
 
+    const isLast = i === cfg.questions.length - 1;
     row.innerHTML = `
       <div class="q-label">${q.label}</div>
       <div class="q-hint">${q.hint}</div>
@@ -421,9 +422,10 @@ function buildCalculator() {
       ${q.benchmark ? `<div class="q-benchmark">📊 ${q.benchmark}</div>` : ''}
       ${inputHTML}
       <div class="cost-preview" id="prev_${q.id}"></div>
+      ${isLast ? `<div style="margin-top:24px;padding-top:20px;border-top:1px solid rgba(255,255,255,0.07);"><div class="method-title">How we calculate this</div><div class="method-body">${cfg.methodNote}</div></div>` : ''}
     `;
 
-    if (i === cfg.questions.length - 1) row.style.borderBottom = 'none';
+    if (isLast) row.style.borderBottom = 'none';
     container.appendChild(row);
   });
 
