@@ -318,7 +318,8 @@ function setSector(key, btn) {
   btn.classList.add('active');
   buildVolumeOptions();
   document.getElementById('volBlock').style.display = 'block';
-  document.getElementById('calcBlock').style.display = 'none';
+  document.getElementById('calcLeft').style.display = 'none';
+  document.getElementById('calcRight').style.display = 'none';
   currentVolume = null;
 }
 
@@ -341,8 +342,9 @@ function setVolume(key, btn) {
   document.querySelectorAll('#volGrid .sel-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
   buildCalculator();
-  document.getElementById('calcBlock').style.display = 'block';
-  setTimeout(() => document.getElementById('calcBlock').scrollIntoView({behavior:'smooth',block:'start'}), 100);
+  document.getElementById('calcLeft').style.display = 'block';
+  document.getElementById('calcRight').style.display = 'block';
+  setTimeout(() => document.getElementById('calcLeft').scrollIntoView({behavior:'smooth',block:'start'}), 100);
 }
 
 // ─── BUILD CALCULATOR ─────────────────────────────────────────────────────────

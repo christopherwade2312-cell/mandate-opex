@@ -326,68 +326,67 @@
     </div>
   </div>
 
-  <!-- STEP 1: SECTOR -->
-  <div class="selector-block">
-    <div class="selector-block-title">Step 1 of 3 &mdash; Your sector</div>
-    <div class="selector-block-sub">Pick the one that best describes your business. This shapes the questions, benchmarks, and recommendations throughout the tool.</div>
-    <div class="selector-grid" id="sectorGrid">
-      <button class="sel-btn" data-val="engineering" onclick="setSector('engineering',this)">
-        <span class="sel-icon">⚙️</span>
-        <span class="sel-name">Precision &amp; Engineering</span>
-        <span class="sel-desc">CNC, fabrication, tooling, aerospace sub-tier, machining</span>
-      </button>
-      <button class="sel-btn" data-val="food" onclick="setSector('food',this)">
-        <span class="sel-icon">🍽️</span>
-        <span class="sel-name">Food Manufacturing</span>
-        <span class="sel-desc">Specialty food, drinks, bakery, ready meals, ingredients</span>
-      </button>
-      <button class="sel-btn" data-val="automotive" onclick="setSector('automotive',this)">
-        <span class="sel-icon">🚗</span>
-        <span class="sel-name">Automotive Supply</span>
-        <span class="sel-desc">Tier 2/3 suppliers, pressing, stamping, automotive assembly</span>
-      </button>
-      <button class="sel-btn" data-val="print" onclick="setSector('print',this)">
-        <span class="sel-icon">🖨️</span>
-        <span class="sel-name">Print &amp; Packaging</span>
-        <span class="sel-desc">Commercial print, labels, flexible packaging, cartons, corrugated</span>
-      </button>
-      <button class="sel-btn" data-val="plastics" onclick="setSector('plastics',this)">
-        <span class="sel-icon">🏭</span>
-        <span class="sel-name">Plastics &amp; Rubber</span>
-        <span class="sel-desc">Injection moulding, extrusion, blow moulding, rubber moulding</span>
-      </button>
-      <button class="sel-btn" data-val="electronics" onclick="setSector('electronics',this)">
-        <span class="sel-icon">🔌</span>
-        <span class="sel-name">Electronics &amp; Assembly</span>
-        <span class="sel-desc">PCB assembly, EMS, electronic product assembly, wire harness</span>
-      </button>
-      <button class="sel-btn" data-val="service" onclick="setSector('service',this)">
-        <span class="sel-icon">🔧</span>
-        <span class="sel-name">Field Service &amp; Maintenance</span>
-        <span class="sel-desc">HVAC, industrial maintenance, technical services, installation</span>
-      </button>
-      <button class="sel-btn" data-val="general" onclick="setSector('general',this)">
-        <span class="sel-icon">🏗️</span>
-        <span class="sel-name">General / Mixed</span>
-        <span class="sel-desc">Light manufacturing, assembly, mixed operations, not sure</span>
-      </button>
+  <!-- ALL STEPS share one grid so selectors span same width as left+gap+right columns -->
+  <div class="calc-grid">
+
+    <!-- STEP 1: SECTOR — spans both columns -->
+    <div class="selector-block" style="grid-column:1/-1">
+      <div class="selector-block-title">Step 1 of 3 &mdash; Your sector</div>
+      <div class="selector-block-sub">Pick the one that best describes your business. This shapes the questions, benchmarks, and recommendations throughout the tool.</div>
+      <div class="selector-grid" id="sectorGrid">
+        <button class="sel-btn" data-val="engineering" onclick="setSector('engineering',this)">
+          <span class="sel-icon">⚙️</span>
+          <span class="sel-name">Precision &amp; Engineering</span>
+          <span class="sel-desc">CNC, fabrication, tooling, aerospace sub-tier, machining</span>
+        </button>
+        <button class="sel-btn" data-val="food" onclick="setSector('food',this)">
+          <span class="sel-icon">🍽️</span>
+          <span class="sel-name">Food Manufacturing</span>
+          <span class="sel-desc">Specialty food, drinks, bakery, ready meals, ingredients</span>
+        </button>
+        <button class="sel-btn" data-val="automotive" onclick="setSector('automotive',this)">
+          <span class="sel-icon">🚗</span>
+          <span class="sel-name">Automotive Supply</span>
+          <span class="sel-desc">Tier 2/3 suppliers, pressing, stamping, automotive assembly</span>
+        </button>
+        <button class="sel-btn" data-val="print" onclick="setSector('print',this)">
+          <span class="sel-icon">🖨️</span>
+          <span class="sel-name">Print &amp; Packaging</span>
+          <span class="sel-desc">Commercial print, labels, flexible packaging, cartons, corrugated</span>
+        </button>
+        <button class="sel-btn" data-val="plastics" onclick="setSector('plastics',this)">
+          <span class="sel-icon">🏭</span>
+          <span class="sel-name">Plastics &amp; Rubber</span>
+          <span class="sel-desc">Injection moulding, extrusion, blow moulding, rubber moulding</span>
+        </button>
+        <button class="sel-btn" data-val="electronics" onclick="setSector('electronics',this)">
+          <span class="sel-icon">🔌</span>
+          <span class="sel-name">Electronics &amp; Assembly</span>
+          <span class="sel-desc">PCB assembly, EMS, electronic product assembly, wire harness</span>
+        </button>
+        <button class="sel-btn" data-val="service" onclick="setSector('service',this)">
+          <span class="sel-icon">🔧</span>
+          <span class="sel-name">Field Service &amp; Maintenance</span>
+          <span class="sel-desc">HVAC, industrial maintenance, technical services, installation</span>
+        </button>
+        <button class="sel-btn" data-val="general" onclick="setSector('general',this)">
+          <span class="sel-icon">🏗️</span>
+          <span class="sel-name">General / Mixed</span>
+          <span class="sel-desc">Light manufacturing, assembly, mixed operations, not sure</span>
+        </button>
+      </div>
     </div>
-  </div>
 
-  <!-- STEP 2: VOLUME PROFILE -->
-  <div class="selector-block" id="volBlock" style="display:none">
-    <div class="selector-block-title">Step 2 of 3 &mdash; How you produce</div>
-    <div class="selector-block-sub">Pick the option that best describes how your operation runs. This changes which waste types we focus on.</div>
-    <div class="vol-grid" id="volGrid"></div>
-  </div>
+    <!-- STEP 2: VOLUME PROFILE — spans both columns -->
+    <div class="selector-block" id="volBlock" style="display:none;grid-column:1/-1">
+      <div class="selector-block-title">Step 2 of 3 &mdash; How you produce</div>
+      <div class="selector-block-sub">Pick the option that best describes how your operation runs. This changes which waste types we focus on.</div>
+      <div class="vol-grid" id="volGrid"></div>
+    </div>
 
-  <!-- STEP 3: CALCULATOR -->
-  <div id="calcBlock" style="display:none">
-    <div class="calc-grid">
-
-      <!-- INPUTS -->
-      <div style="width:100%;overflow:visible">
-        <div class="inputs-panel">
+    <!-- STEP 3 LEFT: INPUTS -->
+    <div id="calcLeft" style="width:100%;overflow:visible;display:none">
+      <div class="inputs-panel">
           <div class="panel-header">
             <div class="panel-title" id="panelTitle">Your operation</div>
             <button class="reset-btn" onclick="resetAll()">Reset all</button>
@@ -425,8 +424,8 @@
         </div>
       </div>
 
-      <!-- RESULTS -->
-      <div class="results-panel">
+    <!-- STEP 3 RIGHT: RESULTS -->
+    <div id="calcRight" class="results-panel" style="display:none">
 
         <div class="result-card">
           <div class="result-hero">
@@ -472,11 +471,8 @@
           <a href="index.html#waitlist" class="cta-btn">Get the full action plan &rarr;</a>
           <div class="cta-note">No spam. One email when we launch.</div>
         </div>
-      </div>
-
-
-
     </div>
+
   </div>
 
 </div>
