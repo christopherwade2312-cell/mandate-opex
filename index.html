@@ -168,7 +168,7 @@
     .spots-left { font-size: 10px; color: rgba(240,165,0,0.9); }
     .spots-remain { font-size: 10px; color: rgba(255,255,255,0.4); }
     .progress-bar { height: 3px; background: rgba(255,255,255,0.06); border-radius: 2px; margin-bottom: 12px; overflow: hidden; }
-    .progress-fill { height: 100%; width: 24%; background: #F0A500; border-radius: 2px; }
+    .progress-fill { height: 100%; width: 4%; background: #F0A500; border-radius: 2px; }
     .wl-input { width: 100%; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 7px; padding: 8px 10px; font-size: 11px; color: rgba(255,255,255,0.65); margin-bottom: 7px; font-family: inherit; outline: none; }
     .wl-input::placeholder { color: rgba(255,255,255,0.28); }
     .wl-input:focus { border-color: rgba(240,165,0,0.35); }
@@ -361,8 +361,8 @@
     <div class="wl-title">Reserve your place</div>
     <p class="wl-sub">We are building this right now. Join the waitlist, get 3 months free on any tool at launch, and help shape what gets built first.</p>
     <div class="spots-counter">
-      <span class="spots-left">12 of 50 founder spots claimed</span>
-      <span class="spots-remain">38 remaining</span>
+      <span class="spots-left">2 of 50 founder spots claimed</span>
+      <span class="spots-remain">48 remaining</span>
     </div>
     <div class="progress-bar"><div class="progress-fill"></div></div>
     <div id="wl-form-wrap">
@@ -504,27 +504,6 @@
       });
     });
   }
-
-  // Dynamic waitlist counter
-  (function() {
-    var TOTAL    = 50;
-    var FALLBACK = 12;
-    function updateCounter(count) {
-      var remaining    = Math.max(0, TOTAL - count);
-      var pct          = Math.min(100, Math.round(count / TOTAL * 100));
-      var spotsLeft    = document.querySelector('.spots-left');
-      var spotsRemain  = document.querySelector('.spots-remain');
-      var progressFill = document.querySelector('.progress-fill');
-      if (spotsLeft)    spotsLeft.textContent   = count + ' of 50 founder spots claimed';
-      if (spotsRemain)  spotsRemain.textContent = remaining + ' remaining';
-      if (progressFill) progressFill.style.width = pct + '%';
-    }
-    fetch('https://api.airtable.com/v0/appyLNjk2cKIk6swM/Waitlist?pageSize=100&fields%5B%5D=Email', {
-      headers: { 'Authorization': 'Bearer patmoq442wmkNDGhD.edfe94549612aa6395252343786a7d8cb5f3d074f9a8db406ccb2578fe9baaf4' }
-    }).then(function(r) { return r.json(); })
-      .then(function(d) { updateCounter((d.records && d.records.length) || FALLBACK); })
-      .catch(function()  { updateCounter(FALLBACK); });
-  })();
 
 })();
 </script>
