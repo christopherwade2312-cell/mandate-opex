@@ -95,7 +95,7 @@
     .vol-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(160px,1fr)); gap:0.65rem; }
 
     /* MAIN GRID */
-    .calc-grid { display:grid; grid-template-columns:minmax(0,1fr) 360px; gap:3rem; align-items:start; }
+    .calc-grid { display:grid; grid-template-columns:minmax(0,60%) minmax(0,35%); gap:5%; align-items:start; }
 
     /* INPUTS PANEL */
     .inputs-panel { background:var(--navy-card); border:1px solid var(--border); border-radius:20px; overflow:hidden; min-width:0; }
@@ -386,7 +386,7 @@
     <div class="calc-grid">
 
       <!-- INPUTS -->
-      <div>
+      <div style="min-width:0">
         <div class="inputs-panel">
           <div class="panel-header">
             <div class="panel-title" id="panelTitle">Your operation</div>
